@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tournoi Five Futuriste</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -11,14 +11,15 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             background-color: #111;
             color: #fff;
             line-height: 1.6;
-            padding-bottom: 60px; /* Important : laisse de la place pour la barre de navigation fixe */
+            padding-bottom: 80px; /* Augmenté pour la barre de navigation */
         }
 
         /* Barre de navigation fixe en bas */
@@ -32,8 +33,9 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 0.75rem 0;
-            z-index: 100; /* Pour qu'elle reste au-dessus du contenu */
+            padding: 0.85rem 0;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .bottom-nav a {
@@ -42,185 +44,292 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             transition: color 0.2s;
+            padding: 0.5rem;
+            width: 25%;
+            text-align: center;
         }
 
         .bottom-nav a i {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 0.2rem;
         }
 
         .bottom-nav a.active {
-            color: #00aaff; /* Couleur différente pour l'élément actif */
+            color: #00aaff;
         }
 
         /* Section "hero" (accroche principale) */
         #hero {
-            background: url('') center/cover no-repeat; /* Remplace '' par le chemin de ton image de fond */
-            height: 50vh; /* Adapte la hauteur si besoin */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/800x600/?soccer') center/cover no-repeat;
+            height: 60vh;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 1rem; /* Réduit le padding sur mobile */
+            padding: 1rem;
         }
+
         .hero-content {
             max-width: 800px;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 1.5rem; /* Réduit le padding */
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 1.5rem;
             border-radius: 10px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .hero-content h2 {
-            font-size: 2.5rem; /* Réduit la taille de la police */
+            font-size: 2.2rem;
             margin-bottom: 0.8rem;
             text-shadow: 0 0 10px rgba(0, 170, 255, 0.8);
         }
 
         .hero-content p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
         }
 
         .cta-button {
             display: inline-block;
             background-color: #00aaff;
             color: #fff;
-            padding: 0.8rem 1.5rem; /* Réduit le padding */
+            padding: 0.8rem 1.5rem;
             border-radius: 5px;
             text-decoration: none;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
-        .cta-button:hover {
+        .cta-button:hover, .cta-button:active {
             background-color: #0077cc;
+            transform: translateY(-2px);
         }
 
         /* Section Information */
-        #roadmap {
-            margin-top: 1rem;
+        section {
+            margin-top: 2rem;
             padding: 1rem;
             text-align: center;
         }
-        #inscription{
-            margin-top: 1rem;
-            padding: 1rem;
-            text-align: center;
+
+        section h2 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            right: 25%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #00aaff, transparent);
         }
 
         .roadmap-container {
             display: flex;
-            flex-direction: row; /* Disposition horizontale par défaut */
-            align-items: center;
-            justify-content: space-between; /* Espace les éléments */
-            width: 100%;
-            max-width: 800px; /* Limite la largeur */
-            margin: 0 auto; /* Centre le conteneur */
+            flex-direction: row;
             flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem 0;
         }
 
         .match-group {
             display: flex;
-            flex-direction: column; /* Disposition verticale pour les matchs */
+            flex-direction: column;
             align-items: center;
-            margin: 0 10px; /* Espacement entre les groupes de matchs */
-            min-width: 80px; /* Largeur minimale pour éviter que ça ne soit trop serré */
+            min-width: 80px;
         }
-        .match-group.perdant{
-            flex-direction:row;
-            width: 90%;
+
+        .match-group.perdant {
+            flex-direction: column;
+            width: 100%;
+            margin-top: 20px;
+            border-top: 1px dashed #444;
+            padding-top: 20px;
         }
+
         .match {
             border: 1px solid #00aaff;
-            padding: 0.5rem;
-            margin-bottom: 0.5rem; /* Espacement entre les matchs d'un même groupe */
-            border-radius: 4px;
-            min-width: 60px; /* Largeur minimale pour les cases de match */
+            padding: 0.7rem;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            min-width: 80px;
             background-color: #222;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .match:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3);
         }
 
         .arrow {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #00aaff;
-            margin: 0 10px;
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
         }
 
-        .inscription-container{
+        .inscription-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
+            gap: 20px;
             width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
         }
+
         .equipe {
-            margin: 1rem 0;
+            margin: 0.5rem 0;
             border: 1px solid #444;
             padding: 1rem;
-            border-radius: 5px;
-            width: 90%; /* Prend une largeur plus grande sur mobile */
-            max-width: 500px; /* Limite la largeur sur les grands écrans */
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            background-color: #222;
+            transition: transform 0.3s;
+        }
+
+        .equipe:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .equipe p {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: #00aaff;
         }
 
         .membres {
-            list-style: none; /* Enlève les puces */
-            padding-left: 0; /* Supprime le retrait par défaut */
+            list-style: none;
+            padding-left: 0;
             margin-top: 0.5rem;
         }
 
         .membres li {
-            margin-bottom: 0.2rem; /* Espacement entre les noms */
+            margin-bottom: 0.5rem;
             min-height: 1.2em;
+            padding: 0.5rem;
+            border-radius: 4px;
+            background-color: #333;
         }
 
         /* Style pour les pages d'inscription */
         .form-container {
-            max-width: 95%; /* Prend presque toute la largeur sur mobile */
-            margin: 1rem auto;  /* Centre et réduit la marge */
-            padding: 1rem;
+            max-width: 95%;
+            margin: 1rem auto;
+            padding: 1.5rem;
             background-color: rgba(0, 0, 0, 0.7);
             border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .form-container h2 {
-            font-size: 1.8rem; /* Réduit la taille */
+            font-size: 1.8rem;
             margin-bottom: 1rem;
             text-align: center;
         }
 
         .form-group {
-            margin-bottom: 0.8rem; /* Réduit la marge */
+            margin-bottom: 1rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.3rem; /* Réduit la marge */
-            font-size: 0.9rem; /* Réduit la taille */
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+            color: #ccc;
         }
 
         .form-group input[type="text"],
         .form-group input[type="email"],
         .form-group input[type="tel"],
-        .form-group input[type="number"] {
-            width: 100%; /* Prend toute la largeur */
-            padding: 0.6rem; /* Réduit le padding */
+        .form-group input[type="number"],
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
             border: 1px solid #444;
-            background-color: #222;
+            background-color: #333;
             color: #fff;
-            border-radius: 4px; /* Réduit le rayon */
-            font-size: 0.9rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        /* Media query pour les écrans plus grands (tablettes, ordinateurs) */
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #00aaff;
+            box-shadow: 0 0 0 2px rgba(0, 170, 255, 0.3);
+        }
+
+        #message {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Loader pour le feedback visuel */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #00aaff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Media query pour les écrans plus grands */
         @media (min-width: 768px) {
+            body {
+                padding-bottom: 60px;
+            }
+
             #hero {
                 padding: 2rem;
+                height: 70vh;
             }
 
             .hero-content {
-                padding: 2rem;
+                padding: 2.5rem;
             }
 
             .hero-content h2 {
@@ -235,33 +344,45 @@
                 padding: 1rem 2rem;
                 font-size: 1.1rem;
             }
+
             .match {
                 width: auto;
+                padding: 1rem;
+            }
+
+            .inscription-container {
+                flex-direction: row;
+                flex-wrap: wrap;
             }
 
             .equipe {
-            width: 45%;
+                width: 45%;
             }
-            .inscription-container{
-                flex-direction: row;
-            }
-            .form-container{
+
+            .form-container {
                 max-width: 600px;
+                padding: 2rem;
             }
         }
-            footer {
-                text-align: center;
-                padding: 1rem;
-                margin-top: 2rem;
-                border-top: 1px solid #444;
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.5s ease-out;
         }
     </style>
 </head>
 <body>
     <!-- Barre de navigation (en bas de l'écran) -->
     <nav class="bottom-nav">
-        <a href="#" class="nav-item active"><i class="fas fa-home"></i> Accueil</a>
+        <a href="#hero" class="nav-item active"><i class="fas fa-home"></i> Accueil</a>
+        <a href="#roadmap" class="nav-item"><i class="fas fa-sitemap"></i> Matchs</a>
         <a href="#inscription-section" class="nav-item"><i class="fas fa-user-plus"></i> Inscription</a>
+        <a href="#liste-inscrits" class="nav-item"><i class="fas fa-users"></i> Équipes</a>
     </nav>
 
     <main>
@@ -270,6 +391,7 @@
                 <h2>Tournoi Five Futuriste</h2>
                 <p>Arbouans - Street Soccer</p>
                 <p>14h00 - 15h00</p>
+                <a href="#inscription-section" class="cta-button">S'inscrire maintenant</a>
             </div>
         </section>
 
@@ -285,19 +407,19 @@
                 </div>
                 <div class="match-group">
                     <div class="match">Vainqueur 1</div>
-                 </div>
+                </div>
                 <div class="arrow">
                     <i class="fas fa-arrow-right"></i>
                 </div>
-                  <div class="match-group">
+                <div class="match-group">
                     <div class="match">Finale</div>
-                 </div>
-                 <div class="arrow">
+                </div>
+                <div class="arrow">
                     <i class="fas fa-arrow-left"></i>
                 </div>
                 <div class="match-group">
                     <div class="match">Vainqueur 2</div>
-                 </div>
+                </div>
                 <div class="arrow">
                     <i class="fas fa-arrow-left"></i>
                 </div>
@@ -305,97 +427,85 @@
                     <div class="match">Équipe 3</div>
                     <div class="match">Équipe 4</div>
                 </div>
-            </div>
-             <div class="match-group perdant">
-                    <div class="match">Match per</div>
+                
+                <div class="match-group perdant">
+                    <div class="match">Match de classement</div>
                     <p>Perdant 1 vs Perdant 2</p>
                 </div>
+            </div>
         </section>
 
-         <section id="inscription-section">
-        <h2>Inscription</h2>
-        <div class="form-container">
+        <section id="inscription-section">
             <h2>Inscription</h2>
-            <p>Prix : 6€ (5€ + 1€ sadaqa)</p>
-                <p><strong>Note:</strong>Le site est statique.</p>
-            <form id="inscriptionForm">
-                <div class="form-group">
-                    <label for="nom">Nom :</label>
-                    <input type="text" id="nom" name="nom" required>
-                </div>
-                <div class="form-group">
-                    <label for="prenom">Prénom :</label>
-                    <input type="text" id="prenom" name="prenom" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email :</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="telephone">Téléphone :</label>
-                    <input type="tel" id="telephone" name="telephone" required pattern="[0-9]{10}" title="Veuillez entrer un numéro de téléphone à 10 chiffres">
-                </div>
-                <div class="form-group">
-                    <label for="age">Âge :</label>
-                    <input type="number" id="age" name="age" required min="1" max="120">
-                </div>
-                <div class="form-group">
-                    <label for="equipe">Équipe:</label>
-                    <select id="equipe" name="equipe" required>
-                        <option value="equipe1">Équipe 1</option>
-                        <option value="equipe2">Équipe 2</option>
-                        <option value="equipe3">Équipe 3</option>
-                        <option value="equipe4">Équipe 4</option>
-                    </select>
-                </div>
-                <button type="submit" class="cta-button">Confirmer l'inscription</button>
-            </form>
-            <div id="message"></div>
-        </div>
+            <div class="form-container">
+                <h2>Inscription au tournoi</h2>
+                <p>Prix : 6€ (5€ + 1€ sadaqa)</p>
+                <form id="inscriptionForm">
+                    <div class="form-group">
+                        <label for="nom">Nom :</label>
+                        <input type="text" id="nom" name="nom" required autocomplete="family-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom :</label>
+                        <input type="text" id="prenom" name="prenom" required autocomplete="given-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email :</label>
+                        <input type="email" id="email" name="email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Téléphone :</label>
+                        <input type="tel" id="telephone" name="telephone" required pattern="[0-9]{10}" title="Veuillez entrer un numéro de téléphone à 10 chiffres" autocomplete="tel">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Âge :</label>
+                        <input type="number" id="age" name="age" required min="1" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label for="equipe">Équipe:</label>
+                        <select id="equipe" name="equipe" required>
+                            <option value="">-- Sélectionnez une équipe --</option>
+                            <option value="equipe1-membres">Équipe 1</option>
+                            <option value="equipe2-membres">Équipe 2</option>
+                            <option value="equipe3-membres">Équipe 3</option>
+                            <option value="equipe4-membres">Équipe 4</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="cta-button">Confirmer l'inscription</button>
+                    <div class="loader" id="formLoader"></div>
+                </form>
+                <div id="message"></div>
+            </div>
+        </section>
 
-        <h2>Liste des inscrits</h2>
-           <div class="inscription">
+        <section id="liste-inscrits">
+            <h2>Liste des inscrits</h2>
+            <div class="inscription-container">
                 <div class="equipe">
                     <p>Équipe 1</p>
                     <ul class="membres" id="equipe1-membres">
-                        <li>Joueur 1</li>
-                        <li>Joueur 2</li>
-                        <li>Joueur 3</li>
-                        <li>Joueur 4</li>
-                        <li>Joueur 5</li>
+                        <!-- Joueurs ajoutés dynamiquement -->
                     </ul>
                 </div>
 
                 <div class="equipe">
                     <p>Équipe 2</p>
                     <ul class="membres" id="equipe2-membres">
-                       <li>Joueur 1</li>
-                        <li>Joueur 2</li>
-                        <li>Joueur 3</li>
-                        <li>Joueur 4</li>
-                        <li>Joueur 5</li>
+                        <!-- Joueurs ajoutés dynamiquement -->
                     </ul>
                 </div>
 
                 <div class="equipe">
                     <p>Équipe 3</p>
                     <ul class="membres" id="equipe3-membres">
-                        <li>Joueur 1</li>
-                        <li>Joueur 2</li>
-                        <li>Joueur 3</li>
-                        <li>Joueur 4</li>
-                        <li>Joueur 5</li>
+                        <!-- Joueurs ajoutés dynamiquement -->
                     </ul>
                 </div>
 
                 <div class="equipe">
                     <p>Équipe 4</p>
                     <ul class="membres" id="equipe4-membres">
-                        <li>Joueur 1</li>
-                        <li>Joueur 2</li>
-                        <li>Joueur 3</li>
-                        <li>Joueur 4</li>
-                        <li>Joueur 5</li>
+                        <!-- Joueurs ajoutés dynamiquement -->
                     </ul>
                 </div>
             </div>
@@ -403,109 +513,225 @@
     </main>
 
     <footer>
-        <p>© 2024 Nom du Tournoi. Tous droits réservés.</p>
+        <p>© 2024 Tournoi Five Futuriste. Tous droits réservés.</p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-          // Trouve tous les liens de la barre de navigation
-          const navItems = document.querySelectorAll('.bottom-nav a');
+            // Système de navigation amélioré
+            const navItems = document.querySelectorAll('.bottom-nav a');
+            const sections = document.querySelectorAll('section');
 
-          // Fonction pour mettre à jour l'élément actif
-          function updateActiveNavItem() {
-            // Trouve la section actuellement visible (en fonction du scroll)
-            let currentSection = '';
-            document.querySelectorAll('section').forEach(section => {
-              const rect = section.getBoundingClientRect();
-              if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-                currentSection = section.id;
-              }
-            });
+            // Pour le smooth scroll et la mise à jour de la navigation active
+            function updateActiveNavItem() {
+                let currentSectionId = '';
+                let minDistance = Infinity;
 
-            // Met à jour la classe "active" sur les liens de navigation
-            navItems.forEach(item => {
-              item.classList.remove('active');
-              if (item.hash === `#${currentSection}`) {
-                item.classList.add('active');
-              }
-            });
-          }
-
-          // Appelle la fonction au chargement de la page et quand on scroll
-          updateActiveNavItem();
-          window.addEventListener('scroll', updateActiveNavItem);
-
-            // Gère le clic sur les liens de navigation (pour le smooth scroll)
-            navItems.forEach(item => {
-            item.addEventListener('click', function(event) {
-              event.preventDefault(); // Empêche le comportement par défaut du lien
-
-              const targetId = this.getAttribute('href'); // Récupère l'ID de la cible
-              const targetElement = document.querySelector(targetId); // Trouve l'élément cible
-
-              if (targetElement) {
-                // Calcule la position de l'élément cible, en tenant compte de la barre de navigation fixe
-                const navHeight = document.querySelector('.bottom-nav').offsetHeight;
-                const targetPosition = targetElement.offsetTop - navHeight;
-
-
-                // Fait défiler la page jusqu'à l'élément cible (avec un effet "smooth")
-                window.scrollTo({
-                  top: targetPosition,
-                  behavior: 'smooth'
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const distance = Math.abs(rect.top);
+                    
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        currentSectionId = section.id;
+                    }
                 });
-              }
+
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === `#${currentSectionId}`) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+
+            updateActiveNavItem();
+            window.addEventListener('scroll', updateActiveNavItem);
+
+            // Smooth scroll pour les liens de navigation
+            navItems.forEach(item => {
+                item.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        const navHeight = document.querySelector('.bottom-nav').offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 20;
+
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
-          });
-        });
-        // Fonction pour ajouter un joueur à la liste (à des fins de démonstration)
-        function ajouterJoueur(equipe, prenom, nom) {
-            const liste = document.querySelector(`#${equipe}-membres`);
-            if (liste) {
-                const nouvelElement = document.createElement('li');
-                nouvelElement.textContent = `${prenom} ${nom}`;
-                liste.appendChild(nouvelElement);
-            }
-        }
 
-        // Gestionnaire de soumission du formulaire (simulation d'inscription)
-        const form = document.getElementById('inscriptionForm');
-        const messageDiv = document.getElementById('message');
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche le rechargement de la page
-
-            // Récupère les valeurs du formulaire
-            const nom = document.getElementById('nom').value;
-            const prenom = document.getElementById('prenom').value;
-            const email = document.getElementById('email').value;
-            const telephone = document.getElementById('telephone').value;
-            const age = document.getElementById('age').value;
-            const equipe = document.getElementById('equipe').value;
-
-            // Validation simple (côté client - tu peux la compléter)
-            if (!nom || !prenom || !email || !telephone || !age) {
-                messageDiv.innerHTML = '<p style="color: red;">Veuillez remplir tous les champs.</p>';
-                return;
-            }
-
-            if (!/^[0-9]{10}$/.test(telephone)) {
-                 messageDiv.innerHTML = '<p style="color: red;">Veuillez rentrer un numéro de téléphone valide.</p>';
-                return;
-            }
-             if (isNaN(age) || age < 1 || age > 120) {
-                messageDiv.innerHTML = '<p style="color: red;">L\'age doit être un nombre compris entre 1 et 120.</p>';
-                return;
+            // Système de persistence des données avec localStorage
+            // Fonction pour charger les données persistantes
+            function loadSavedPlayers() {
+                for (let i = 1; i <= 4; i++) {
+                    const equipeId = `equipe${i}-membres`;
+                    const savedPlayers = localStorage.getItem(equipeId);
+                    
+                    if (savedPlayers) {
+                        const playersData = JSON.parse(savedPlayers);
+                        const playersList = document.getElementById(equipeId);
+                        
+                        // Vider la liste avant de charger
+                        playersList.innerHTML = '';
+                        
+                        // Ajouter les joueurs sauvegardés
+                        playersData.forEach(player => {
+                            const li = document.createElement('li');
+                            li.textContent = player.prenom + ' ' + player.nom;
+                            
+                            // Ajouter les données complètes comme attributs data-*
+                            li.dataset.email = player.email;
+                            li.dataset.tel = player.telephone;
+                            li.dataset.age = player.age;
+                            
+                            playersList.appendChild(li);
+                        });
+                    } else {
+                        // Si pas de données, initialiser un tableau vide et sauvegarder
+                        localStorage.setItem(equipeId, JSON.stringify([]));
+                        
+                        // Afficher un message "Aucun joueur inscrit" si l'équipe est vide
+                        const playersList = document.getElementById(equipeId);
+                        playersList.innerHTML = '<li style="color: #999; font-style: italic;">Aucun joueur inscrit</li>';
+                    }
+                }
             }
 
-            // Ajoute le joueur à la liste (pour la démo - en réalité, il faudrait modifier le HTML manuellement)
-            ajouterJoueur(equipe, prenom, nom);
+            // Fonction pour ajouter un joueur à la liste et le sauvegarder
+            function ajouterJoueur(equipeId, joueur) {
+                const liste = document.getElementById(equipeId);
+                if (liste) {
+                    // Vérifier s'il y a un message "Aucun joueur inscrit"
+                    if (liste.querySelector('li[style*="italic"]')) {
+                        liste.innerHTML = ''; // Vider la liste s'il y a seulement le message
+                    }
+                    
+                    // Créer l'élément pour le joueur
+                    const nouvelElement = document.createElement('li');
+                    nouvelElement.textContent = `${joueur.prenom} ${joueur.nom}`;
+                    nouvelElement.dataset.email = joueur.email;
+                    nouvelElement.dataset.tel = joueur.telephone;
+                    nouvelElement.dataset.age = joueur.age;
+                    liste.appendChild(nouvelElement);
+                    
+                    // Sauvegarder dans localStorage
+                    const savedPlayers = JSON.parse(localStorage.getItem(equipeId) || '[]');
+                    savedPlayers.push(joueur);
+                    localStorage.setItem(equipeId, JSON.stringify(savedPlayers));
+                    
+                    // Animer l'entrée
+                    nouvelElement.style.animation = 'fadeIn 0.5s';
+                }
+            }
 
-            // Affiche un message de succès
-              messageDiv.innerHTML = `<p style="color: green;">Inscription réussie pour ${prenom} ${nom} dans l'équipe ${equipe} !</p>`;
+            // Charger les données au démarrage
+            loadSavedPlayers();
 
-            // Efface le formulaire
-            form.reset();
+            // Gestion du formulaire d'inscription
+            const form = document.getElementById('inscriptionForm');
+            const messageDiv = document.getElementById('message');
+            const formLoader = document.getElementById('formLoader');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                // Afficher le loader
+                formLoader.style.display = 'block';
+                
+                // Récupérer les valeurs du formulaire
+                const nom = document.getElementById('nom').value.trim();
+                const prenom = document.getElementById('prenom').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const telephone = document.getElementById('telephone').value.trim();
+                const age = document.getElementById('age').value;
+                const equipe = document.getElementById('equipe').value;
+
+                // Validation
+                if (!nom || !prenom || !email || !telephone || !age || !equipe) {
+                    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez remplir tous les champs.</p>';
+                    formLoader.style.display = 'none';
+                    return;
+                }
+
+                if (!/^[0-9]{10}$/.test(telephone)) {
+                    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez rentrer un numéro de téléphone valide (10 chiffres).</p>';
+                    formLoader.style.display = 'none';
+                    return;
+                }
+
+                if (isNaN(age) || age < 1 || age > 120) {
+                    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">L\'âge doit être un nombre compris entre 1 et 120.</p>';
+                    formLoader.style.display = 'none';
+                    return;
+                }
+
+                // Vérifier si l'équipe est pleine (max 5 joueurs)
+                const equipeList = document.getElementById(equipe);
+                const joueursDansEquipe = equipeList.querySelectorAll('li:not([style*="italic"])');
+                
+                if (joueursDansEquipe && joueursDansEquipe.length >= 5) {
+                    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Cette équipe est déjà complète (5 joueurs maximum).</p>';
+                    formLoader.style.display = 'none';
+                    return;
+                }
+
+                // Préparer les données du joueur
+                const joueur = {
+                    nom: nom,
+                    prenom: prenom,
+                    email: email,
+                    telephone: telephone,
+                    age: age
+                };
+
+                // Simuler un délai d'inscription (pour l'effet visuel)
+                setTimeout(() => {
+                    // Ajouter le joueur à l'équipe
+                    ajouterJoueur(equipe, joueur);
+                    
+                    // Afficher le message de succès
+                    messageDiv.innerHTML = `<p style="color: #4CAF50; background-color: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 5px;">Inscription réussie pour ${prenom} ${nom} dans l'équipe ${equipe.replace('-membres', '').replace('equipe', 'Équipe ')} !</p>`;
+                    
+                    // Masquer le loader
+                    formLoader.style.display = 'none';
+                    
+                    // Réinitialiser le formulaire
+                    form.reset();
+                    
+                    // Faire défiler vers la section des équipes après 1 seconde
+                    setTimeout(() => {
+                        document.getElementById('liste-inscrits').scrollIntoView({ behavior: 'smooth' });
+                    }, 1000);
+                }, 800); // Délai simulé de 800ms
+            });
+
+            // Bouton pour réinitialiser les équipes (pour les tests)
+            // Vous pouvez l'ajouter au footer pour les tests et le supprimer ensuite
+            const footer = document.querySelector('footer');
+            const resetButton = document.createElement('button');
+            resetButton.textContent = 'Réinitialiser les équipes (Admin)';
+            resetButton.className = 'cta-button';
+            resetButton.style.marginTop = '20px';
+            resetButton.style.backgroundColor = '#ff3c3c';
+            
+            resetButton.addEventListener('click', function() {
+                if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
+                    for (let i = 1; i <= 4; i++) {
+                        localStorage.removeItem(`equipe${i}-membres`);
+                    }
+                    loadSavedPlayers(); // Recharger les listes vides
+                    alert('Toutes les équipes ont été réinitialisées.');
+                }
+            });
+            
+            footer.appendChild(resetButton);
         });
     </script>
 </body>
