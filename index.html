@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournoi Five Futuriste</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Réinitialisation (reset) des styles par défaut */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #111;
+            color: #fff;
+            line-height: 1.6;
+            padding-bottom: 60px; /* Important : laisse de la place pour la barre de navigation fixe */
+        }
+
+        /* Barre de navigation fixe en bas */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #222;
+            border-top: 1px solid #444;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0.75rem 0;
+            z-index: 100; /* Pour qu'elle reste au-dessus du contenu */
+        }
+
+        .bottom-nav a {
+            color: #aaa;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.8rem;
+            transition: color 0.2s;
+        }
+
+        .bottom-nav a i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .bottom-nav a.active {
+            color: #00aaff; /* Couleur différente pour l'élément actif */
+        }
+
+        /* Section "hero" (accroche principale) */
+        #hero {
+            background: url('') center/cover no-repeat; /* Remplace '' par le chemin de ton image de fond */
+            height: 50vh; /* Adapte la hauteur si besoin */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem; /* Réduit le padding sur mobile */
+        }
+        .hero-content {
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 1.5rem; /* Réduit le padding */
+            border-radius: 10px;
+        }
+
+        .hero-content h2 {
+            font-size: 2.5rem; /* Réduit la taille de la police */
+            margin-bottom: 0.8rem;
+            text-shadow: 0 0 10px rgba(0, 170, 255, 0.8);
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #00aaff;
+            color: #fff;
+            padding: 0.8rem 1.5rem; /* Réduit le padding */
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background-color: #0077cc;
+        }
+
+        /* Section Information */
+        #roadmap {
+            margin-top: 1rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        #inscription{
+            margin-top: 1rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .roadmap-container {
+            display: flex;
+            flex-direction: row; /* Disposition horizontale par défaut */
+            align-items: center;
+            justify-content: space-between; /* Espace les éléments */
+            width: 100%;
+            max-width: 800px; /* Limite la largeur */
+            margin: 0 auto; /* Centre le conteneur */
+            flex-wrap: wrap;
+        }
+
+        .match-group {
+            display: flex;
+            flex-direction: column; /* Disposition verticale pour les matchs */
+            align-items: center;
+            margin: 0 10px; /* Espacement entre les groupes de matchs */
+            min-width: 80px; /* Largeur minimale pour éviter que ça ne soit trop serré */
+        }
+        .match-group.perdant{
+            flex-direction:row;
+            width: 90%;
+        }
+        .match {
+            border: 1px solid #00aaff;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem; /* Espacement entre les matchs d'un même groupe */
+            border-radius: 4px;
+            min-width: 60px; /* Largeur minimale pour les cases de match */
+            background-color: #222;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: #00aaff;
+            margin: 0 10px;
+        }
+
+        .inscription-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .equipe {
+            margin: 1rem 0;
+            border: 1px solid #444;
+            padding: 1rem;
+            border-radius: 5px;
+            width: 90%; /* Prend une largeur plus grande sur mobile */
+            max-width: 500px; /* Limite la largeur sur les grands écrans */
+        }
+
+        .membres {
+            list-style: none; /* Enlève les puces */
+            padding-left: 0; /* Supprime le retrait par défaut */
+            margin-top: 0.5rem;
+        }
+
+        .membres li {
+            margin-bottom: 0.2rem; /* Espacement entre les noms */
+            min-height: 1.2em;
+        }
+
+        /* Style pour les pages d'inscription */
+        .form-container {
+            max-width: 95%; /* Prend presque toute la largeur sur mobile */
+            margin: 1rem auto;  /* Centre et réduit la marge */
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+        }
+
+        .form-container h2 {
+            font-size: 1.8rem; /* Réduit la taille */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 0.8rem; /* Réduit la marge */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.3rem; /* Réduit la marge */
+            font-size: 0.9rem; /* Réduit la taille */
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="number"] {
+            width: 100%; /* Prend toute la largeur */
+            padding: 0.6rem; /* Réduit le padding */
+            border: 1px solid #444;
+            background-color: #222;
+            color: #fff;
+            border-radius: 4px; /* Réduit le rayon */
+            font-size: 0.9rem;
+        }
+
+        /* Media query pour les écrans plus grands (tablettes, ordinateurs) */
+        @media (min-width: 768px) {
+            #hero {
+                padding: 2rem;
+            }
+
+            .hero-content {
+                padding: 2rem;
+            }
+
+            .hero-content h2 {
+                font-size: 3rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .cta-button {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+            .match {
+                width: auto;
+            }
+
+            .equipe {
+            width: 45%;
+            }
+            .inscription-container{
+                flex-direction: row;
+            }
+            .form-container{
+                max-width: 600px;
+            }
+        }
+            footer {
+                text-align: center;
+                padding: 1rem;
+                margin-top: 2rem;
+                border-top: 1px solid #444;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barre de navigation (en bas de l'écran) -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active"><i class="fas fa-home"></i> Accueil</a>
+        <a href="#inscription-section" class="nav-item"><i class="fas fa-user-plus"></i> Inscription</a>
+    </nav>
+
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h2>Tournoi Five Futuriste</h2>
+                <p>Arbouans - Street Soccer</p>
+                <p>14h00 - 15h00</p>
+            </div>
+        </section>
+
+        <section id="roadmap">
+            <h2>Roadmap des Matchs</h2>
+            <div class="roadmap-container">
+                <div class="match-group">
+                    <div class="match">Équipe 1</div>
+                    <div class="match">Équipe 2</div>
+                </div>
+                <div class="arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="match-group">
+                    <div class="match">Vainqueur 1</div>
+                 </div>
+                <div class="arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                  <div class="match-group">
+                    <div class="match">Finale</div>
+                 </div>
+                 <div class="arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="match-group">
+                    <div class="match">Vainqueur 2</div>
+                 </div>
+                <div class="arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="match-group">
+                    <div class="match">Équipe 3</div>
+                    <div class="match">Équipe 4</div>
+                </div>
+            </div>
+             <div class="match-group perdant">
+                    <div class="match">Match per</div>
+                    <p>Perdant 1 vs Perdant 2</p>
+                </div>
+        </section>
+
+         <section id="inscription-section">
+        <h2>Inscription</h2>
+        <div class="form-container">
+            <h2>Inscription</h2>
+            <p>Prix : 6€ (5€ + 1€ sadaqa)</p>
+                <p><strong>Note:</strong>Le site est statique.</p>
+            <form id="inscriptionForm">
+                <div class="form-group">
+                    <label for="nom">Nom :</label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom :</label>
+                    <input type="text" id="prenom" name="prenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Téléphone :</label>
+                    <input type="tel" id="telephone" name="telephone" required pattern="[0-9]{10}" title="Veuillez entrer un numéro de téléphone à 10 chiffres">
+                </div>
+                <div class="form-group">
+                    <label for="age">Âge :</label>
+                    <input type="number" id="age" name="age" required min="1" max="120">
+                </div>
+                <div class="form-group">
+                    <label for="equipe">Équipe:</label>
+                    <select id="equipe" name="equipe" required>
+                        <option value="equipe1">Équipe 1</option>
+                        <option value="equipe2">Équipe 2</option>
+                        <option value="equipe3">Équipe 3</option>
+                        <option value="equipe4">Équipe 4</option>
+                    </select>
+                </div>
+                <button type="submit" class="cta-button">Confirmer l'inscription</button>
+            </form>
+            <div id="message"></div>
+        </div>
+
+        <h2>Liste des inscrits</h2>
+           <div class="inscription">
+                <div class="equipe">
+                    <p>Équipe 1</p>
+                    <ul class="membres" id="equipe1-membres">
+                        <li>Joueur 1</li>
+                        <li>Joueur 2</li>
+                        <li>Joueur 3</li>
+                        <li>Joueur 4</li>
+                        <li>Joueur 5</li>
+                    </ul>
+                </div>
+
+                <div class="equipe">
+                    <p>Équipe 2</p>
+                    <ul class="membres" id="equipe2-membres">
+                       <li>Joueur 1</li>
+                        <li>Joueur 2</li>
+                        <li>Joueur 3</li>
+                        <li>Joueur 4</li>
+                        <li>Joueur 5</li>
+                    </ul>
+                </div>
+
+                <div class="equipe">
+                    <p>Équipe 3</p>
+                    <ul class="membres" id="equipe3-membres">
+                        <li>Joueur 1</li>
+                        <li>Joueur 2</li>
+                        <li>Joueur 3</li>
+                        <li>Joueur 4</li>
+                        <li>Joueur 5</li>
+                    </ul>
+                </div>
+
+                <div class="equipe">
+                    <p>Équipe 4</p>
+                    <ul class="membres" id="equipe4-membres">
+                        <li>Joueur 1</li>
+                        <li>Joueur 2</li>
+                        <li>Joueur 3</li>
+                        <li>Joueur 4</li>
+                        <li>Joueur 5</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Nom du Tournoi. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Trouve tous les liens de la barre de navigation
+          const navItems = document.querySelectorAll('.bottom-nav a');
+
+          // Fonction pour mettre à jour l'élément actif
+          function updateActiveNavItem() {
+            // Trouve la section actuellement visible (en fonction du scroll)
+            let currentSection = '';
+            document.querySelectorAll('section').forEach(section => {
+              const rect = section.getBoundingClientRect();
+              if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                currentSection = section.id;
+              }
+            });
+
+            // Met à jour la classe "active" sur les liens de navigation
+            navItems.forEach(item => {
+              item.classList.remove('active');
+              if (item.hash === `#${currentSection}`) {
+                item.classList.add('active');
+              }
+            });
+          }
+
+          // Appelle la fonction au chargement de la page et quand on scroll
+          updateActiveNavItem();
+          window.addEventListener('scroll', updateActiveNavItem);
+
+            // Gère le clic sur les liens de navigation (pour le smooth scroll)
+            navItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+              event.preventDefault(); // Empêche le comportement par défaut du lien
+
+              const targetId = this.getAttribute('href'); // Récupère l'ID de la cible
+              const targetElement = document.querySelector(targetId); // Trouve l'élément cible
+
+              if (targetElement) {
+                // Calcule la position de l'élément cible, en tenant compte de la barre de navigation fixe
+                const navHeight = document.querySelector('.bottom-nav').offsetHeight;
+                const targetPosition = targetElement.offsetTop - navHeight;
+
+
+                // Fait défiler la page jusqu'à l'élément cible (avec un effet "smooth")
+                window.scrollTo({
+                  top: targetPosition,
+                  behavior: 'smooth'
+                });
+              }
+            });
+          });
+        });
+        // Fonction pour ajouter un joueur à la liste (à des fins de démonstration)
+        function ajouterJoueur(equipe, prenom, nom) {
+            const liste = document.querySelector(`#${equipe}-membres`);
+            if (liste) {
+                const nouvelElement = document.createElement('li');
+                nouvelElement.textContent = `${prenom} ${nom}`;
+                liste.appendChild(nouvelElement);
+            }
+        }
+
+        // Gestionnaire de soumission du formulaire (simulation d'inscription)
+        const form = document.getElementById('inscriptionForm');
+        const messageDiv = document.getElementById('message');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche le rechargement de la page
+
+            // Récupère les valeurs du formulaire
+            const nom = document.getElementById('nom').value;
+            const prenom = document.getElementById('prenom').value;
+            const email = document.getElementById('email').value;
+            const telephone = document.getElementById('telephone').value;
+            const age = document.getElementById('age').value;
+            const equipe = document.getElementById('equipe').value;
+
+            // Validation simple (côté client - tu peux la compléter)
+            if (!nom || !prenom || !email || !telephone || !age) {
+                messageDiv.innerHTML = '<p style="color: red;">Veuillez remplir tous les champs.</p>';
+                return;
+            }
+
+            if (!/^[0-9]{10}$/.test(telephone)) {
+                 messageDiv.innerHTML = '<p style="color: red;">Veuillez rentrer un numéro de téléphone valide.</p>';
+                return;
+            }
+             if (isNaN(age) || age < 1 || age > 120) {
+                messageDiv.innerHTML = '<p style="color: red;">L\'age doit être un nombre compris entre 1 et 120.</p>';
+                return;
+            }
+
+            // Ajoute le joueur à la liste (pour la démo - en réalité, il faudrait modifier le HTML manuellement)
+            ajouterJoueur(equipe, prenom, nom);
+
+            // Affiche un message de succès
+              messageDiv.innerHTML = `<p style="color: green;">Inscription réussie pour ${prenom} ${nom} dans l'équipe ${equipe} !</p>`;
+
+            // Efface le formulaire
+            form.reset();
+        });
+    </script>
+</body>
+</html>
