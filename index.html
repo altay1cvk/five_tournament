@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tournoi Five RAMADAN </title>
+    <title>Tournoi Five RAMADAN</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Réinitialisation (reset) des styles par défaut */
@@ -383,7 +383,6 @@
     </style>
 </head>
 <body>
-    <!-- Barre de navigation (en bas de l'écran) -->
     <nav class="bottom-nav">
         <a href="#hero" class="nav-item active"><i class="fas fa-home"></i> Accueil</a>
         <a href="#roadmap" class="nav-item"><i class="fas fa-sitemap"></i> Matchs</a>
@@ -417,7 +416,7 @@
                         <div class="match">Vainqueur 1</div>
                     </div>
                 </div>
-                
+
                 <!-- Finale -->
                 <div class="arrow">
                     <i class="fas fa-arrow-down"></i>
@@ -428,7 +427,7 @@
                 <div class="arrow">
                     <i class="fas fa-arrow-up"></i>
                 </div>
-                
+
                 <!-- Deuxième demi-finale -->
                 <div class="bracket-row">
                     <div class="match-group">
@@ -442,7 +441,7 @@
                         <div class="match">Équipe 4</div>
                     </div>
                 </div>
-                
+
                 <!-- Match de classement -->
                 <div class="match-group perdant">
                     <div class="match">Match de classement</div>
@@ -533,36 +532,34 @@
     </footer>
 
     <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
         import { getDatabase, ref, set, onValue, push, serverTimestamp, remove } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
 
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      const firebaseConfig = {
-        apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
-        authDomain: "tournoifoot-e233b.firebaseapp.com",
-        projectId: "tournoifoot-e233b",
-        storageBucket: "tournoifoot-e233b.firebasestorage.app",
-        messagingSenderId: "915558317701",
-        appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",
-        measurementId: "G-N5NWTN317Y"
-      };
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
+          authDomain: "tournoifoot-e233b.firebaseapp.com",
+          projectId: "tournoifoot-e233b",
+          storageBucket: "tournoifoot-e233b.firebasestorage.app",
+          messagingSenderId: "915558317701",
+          appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",
+          measurementId: "G-N5NWTN317Y"
+        };
 
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const database = getDatabase(app);
-    </script>
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
 
 
-    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Plus besoin de la configuration Firebase ici, elle est dans le module au-dessus
+            // ... (Le reste de ton code JavaScript, à l'intérieur du DOMContentLoaded) ...
 
             // Système de navigation amélioré
             const navItems = document.querySelectorAll('.bottom-nav a');
@@ -576,7 +573,7 @@
                 sections.forEach(section => {
                     const rect = section.getBoundingClientRect();
                     const distance = Math.abs(rect.top);
-                    
+
                     if (distance < minDistance) {
                         minDistance = distance;
                         currentSectionId = section.id;
@@ -613,100 +610,100 @@
                 });
             });
 
-            // Fonction pour charger les joueurs depuis Firebase
+
+
+            // Fonction pour charger les joueurs depuis Firebase (avec l'écouteur onValue)
             function loadPlayersFromFirebase() {
-                for (let i = 1; i <= 4; i++) {
-                    const equipeId = `equipe${i}-membres`;
-                    const playersList = document.getElementById(equipeId);
-                    
-                    // Référence à la liste des joueurs de cette équipe
-                    const playersRef = ref(database, 'equipes/' + equipeId);
-                    
-                    // Écouter les changements de données
-                    onValue(playersRef, (snapshot) => {
-                        const players = snapshot.val() || {};
-                        
-                        // Vider la liste actuelle
-                        playersList.innerHTML = '';
-                        
-                        // Convertir l'objet en tableau pour faciliter le traitement
-                        const playersArray = Object.values(players);
-                        
-                        if (playersArray.length === 0) {
-                            // Afficher un message "Aucun joueur inscrit" si l'équipe est vide
-                            playersList.innerHTML = '<li style="color: #999; font-style: italic;">Aucun joueur inscrit</li>';
-                        } else {
-                            // Ajouter chaque joueur à la liste
-                            playersArray.forEach(player => {
-                                const li = document.createElement('li');
-                                li.textContent = `${player.prenom} ${player.nom}`;
-                                li.dataset.email = player.email;
-                                li.dataset.tel = player.telephone;
-                                li.dataset.age = player.age;
-                                playersList.appendChild(li);
-                                
-                                // Animer l'entrée
-                                li.style.animation = 'fadeIn 0.5s';
-                            });
-                        }
+              for (let i = 1; i <= 4; i++) {
+                const equipeId = `equipe${i}-membres`;
+                const playersList = document.getElementById(equipeId);
+
+                // Référence à la liste des joueurs de cette équipe
+                const playersRef = ref(database, 'equipes/' + equipeId);
+
+                // Écouter les changements de données (ICI, et pas dans ajouterJoueurFirebase)
+                onValue(playersRef, (snapshot) => {
+                  const players = snapshot.val() || {};
+
+                  // Vider la liste actuelle
+                  playersList.innerHTML = '';
+
+                  // Convertir l'objet en tableau pour faciliter le traitement
+                  const playersArray = Object.values(players);
+
+                  if (playersArray.length === 0) {
+                    // Afficher un message "Aucun joueur inscrit" si l'équipe est vide
+                    playersList.innerHTML = '<li style="color: #999; font-style: italic;">Aucun joueur inscrit</li>';
+                  } else {
+                    // Ajouter chaque joueur à la liste
+                    playersArray.forEach(player => {
+                      const li = document.createElement('li');
+                      li.textContent = `${player.prenom} ${player.nom}`;
+                      li.dataset.email = player.email;  // Conserver les données (facultatif)
+                      li.dataset.tel = player.telephone;
+                      li.dataset.age = player.age;
+                      playersList.appendChild(li);
+
+                      // Animer l'entrée
+                      li.style.animation = 'fadeIn 0.5s';
                     });
-                }
+                  }
+                });
+              }
             }
 
-            // Fonction pour ajouter un joueur à Firebase
-            function ajouterJoueurFirebase(equipeId, joueur) {
-                // Créer une référence à l'équipe spécifique
-                const equipeRef = ref(database, 'equipes/' + equipeId);
 
-                  // Vérifier d'abord combien de joueurs sont déjà dans l'équipe
-                onValue(equipeRef, (snapshot) => {
+          // Fonction pour ajouter un joueur à Firebase
+            function ajouterJoueurFirebase(equipeId, joueur) {
+                const equipeRef = ref(database, 'equipes/' + equipeId);
+                const newPlayerRef = push(equipeRef); // Génère une clé unique
+
+                // Vérification du nombre de joueurs *AVANT* d'ajouter.
+                // On utilise `get()` pour récupérer les données une seule fois.
+                const countRef = ref(database, 'equipes/' + equipeId);
+                get(countRef).then((snapshot) => { // Utilisation de 'get'
                     const players = snapshot.val() || {};
                     const count = Object.keys(players).length;
 
                     if (count >= 5) {
-                      // Équipe pleine, afficher un message d'erreur
                         const messageDiv = document.getElementById('message');
                         messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Cette équipe est déjà complète (5 joueurs maximum).</p>';
                         document.getElementById('formLoader').style.display = 'none';
-                        return;
+                        return; // Arrête l'exécution de la fonction
                     }
-
-
-                    // Créer une nouvelle entrée avec une clé unique
-                    const newPlayerRef = push(equipeRef);
+                    //Si l'equipe n est pas complete, ajout du joueur
                       set(newPlayerRef, joueur)
                       .then(() => {
-                          // Afficher le message de succès
                         const messageDiv = document.getElementById('message');
                         messageDiv.innerHTML = `<p style="color: #4CAF50; background-color: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 5px;">Inscription réussie pour ${joueur.prenom} ${joueur.nom} dans l'équipe ${equipeId.replace('-membres', '').replace('equipe', 'Équipe ')} !</p>`;
-
-                        // Masquer le loader
                         document.getElementById('formLoader').style.display = 'none';
-
-                        // Réinitialiser le formulaire
                         document.getElementById('inscriptionForm').reset();
-
-                        // Faire défiler vers la section des équipes après 1 seconde
                         setTimeout(() => {
-                            document.getElementById('liste-inscrits').scrollIntoView({ behavior: 'smooth' });
+                          document.getElementById('liste-inscrits').scrollIntoView({ behavior: 'smooth' });
                         }, 1000);
-                    })
-                    .catch((error) => {
+                      })
+                      .catch((error) => {
                         console.error("Erreur lors de l'ajout du joueur:", error);
                         const messageDiv = document.getElementById('message');
-                        messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Une erreur est survenue lors de l\'inscription.  Veuillez réessayer.</p>';
+                        messageDiv.innerHTML = `<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Une erreur est survenue lors de l'inscription: ${error.message}</p>`; // Affiche le message d'erreur Firebase
                         document.getElementById('formLoader').style.display = 'none';
-                    });
-                }, {
-                  onlyOnce: true // Important: onValue s'exécute *à chaque changement*,  on a besoin de once ici.
-                });
+                      });
 
+                }).catch((error) => { // Gestion de l'erreur pour 'get'
+                    console.error("Erreur lors de la récupération du nombre de joueurs :", error);
+                      const messageDiv = document.getElementById('message');
+                      messageDiv.innerHTML = `<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Une erreur est survenue lors de la vérification de l'équipe: ${error.message}</p>`;
+                      document.getElementById('formLoader').style.display = 'none';
+
+                });
             }
 
-            // Charger les joueurs au démarrage
+
+            // Charger les joueurs au démarrage (appelle loadPlayersFromFirebase)
             loadPlayersFromFirebase();
 
-            // Gestion du formulaire d'inscription
+
+            // Gestion du formulaire d'inscription (inchangé, sauf appel à la fonction corrigée)
             const form = document.getElementById('inscriptionForm');
             const messageDiv = document.getElementById('message');
             const formLoader = document.getElementById('formLoader');
@@ -714,10 +711,8 @@
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
 
-                // Afficher le loader
                 formLoader.style.display = 'block';
-                
-                // Récupérer les valeurs du formulaire
+
                 const nom = document.getElementById('nom').value.trim();
                 const prenom = document.getElementById('prenom').value.trim();
                 const email = document.getElementById('email').value.trim();
@@ -725,7 +720,6 @@
                 const age = document.getElementById('age').value;
                 const equipe = document.getElementById('equipe').value;
 
-                // Validation
                 if (!nom || !prenom || !email || !telephone || !age || !equipe) {
                     messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez remplir tous les champs.</p>';
                     formLoader.style.display = 'none';
@@ -744,19 +738,20 @@
                     return;
                 }
 
-                // Préparer les données du joueur
                 const joueur = {
                     nom: nom,
                     prenom: prenom,
                     email: email,
                     telephone: telephone,
                     age: age,
-                    dateInscription: serverTimestamp() // Utiliser serverTimestamp()
+                    dateInscription: serverTimestamp()
                 };
 
-                // Ajouter le joueur à Firebase (la vérification du nombre de joueurs se fait à l'intérieur)
+              //Appel de la fonction ajouterJoueurFirebase
                 ajouterJoueurFirebase(equipe, joueur);
             });
+
+
 
             // Bouton pour réinitialiser les équipes (avec mot de passe)
             const footer = document.querySelector('footer');
@@ -770,11 +765,9 @@
                 const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
                 if (password === 'ditib25five') {
                     if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
-                        // Supprimer toutes les données des équipes dans Firebase
-                       remove(ref(database, 'equipes')) // Utiliser remove()
+                        remove(ref(database, 'equipes'))
                             .then(() => {
                                 alert('Toutes les équipes ont été réinitialisées.');
-                                // Recharger la page
                                 window.location.reload();
                             })
                             .catch((error) => {
