@@ -135,40 +135,33 @@
             background: linear-gradient(to right, transparent, #00aaff, transparent);
         }
 
+        /* Styles optimisés pour la roadmap */
         .roadmap-container {
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            padding: 1rem 0;
+            padding: 1rem;
+            overflow-x: hidden;
         }
 
         .match-group {
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 80px;
-        }
-
-        .match-group.perdant {
-            flex-direction: column;
             width: 100%;
-            margin-top: 20px;
-            border-top: 1px dashed #444;
-            padding-top: 20px;
+            margin: 10px 0;
         }
 
         .match {
             border: 1px solid #00aaff;
             padding: 0.7rem;
-            margin-bottom: 0.5rem;
+            margin: 5px;
             border-radius: 5px;
-            min-width: 80px;
+            width: 140px;
+            text-align: center;
             background-color: #222;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             transition: all 0.3s;
@@ -179,12 +172,25 @@
             box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3);
         }
 
-        .arrow {
-            font-size: 1.3rem;
-            color: #00aaff;
-            margin: 0 5px;
+        .bracket-row {
             display: flex;
+            flex-direction: column;
             align-items: center;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .arrow {
+            color: #00aaff;
+            font-size: 1.3rem;
+            margin: 5px;
+        }
+
+        .match-group.perdant {
+            margin-top: 20px;
+            border-top: 1px dashed #444;
+            padding-top: 20px;
+            width: 100%;
         }
 
         .inscription-container {
@@ -345,9 +351,9 @@
                 font-size: 1.1rem;
             }
 
-            .match {
-                width: auto;
-                padding: 1rem;
+            .bracket-row {
+                flex-direction: row;
+                justify-content: center;
             }
 
             .inscription-container {
@@ -398,36 +404,46 @@
         <section id="roadmap">
             <h2>Roadmap des Matchs</h2>
             <div class="roadmap-container">
-                <div class="match-group">
-                    <div class="match">Équipe 1</div>
-                    <div class="match">Équipe 2</div>
+                <!-- Premier tour - demi-finales -->
+                <div class="bracket-row">
+                    <div class="match-group">
+                        <div class="match">Équipe 1</div>
+                        <div class="match">Équipe 2</div>
+                    </div>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="match-group">
+                        <div class="match">Vainqueur 1</div>
+                    </div>
                 </div>
+                
+                <!-- Finale -->
                 <div class="arrow">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-                <div class="match-group">
-                    <div class="match">Vainqueur 1</div>
-                </div>
-                <div class="arrow">
-                    <i class="fas fa-arrow-right"></i>
+                    <i class="fas fa-arrow-down"></i>
                 </div>
                 <div class="match-group">
                     <div class="match">Finale</div>
                 </div>
                 <div class="arrow">
-                    <i class="fas fa-arrow-left"></i>
-                </div>
-                <div class="match-group">
-                    <div class="match">Vainqueur 2</div>
-                </div>
-                <div class="arrow">
-                    <i class="fas fa-arrow-left"></i>
-                </div>
-                <div class="match-group">
-                    <div class="match">Équipe 3</div>
-                    <div class="match">Équipe 4</div>
+                    <i class="fas fa-arrow-up"></i>
                 </div>
                 
+                <!-- Deuxième demi-finale -->
+                <div class="bracket-row">
+                    <div class="match-group">
+                        <div class="match">Vainqueur 2</div>
+                    </div>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="match-group">
+                        <div class="match">Équipe 3</div>
+                        <div class="match">Équipe 4</div>
+                    </div>
+                </div>
+                
+                <!-- Match de classement -->
                 <div class="match-group perdant">
                     <div class="match">Match de classement</div>
                     <p>Perdant 1 vs Perdant 2</p>
