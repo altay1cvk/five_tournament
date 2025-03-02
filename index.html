@@ -712,25 +712,29 @@
                 }, 800); // Délai simulé de 800ms
             });
 
-            // Bouton pour réinitialiser les équipes (pour les tests)
-            // Vous pouvez l'ajouter au footer pour les tests et le supprimer ensuite
+            // Bouton pour réinitialiser les équipes (avec mot de passe)
             const footer = document.querySelector('footer');
             const resetButton = document.createElement('button');
             resetButton.textContent = 'Réinitialiser les équipes (Admin)';
             resetButton.className = 'cta-button';
             resetButton.style.marginTop = '20px';
             resetButton.style.backgroundColor = '#ff3c3c';
-            
+
             resetButton.addEventListener('click', function() {
-                if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
-                    for (let i = 1; i <= 4; i++) {
-                        localStorage.removeItem(`equipe${i}-membres`);
+                const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
+                if (password === 'ditib25five') {
+                    if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
+                        for (let i = 1; i <= 4; i++) {
+                            localStorage.removeItem(`equipe${i}-membres`);
+                        }
+                        loadSavedPlayers(); // Recharger les listes vides
+                        alert('Toutes les équipes ont été réinitialisées.');
                     }
-                    loadSavedPlayers(); // Recharger les listes vides
-                    alert('Toutes les équipes ont été réinitialisées.');
+                } else if (password !== null) {
+                    alert('Mot de passe incorrect.');
                 }
             });
-            
+
             footer.appendChild(resetButton);
         });
     </script>
