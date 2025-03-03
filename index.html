@@ -7,377 +7,58 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Réinitialisation (reset) des styles par défaut */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Empêche le surlignage bleu au toucher sur iOS */
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #111;
-            color: #fff;
-            line-height: 1.6;
-            padding-bottom: 80px; /* Espace pour la barre de navigation */
-        }
-
-        /* Barre de navigation fixe en bas */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #222;
-            border-top: 1px solid #444;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0.85rem 0;
-            z-index: 100; /* Pour qu'elle soit au-dessus du contenu */
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .bottom-nav a {
-            color: #aaa;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-            padding: 0.5rem;
-            width: 25%; /* Répartit les éléments équitablement */
-            text-align: center;
-        }
-
-        .bottom-nav a i {
-            font-size: 1.3rem;
-            margin-bottom: 0.2rem;
-        }
-
-        .bottom-nav a.active {
-            color: #00aaff;
-        }
-
-        /* Section "hero" (accroche principale) */
-        #hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/800x600/?soccer') center/cover no-repeat;
-            height: 60vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 1rem;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 1.5rem;
-            border-radius: 10px;
-            backdrop-filter: blur(5px); /* Effet de flou (si supporté) */
-            -webkit-backdrop-filter: blur(5px); /* Pour Safari */
-        }
-
-        .hero-content h2 {
-            font-size: 2.2rem;
-            margin-bottom: 0.8rem;
-            text-shadow: 0 0 10px rgba(0, 170, 255, 0.8); /* Ombre lumineuse */
-        }
-
-        .hero-content p {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-color: #00aaff;
-            color: #fff;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        .cta-button:hover, .cta-button:active {
-            background-color: #0077cc;
-            transform: translateY(-2px); /* Léger effet de soulèvement au survol */
-        }
-
-        /* Section Information */
-        section {
-            margin-top: 2rem;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        section h2 {
-            margin-bottom: 1.5rem;
-            position: relative;
-            display: inline-block; /* Pour que le soulignement soit de la largeur du texte */
-            padding-bottom: 0.5rem; /* Espace pour le soulignement */
-        }
-
-        section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 25%;
-            right: 25%;
-            height: 3px;
-            background: linear-gradient(to right, transparent, #00aaff, transparent); /* Soulignement dégradé */
-        }
-
-        /* Styles pour la roadmap */
-        .roadmap-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-
-        .match-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%; /* Occupe toute la largeur disponible */
-            margin: 10px 0;
-        }
-
-        .match {
-            border: 1px solid #00aaff;
-            padding: 0.7rem;
-            margin: 5px;
-            border-radius: 5px;
-            width: 140px; /* Largeur fixe pour les matchs */
-            text-align: center;
-            background-color: #222;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
-        }
-
-        .match:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3); /* Ombre plus prononcée au survol */
-        }
-
-        .bracket-row {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            margin: 10px 0;
-        }
-
-        .arrow {
-            color: #00aaff;
-            font-size: 1.3rem;
-            margin: 5px;
-        }
-
-        .match-group.perdant {
-            margin-top: 20px;
-            border-top: 1px dashed #444; /* Ligne pointillée pour séparer les perdants */
-            padding-top: 20px;
-            width: 100%;
-        }
-
-          .inscription-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .equipe {
-            margin: 0.5rem 0;
-            border: 1px solid #444;
-            padding: 1rem;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            background-color: #222;
-            transition: transform 0.3s;
-        }
-
-        .equipe:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .equipe p {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-            color: #00aaff;
-        }
-
-        .membres {
-            list-style: none;
-            padding-left: 0;
-            margin-top: 0.5rem;
-        }
-
-        .membres li {
-            margin-bottom: 0.5rem;
-            min-height: 1.2em;
-            padding: 0.5rem;
-            border-radius: 4px;
-            background-color: #333;
-        }
-
-        /* Style pour les pages d'inscription */
-        .form-container {
-            max-width: 95%;
-            margin: 1rem auto;
-            padding: 1.5rem;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .form-container h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.3rem;
-            font-size: 0.95rem;
-            color: #ccc;
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group input[type="number"],
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #444;
-            background-color: #333;
-            color: #fff;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #00aaff;
-            box-shadow: 0 0 0 2px rgba(0, 170, 255, 0.3);
-        }
-
-        #message {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-          footer {
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: 3rem;
-            border-top: 1px solid #444;
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-
-        /* Loader pour le feedback visuel */
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #00aaff;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-            display: none; /* Caché par défaut */
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Media query pour les écrans plus grands */
+        * {  margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #111; color: #fff; line-height: 1.6; padding-bottom: 80px;}
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #222; border-top: 1px solid #444; display: flex; justify-content: space-around; align-items: center; padding: 0.85rem 0; z-index: 100; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3); }
+        .bottom-nav a { color: #aaa; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 0.85rem; transition: color 0.2s; padding: 0.5rem; width: 25%; text-align: center; }
+        .bottom-nav a i { font-size: 1.3rem; margin-bottom: 0.2rem; }
+        .bottom-nav a.active { color: #00aaff; }
+        #hero { background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/800x600/?soccer') center/cover no-repeat; height: 60vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 1rem; }
+        .hero-content { max-width: 800px; background-color: rgba(0, 0, 0, 0.7); padding: 1.5rem; border-radius: 10px; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+        .hero-content h2 { font-size: 2.2rem; margin-bottom: 0.8rem; text-shadow: 0 0 10px rgba(0, 170, 255, 0.8); }
+        .hero-content p { font-size: 1.1rem; margin-bottom: 1rem; }
+        .cta-button { display: inline-block; background-color: #00aaff; color: #fff; padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; transition: all 0.3s; font-size: 1rem; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); }
+        .cta-button:hover, .cta-button:active { background-color: #0077cc; transform: translateY(-2px); }
+        section { margin-top: 2rem; padding: 1rem; text-align: center; }
+        section h2 { margin-bottom: 1.5rem; position: relative; display: inline-block; padding-bottom: 0.5rem; }
+        section h2::after { content: ''; position: absolute; bottom: 0; left: 25%; right: 25%; height: 3px; background: linear-gradient(to right, transparent, #00aaff, transparent); }
+        .roadmap-container { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; padding: 1rem; }
+        .match-group { display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10px 0; }
+        .match { border: 1px solid #00aaff; padding: 0.7rem; margin: 5px; border-radius: 5px; width: 140px; text-align: center; background-color: #222; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: all 0.3s; }
+        .match:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3); }
+        .bracket-row { display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10px 0; }
+        .arrow { color: #00aaff; font-size: 1.3rem; margin: 5px; }
+        .match-group.perdant { margin-top: 20px; border-top: 1px dashed #444; padding-top: 20px; width: 100%; }
+        .inscription-container { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .equipe { margin: 0.5rem 0; border: 1px solid #444; padding: 1rem; border-radius: 8px; width: 90%; max-width: 500px; background-color: #222; transition: transform 0.3s; }
+        .equipe:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        .equipe p { font-weight: bold; margin-bottom: 0.5rem; font-size: 1.1rem; color: #00aaff; }
+        .membres { list-style: none; padding-left: 0; margin-top: 0.5rem; }
+        .membres li { margin-bottom: 0.5rem; min-height: 1.2em; padding: 0.5rem; border-radius: 4px; background-color: #333; }
+        .form-container { max-width: 95%; margin: 1rem auto; padding: 1.5rem; background-color: rgba(0, 0, 0, 0.7); border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        .form-container h2 { font-size: 1.8rem; margin-bottom: 1rem; text-align: center; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.3rem; font-size: 0.95rem; color: #ccc; }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group input[type="number"], .form-group select { width: 100%; padding: 0.8rem; border: 1px solid #444; background-color: #333; color: #fff; border-radius: 5px; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #00aaff; box-shadow: 0 0 0 2px rgba(0, 170, 255, 0.3); }
+        #message { margin-top: 1rem; padding: 0.8rem; border-radius: 5px; font-weight: bold; }
+        footer { text-align: center; padding: 1.5rem; margin-top: 3rem; border-top: 1px solid #444; font-size: 0.9rem; color: #aaa; }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #00aaff; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 0 auto; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @media (min-width: 768px) {
-            body {
-                padding-bottom: 60px; /* Moins d'espace pour la barre de navigation sur les grands écrans */
-            }
-
-            #hero {
-                padding: 2rem;
-                height: 70vh;
-            }
-
-            .hero-content {
-                padding: 2.5rem;
-            }
-
-            .hero-content h2 {
-                font-size: 3rem;
-            }
-
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-
-            .cta-button {
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
-            }
-              .bracket-row {
-                flex-direction: row; /* Disposition horizontale sur les grands écrans */
-                justify-content: center; /* Centrage horizontal */
-            }
-
-            .inscription-container{
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-            .equipe {
-                width: 45%;
-            }
-
-            .form-container {
-                max-width: 600px;
-                padding: 2rem;
-            }
-
+            body { padding-bottom: 60px; }
+            #hero { padding: 2rem; height: 70vh; }
+            .hero-content { padding: 2.5rem; }
+            .hero-content h2 { font-size: 3rem; }
+            .hero-content p { font-size: 1.2rem; }
+            .cta-button { padding: 1rem 2rem; font-size: 1.1rem; }
+            .bracket-row { flex-direction: row; justify-content: center; }
+            .inscription-container{ flex-direction: row; flex-wrap: wrap; }
+            .equipe { width: 45%; }
+            .form-container { max-width: 600px; padding: 2rem; }
         }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        section {
-            animation: fadeIn 0.5s ease-out; /* Animation d'apparition */
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        section { animation: fadeIn 0.5s ease-out; }
     </style>
 </head>
 <body>
@@ -399,53 +80,33 @@
         </section>
 
         <section id="roadmap">
-          <h2>Roadmap des Matchs</h2>
-          <div class="roadmap-container">
-              <!-- Premier tour - demi-finales -->
-              <div class="bracket-row">
-                  <div class="match-group">
-                      <div class="match">Équipe 1</div>
-                      <div class="match">Équipe 2</div>
-                  </div>
-                  <div class="arrow">
-                      <i class="fas fa-arrow-down"></i>
-                  </div>
-                  <div class="match-group">
-                      <div class="match">Vainqueur 1</div>
-                  </div>
-              </div>
-
-              <!-- Finale -->
-              <div class="arrow">
-                  <i class="fas fa-arrow-down"></i>
-              </div>
-              <div class="match-group">
-                  <div class="match">Finale</div>
-              </div>
-              <div class="arrow">
-                  <i class="fas fa-arrow-up"></i>
-              </div>
-
-              <!-- Deuxième demi-finale -->
-              <div class="bracket-row">
-                  <div class="match-group">
-                      <div class="match">Vainqueur 2</div>
-                  </div>
-                  <div class="arrow">
-                      <i class="fas fa-arrow-up"></i>
-                  </div>
-                  <div class="match-group">
-                      <div class="match">Équipe 3</div>
-                      <div class="match">Équipe 4</div>
-                  </div>
-              </div>
-
-              <!-- Match de classement -->
-              <div class="match-group perdant">
-                  <div class="match">Match de classement</div>
-                  <p>Perdant 1 vs Perdant 2</p>
-              </div>
-          </div>
+            <h2>Roadmap des Matchs</h2>
+            <div class="roadmap-container">
+                <!-- ... (Le contenu de la roadmap reste inchangé) ... -->
+                <div class="bracket-row">
+                    <div class="match-group">
+                        <div class="match">Équipe 1</div>
+                        <div class="match">Équipe 2</div>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-down"></i></div>
+                    <div class="match-group"><div class="match">Vainqueur 1</div></div>
+                </div>
+                <div class="arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="match-group"><div class="match">Finale</div></div>
+                <div class="arrow"><i class="fas fa-arrow-up"></i></div>
+                <div class="bracket-row">
+                    <div class="match-group"><div class="match">Vainqueur 2</div></div>
+                    <div class="arrow"><i class="fas fa-arrow-up"></i></div>
+                    <div class="match-group">
+                        <div class="match">Équipe 3</div>
+                        <div class="match">Équipe 4</div>
+                    </div>
+                </div>
+                <div class="match-group perdant">
+                    <div class="match">Match de classement</div>
+                    <p>Perdant 1 vs Perdant 2</p>
+                </div>
+            </div>
         </section>
 
         <section id="inscription-section">
@@ -453,7 +114,8 @@
             <div class="form-container">
                 <h2>Inscription au tournoi</h2>
                 <p>Prix : 6€ (5€ + 1€ sadaqa)</p>
-                <form id="inscriptionForm">
+                <!-- Formulaire (maintenant avec Formspree ET Firebase) -->
+                <form action="https://formspree.io/f/mkgorlln" method="POST" id="inscriptionForm">
                     <div class="form-group">
                         <label for="nom">Nom :</label>
                         <input type="text" id="nom" name="nom" required autocomplete="family-name">
@@ -465,6 +127,7 @@
                     <div class="form-group">
                         <label for="email">Email :</label>
                         <input type="email" id="email" name="email" required autocomplete="email">
+                        <input type="hidden" name="_replyto" value="">  <!-- Champ _replyto pour Formspree -->
                     </div>
                     <div class="form-group">
                         <label for="telephone">Téléphone :</label>
@@ -478,14 +141,16 @@
                         <label for="equipe">Équipe:</label>
                         <select id="equipe" name="equipe" required>
                             <option value="">-- Sélectionnez une équipe --</option>
-                            <option value="equipe1-membres">Équipe 1</option>
+                            <option value="equipe1-membres">Équipe 1</option>  <!-- Les valeurs correspondent aux IDs des listes -->
                             <option value="equipe2-membres">Équipe 2</option>
                             <option value="equipe3-membres">Équipe 3</option>
                             <option value="equipe4-membres">Équipe 4</option>
                         </select>
                     </div>
+                    <input type="hidden" name="_subject" value="Nouvelle inscription au tournoi Five Ramadan!"> <!-- Pour Formspree -->
+                    <input type="text" name="_gotcha" style="display:none">  <!-- Honeypot pour Formspree -->
                     <button type="submit" class="cta-button">Confirmer l'inscription</button>
-                    <div class="loader" id="formLoader"></div>
+                    <div class="loader" id="formLoader" style="display: none;"></div>
                 </form>
                 <div id="message"></div>
             </div>
@@ -496,30 +161,19 @@
             <div class="inscription-container">
                 <div class="equipe">
                     <p>Équipe 1</p>
-                    <ul class="membres" id="equipe1-membres">
-                        <!-- Joueurs ajoutés dynamiquement -->
-                    </ul>
+                    <ul class="membres" id="equipe1-membres"></ul>
                 </div>
-
                 <div class="equipe">
                     <p>Équipe 2</p>
-                    <ul class="membres" id="equipe2-membres">
-                        <!-- Joueurs ajoutés dynamiquement -->
-                    </ul>
+                    <ul class="membres" id="equipe2-membres"></ul>
                 </div>
-
                 <div class="equipe">
                     <p>Équipe 3</p>
-                    <ul class="membres" id="equipe3-membres">
-                        <!-- Joueurs ajoutés dynamiquement -->
-                    </ul>
+                    <ul class="membres" id="equipe3-membres"></ul>
                 </div>
-
                 <div class="equipe">
                     <p>Équipe 4</p>
-                    <ul class="membres" id="equipe4-membres">
-                        <!-- Joueurs ajoutés dynamiquement -->
-                    </ul>
+                    <ul class="membres" id="equipe4-membres"></ul>
                 </div>
             </div>
         </section>
@@ -530,44 +184,126 @@
     </footer>
 
     <script type="module">
-        // Importations Firebase (v10 syntaxe modulaire)
+        // --- Importations Firebase ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";  // Optionnel
         import { getDatabase, ref, set, onValue, push, serverTimestamp, remove, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
-
-        // Configuration Firebase (REMPLACEZ par VOS valeurs)
+        // --- Configuration Firebase (REMPLACEZ PAR VOS VALEURS) ---
         const firebaseConfig = {
-            apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
-            authDomain: "tournoifoot-e233b.firebaseapp.com",
-            projectId: "tournoifoot-e233b",
-            storageBucket: "tournoifoot-e233b.firebasestorage.app",
-            messagingSenderId: "915558317701",
-            appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",
-            measurementId: "G-N5NWTN317Y" // Optionnel
+          apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
+          authDomain: "tournoifoot-e233b.firebaseapp.com",
+          projectId: "tournoifoot-e233b",
+          storageBucket: "tournoifoot-e233b.firebasestorage.app",
+          messagingSenderId: "915558317701",
+          appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",
+          measurementId: "G-N5NWTN317Y"
         };
 
-        // Initialisation de Firebase
+        // --- Initialisation de Firebase ---
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app); // Optionnel (pour les statistiques)
+        const analytics = getAnalytics(app); // Optionnel
         const database = getDatabase(app);
 
-
-        // Écouteur d'événements DOMContentLoaded (s'exécute lorsque le HTML est chargé)
+        // --- Code JavaScript ---
         document.addEventListener('DOMContentLoaded', function() {
 
-            // --- Navigation ---
-            const navItems = document.querySelectorAll('.bottom-nav a');
-            const sections = document.querySelectorAll('section');
+            // --- Fonction : Chargement des joueurs depuis Firebase ---
+            function loadPlayersFromFirebase() {
+                for (let i = 1; i <= 4; i++) {
+                    const equipeId = `equipe${i}-membres`;
+                    const playersList = document.getElementById(equipeId);
+                    const playersRef = ref(database, 'equipes/' + equipeId);
 
-            // Met à jour l'élément de navigation actif en fonction du scroll
+                    onValue(playersRef, (snapshot) => {
+                        const players = snapshot.val() || {};
+                        playersList.innerHTML = '';
+
+                        if (Object.keys(players).length === 0) {
+                            playersList.innerHTML = '<li style="color: #999; font-style: italic;">Aucun joueur inscrit</li>';
+                            return;
+                        }
+
+                        for (const playerId in players) {
+                            const player = players[playerId];
+                            const li = document.createElement('li');
+                            li.textContent = `${player.prenom} ${player.nom}`;
+                            li.dataset.email = player.email;
+                            li.dataset.tel = player.telephone;
+                            li.dataset.age = player.age;
+                            playersList.appendChild(li);
+                            li.style.animation = 'fadeIn 0.5s';
+                        }
+                    });
+                }
+            }
+
+            // --- Fonction : Ajout d'un joueur à Firebase (SANS envoi d'e-mail) ---
+            async function ajouterJoueurFirebase(equipeId, joueur) {
+                const messageDiv = document.getElementById('message');
+
+                try {
+                    // Vérification du nombre de joueurs DANS L'ÉQUIPE SÉLECTIONNÉE (comme avant)
+                    const equipeRef = ref(database, 'equipes/' + equipeId);
+                    const equipeSnapshot = await get(equipeRef);
+                    const equipePlayers = equipeSnapshot.val() || {};
+                    const equipeCount = Object.keys(equipePlayers).length;
+
+                    if (equipeCount >= 5) {
+                        messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Cette équipe est déjà complète (5 joueurs maximum).</p>';
+                        document.getElementById('formLoader').style.display = 'none';
+                        return;
+                    }
+
+                    // --- Vérification des doublons DANS TOUTES LES ÉQUIPES (NOUVEAU CODE) ---
+                    const allTeamsRef = ref(database, 'equipes'); // Référence à TOUTES les équipes
+                    const allTeamsSnapshot = await get(allTeamsRef);
+                    const allTeams = allTeamsSnapshot.val() || {};
+
+                    for (const teamId in allTeams) {
+                        const teamPlayers = allTeams[teamId];
+                        for (const playerId in teamPlayers) {
+                            const existingPlayer = teamPlayers[playerId];
+                            if (existingPlayer.nom.toLowerCase() === joueur.nom.toLowerCase() &&
+                                existingPlayer.prenom.toLowerCase() === joueur.prenom.toLowerCase()) {
+
+                                messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Un joueur avec ce nom et prénom est déjà inscrit.</p>';
+                                document.getElementById('formLoader').style.display = 'none';
+                                return; // Arrête si doublon trouvé
+                            }
+                        }
+                    }
+                    // --- Fin de la vérification des doublons ---
+
+                    // (Le reste de la fonction : ajout à Firebase, message de succès, etc.)
+                    const newPlayerRef = push(equipeRef); // Ajoute à l'équipe sélectionnée
+                    await set(newPlayerRef, joueur);
+
+                    messageDiv.innerHTML = `<p style="color: #4CAF50; background-color: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 5px;">Inscription réussie pour ${joueur.prenom} ${joueur.nom} dans l'équipe ${equipeId.replace('-membres', '').replace('equipe', 'Équipe ')} !</p>`;
+                    document.getElementById('inscriptionForm').reset();
+                    setTimeout(() => {
+                        document.getElementById('liste-inscrits').scrollIntoView({ behavior: 'smooth' });
+                    }, 1000);
+
+                }   catch (error) {
+                        console.error("Erreur lors de l'ajout/vérification:", error);
+                        messageDiv.innerHTML = `<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Une erreur est survenue: ${error.message}</p>`;
+                    } finally {
+                        document.getElementById('formLoader').style.display = 'none';
+                    }
+                }
+
+            // --- Navigation et Smooth Scroll (le code reste inchangé) ---
+            const navItems = document.querySelectorAll('.bottom-nav a');
+            const sections = document.querySelectorAll('main > section');
+
             function updateActiveNavItem() {
                 let currentSectionId = '';
                 let minDistance = Infinity;
 
                 sections.forEach(section => {
                     const rect = section.getBoundingClientRect();
-                    const distance = Math.abs(rect.top); // Distance par rapport au haut de la fenêtre
+                    const distance = Math.abs(rect.top);
 
                     if (distance < minDistance) {
                         minDistance = distance;
@@ -583,164 +319,103 @@
                 });
             }
 
-            // Appelle updateActiveNavItem au chargement et à chaque scroll
             updateActiveNavItem();
             window.addEventListener('scroll', updateActiveNavItem);
 
-
-            // --- Smooth Scroll ---
             navItems.forEach(item => {
                 item.addEventListener('click', function(event) {
-                    event.preventDefault(); // Empêche le comportement par défaut du lien
+                    event.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
 
                     if (targetElement) {
                         const navHeight = document.querySelector('.bottom-nav').offsetHeight;
-                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight+10;
-
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth' // Défilement doux
-                        });
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight + 10;
+                        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                     }
                 });
             });
-
-
-            // --- Chargement des joueurs depuis Firebase ---
-            function loadPlayersFromFirebase() {
-                for (let i = 1; i <= 4; i++) {
-                    const equipeId = `equipe${i}-membres`;
-                    const playersList = document.getElementById(equipeId);
-                    const playersRef = ref(database, 'equipes/' + equipeId);
-
-                    // Écoute les changements et met à jour la liste
-                    onValue(playersRef, (snapshot) => {
-                        const players = snapshot.val() || {};  // Objet vide si aucune donnée
-                        playersList.innerHTML = ''; // Efface la liste existante
-
-                        // Affiche "Aucun joueur inscrit" si l'équipe est vide
-                        if (Object.keys(players).length === 0) {
-                            playersList.innerHTML = '<li style="color: #999; font-style: italic;">Aucun joueur inscrit</li>';
-                            return;
-                        }
-
-                        // Ajoute chaque joueur à la liste
-                        for (const playerId in players) {
-                            const player = players[playerId];
-                            const li = document.createElement('li');
-                            li.textContent = `${player.prenom} ${player.nom}`;
-                            li.dataset.email = player.email;    // Stocke les données (facultatif)
-                            li.dataset.tel = player.telephone;
-                            li.dataset.age = player.age;
-                            playersList.appendChild(li);
-                            li.style.animation = 'fadeIn 0.5s'; // Animation d'apparition
-                        }
-                    });
-                }
-            }
-
-
-            // --- Ajout d'un joueur à Firebase (fonction asynchrone) ---
-            async function ajouterJoueurFirebase(equipeId, joueur) {
-                const equipeRef = ref(database, 'equipes/' + equipeId);
-                const messageDiv = document.getElementById('message'); // Élément pour afficher les messages
-
-                try {
-                    // 1. Vérifie le nombre de joueurs *AVANT* d'ajouter
-                    const snapshot = await get(equipeRef);  // Récupère les données actuelles
-                    const players = snapshot.val() || {};    // Objet vide si aucune donnée
-                    const count = Object.keys(players).length; // Nombre de joueurs
-
-                    if (count >= 5) {
-                        messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Cette équipe est déjà complète (5 joueurs maximum).</p>';
-                        document.getElementById('formLoader').style.display = 'none'; // Cache le loader
-                        return; // Arrête l'exécution de la fonction
-                    }
-
-                    // 2. Ajoute le joueur si l'équipe n'est pas complète
-                    const newPlayerRef = push(equipeRef); // Crée une référence unique pour le nouveau joueur
-                    await set(newPlayerRef, joueur);     // Ajoute les données du joueur
-
-                    messageDiv.innerHTML = `<p style="color: #4CAF50; background-color: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 5px;">Inscription réussie pour ${joueur.prenom} ${joueur.nom} dans l'équipe ${equipeId.replace('-membres', '').replace('equipe', 'Équipe ')} !</p>`;
-                    document.getElementById('inscriptionForm').reset(); // Réinitialise le formulaire
-
-                      // Scroll vers la liste après 1 seconde
-                    setTimeout(() => {
-                        document.getElementById('liste-inscrits').scrollIntoView({ behavior: 'smooth' });
-                    }, 1000);
-
-
-
-                } catch (error) {
-                    console.error("Erreur lors de l'ajout ou de la vérification:", error);
-                    messageDiv.innerHTML = `<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Une erreur est survenue: ${error.message}</p>`; // Affiche l'erreur
-
-                } finally {
-                    document.getElementById('formLoader').style.display = 'none'; // Cache le loader dans tous les cas
-                }
-            }
-
+            // --- Fin de la section Navigation/Smooth Scroll ---
 
             // --- Chargement initial des joueurs ---
             loadPlayersFromFirebase();
 
-
-            // --- Gestion du formulaire d'inscription ---
+            // --- Gestion de la soumission du formulaire (Formspree + Firebase) ---
             const form = document.getElementById('inscriptionForm');
-            const messageDiv = document.getElementById('message'); // Élément pour afficher les messages
-            const formLoader = document.getElementById('formLoader'); // Le loader
+            const messageDiv = document.getElementById('message');
+            const formLoader = document.getElementById('formLoader');
 
-            form.addEventListener('submit', function(event) {
-                event.preventDefault(); // Empêche la soumission par défaut du formulaire
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    // event.preventDefault(); // On n'empêche PAS la soumission par défaut (Formspree)
+                    formLoader.style.display = 'block';
 
-                formLoader.style.display = 'block'; // Affiche le loader
+                    // 1. Récupération des données du formulaire
+                    const nom = document.getElementById('nom').value.trim();
+                    const prenom = document.getElementById('prenom').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const telephone = document.getElementById('telephone').value.trim();
+                    const age = document.getElementById('age').value;
+                    const equipe = document.getElementById('equipe').value;
 
-                // Récupère les valeurs des champs (trim() supprime les espaces inutiles)
-                const nom = document.getElementById('nom').value.trim();
-                const prenom = document.getElementById('prenom').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const telephone = document.getElementById('telephone').value.trim();
-                const age = document.getElementById('age').value;
-                const equipe = document.getElementById('equipe').value;
+                    // 2. Validation des données (côté client)
+                    if (!nom || !prenom || !email || !telephone || !age || !equipe) {
+                        messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez remplir tous les champs.</p>';
+                        formLoader.style.display = 'none';
+                        return;
+                    }
+                    if (!/^[0-9]{10}$/.test(telephone)) {
+                        messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez rentrer un numéro de téléphone valide (10 chiffres).</p>';
+                        formLoader.style.display = 'none';
+                        return;
+                    }
+                    if (isNaN(age) || age < 1 || age > 120) {
+                        messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">L\'âge doit être un nombre compris entre 1 et 120.</p>';
+                        formLoader.style.display = 'none';
+                        return;
+                    }
 
-                // Validation des données (vérifie que les champs sont remplis)
-                if (!nom || !prenom || !email || !telephone || !age || !equipe) {
-                    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez remplir tous les champs.</p>';
-                    formLoader.style.display = 'none'; // Cache le loader
-                    return; // Arrête l'exécution
-                }
+                    // 3. Création de l'objet joueur
+                    const joueur = {
+                        nom: nom,
+                        prenom: prenom,
+                        email: email,
+                        telephone: telephone,
+                        age: age,
+                        dateInscription: serverTimestamp() // Timestamp pour Firebase
+                    };
 
-                // Validation du numéro de téléphone (10 chiffres)
-                if (!/^[0-9]{10}$/.test(telephone)) {
-                    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez rentrer un numéro de téléphone valide (10 chiffres).</p>';
-                    formLoader.style.display = 'none';
-                    return;
-                }
+                    // 4. Ajout du joueur à Firebase (SANS envoyer d'e-mail)
+                    ajouterJoueurFirebase(equipe, joueur)
+                    .then(() => {
+                        // Succès de l'ajout à Firebase (mais pas nécessairement de Formspree)
+                        // Vous pouvez choisir d'afficher un message de succès ici, ou attendre la réponse de Formspree.
+                    })
+                    .catch(error => {
+                        // Gestion des erreurs Firebase (affichage du message, masquage du loader, etc.)
+                        console.error("Erreur Firebase:", error);
+                         messageDiv.innerHTML = `<p style="color: #ff3c3c;>Erreur Firebase: ${error.message}</p>`;
 
-                // Validation de l'âge (entre 1 et 120)
-                if (isNaN(age) || age < 1 || age > 120) {
-                    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">L\'âge doit être un nombre compris entre 1 et 120.</p>';
-                    formLoader.style.display = 'none';
-                    return;
-                }
+                    }).finally(() => {
+                         formLoader.style.display = 'none';
+                    });
 
-                // Crée l'objet joueur
-                const joueur = {
-                    nom: nom,
-                    prenom: prenom,
-                    email: email,
-                    telephone: telephone,
-                    age: age,
-                    dateInscription: serverTimestamp() // Ajoute un timestamp
-                };
-
-                // Appelle la fonction pour ajouter le joueur à Firebase
-                ajouterJoueurFirebase(equipe, joueur);
-            });
+                    // 5. Remplir le champ _replyto pour Formspree
+                    const emailInput = document.getElementById('email');
+                     if (emailInput) {
+                         document.querySelector('input[name="_replyto"]').value = emailInput.value;
+                     }
 
 
+                    // 6. La soumission à Formspree se fait AUTOMATIQUEMENT grâce à l'attribut `action` du formulaire.
+                    //    On n'a pas besoin de fetch() ou de code supplémentaire ici.
+
+                    // Vous *pourriez* utiliser fetch() pour intercepter la réponse de Formspree et afficher
+                    // un message de succès/erreur *spécifique* à Formspree, mais ce n'est pas strictement nécessaire.
+                    // Si vous voulez le faire, ajoutez le code fetch() ici, mais attention à la gestion des erreurs
+                    // (vous aurez à la fois les erreurs Firebase et les erreurs Formspree à gérer).
+                });
+            }
 
             // --- Bouton de réinitialisation (pour les administrateurs) ---
             const footer = document.querySelector('footer');
@@ -748,29 +423,30 @@
             resetButton.textContent = 'Réinitialiser les équipes (Admin)';
             resetButton.className = 'cta-button';
             resetButton.style.marginTop = '20px';
-            resetButton.style.backgroundColor = '#ff3c3c'; // Couleur rouge
+            resetButton.style.backgroundColor = '#ff3c3c';
 
-            resetButton.addEventListener('click', function() {
-                const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
-                if (password === 'ditib25five') { // REMPLACEZ par un mot de passe PLUS SÛR
-                    if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
-                        remove(ref(database, 'equipes')) // Supprime toutes les données des équipes
-                            .then(() => {
-                                alert('Toutes les équipes ont été réinitialisées.');
-                                window.location.reload(); // Recharge la page pour refléter les changements
-                            })
-                            .catch((error) => {
-                                console.error("Erreur lors de la réinitialisation:", error);
-                                alert('Une erreur est survenue lors de la réinitialisation.');
-                            });
+            if (footer) {
+                resetButton.addEventListener('click', function() {
+                    const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
+                    if (password === 'ditib25five') { // REMPLACEZ par un mot de passe PLUS SÛR
+                        if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
+                            remove(ref(database, 'equipes'))
+                                .then(() => {
+                                    alert('Toutes les équipes ont été réinitialisées.');
+                                    window.location.reload();
+                                })
+                                .catch((error) => {
+                                    console.error("Erreur lors de la réinitialisation:", error);
+                                    alert('Une erreur est survenue lors de la réinitialisation.');
+                                });
+                        }
+                    } else if (password !== null) {
+                        alert('Mot de passe incorrect.');
                     }
-                } else if (password !== null) { // Vérifie si l'utilisateur a annulé (password est null)
-                    alert('Mot de passe incorrect.');
-                }
-            });
-
-            footer.appendChild(resetButton); // Ajoute le bouton au pied de page
-        });
+                });
+                footer.appendChild(resetButton);
+            }
+        }); // Fin du DOMContentLoaded
     </script>
 </body>
 </html>
