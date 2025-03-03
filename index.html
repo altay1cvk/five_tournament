@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent; /* Empêche le surlignage bleu au toucher sur iOS */
         }
 
         body {
@@ -19,7 +19,7 @@
             background-color: #111;
             color: #fff;
             line-height: 1.6;
-            padding-bottom: 80px; /* Augmenté pour la barre de navigation */
+            padding-bottom: 80px; /* Espace pour la barre de navigation */
         }
 
         /* Barre de navigation fixe en bas */
@@ -34,7 +34,7 @@
             justify-content: space-around;
             align-items: center;
             padding: 0.85rem 0;
-            z-index: 100;
+            z-index: 100; /* Pour qu'elle soit au-dessus du contenu */
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
         }
 
@@ -47,7 +47,7 @@
             font-size: 0.85rem;
             transition: color 0.2s;
             padding: 0.5rem;
-            width: 25%;
+            width: 25%; /* Répartit les éléments équitablement */
             text-align: center;
         }
 
@@ -76,14 +76,14 @@
             background-color: rgba(0, 0, 0, 0.7);
             padding: 1.5rem;
             border-radius: 10px;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px); /* Effet de flou (si supporté) */
+            -webkit-backdrop-filter: blur(5px); /* Pour Safari */
         }
 
         .hero-content h2 {
             font-size: 2.2rem;
             margin-bottom: 0.8rem;
-            text-shadow: 0 0 10px rgba(0, 170, 255, 0.8);
+            text-shadow: 0 0 10px rgba(0, 170, 255, 0.8); /* Ombre lumineuse */
         }
 
         .hero-content p {
@@ -108,7 +108,7 @@
 
         .cta-button:hover, .cta-button:active {
             background-color: #0077cc;
-            transform: translateY(-2px);
+            transform: translateY(-2px); /* Léger effet de soulèvement au survol */
         }
 
         /* Section Information */
@@ -121,8 +121,8 @@
         section h2 {
             margin-bottom: 1.5rem;
             position: relative;
-            display: inline-block;
-            padding-bottom: 0.5rem;
+            display: inline-block; /* Pour que le soulignement soit de la largeur du texte */
+            padding-bottom: 0.5rem; /* Espace pour le soulignement */
         }
 
         section h2::after {
@@ -132,10 +132,10 @@
             left: 25%;
             right: 25%;
             height: 3px;
-            background: linear-gradient(to right, transparent, #00aaff, transparent);
+            background: linear-gradient(to right, transparent, #00aaff, transparent); /* Soulignement dégradé */
         }
 
-        /* Styles optimisés pour la roadmap */
+        /* Styles pour la roadmap */
         .roadmap-container {
             display: flex;
             flex-direction: column;
@@ -144,14 +144,13 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 1rem;
-            overflow-x: hidden;
         }
 
         .match-group {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
+            width: 100%; /* Occupe toute la largeur disponible */
             margin: 10px 0;
         }
 
@@ -160,7 +159,7 @@
             padding: 0.7rem;
             margin: 5px;
             border-radius: 5px;
-            width: 140px;
+            width: 140px; /* Largeur fixe pour les matchs */
             text-align: center;
             background-color: #222;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -169,7 +168,7 @@
 
         .match:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3); /* Ombre plus prononcée au survol */
         }
 
         .bracket-row {
@@ -188,12 +187,12 @@
 
         .match-group.perdant {
             margin-top: 20px;
-            border-top: 1px dashed #444;
+            border-top: 1px dashed #444; /* Ligne pointillée pour séparer les perdants */
             padding-top: 20px;
             width: 100%;
         }
 
-        .inscription-container {
+          .inscription-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -297,7 +296,7 @@
             font-weight: bold;
         }
 
-        footer {
+          footer {
             text-align: center;
             padding: 1.5rem;
             margin-top: 3rem;
@@ -315,7 +314,7 @@
             height: 20px;
             animation: spin 1s linear infinite;
             margin: 0 auto;
-            display: none;
+            display: none; /* Caché par défaut */
         }
 
         @keyframes spin {
@@ -326,7 +325,7 @@
         /* Media query pour les écrans plus grands */
         @media (min-width: 768px) {
             body {
-                padding-bottom: 60px;
+                padding-bottom: 60px; /* Moins d'espace pour la barre de navigation sur les grands écrans */
             }
 
             #hero {
@@ -350,17 +349,15 @@
                 padding: 1rem 2rem;
                 font-size: 1.1rem;
             }
-
-            .bracket-row {
-                flex-direction: row;
-                justify-content: center;
+              .bracket-row {
+                flex-direction: row; /* Disposition horizontale sur les grands écrans */
+                justify-content: center; /* Centrage horizontal */
             }
 
-            .inscription-container {
+            .inscription-container{
                 flex-direction: row;
                 flex-wrap: wrap;
             }
-
             .equipe {
                 width: 45%;
             }
@@ -369,6 +366,7 @@
                 max-width: 600px;
                 padding: 2rem;
             }
+
         }
 
         /* Animations */
@@ -378,7 +376,7 @@
         }
 
         section {
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.5s ease-out; /* Animation d'apparition */
         }
     </style>
 </head>
@@ -401,53 +399,53 @@
         </section>
 
         <section id="roadmap">
-            <h2>Roadmap des Matchs</h2>
-            <div class="roadmap-container">
-                <!-- Premier tour - demi-finales -->
-                <div class="bracket-row">
-                    <div class="match-group">
-                        <div class="match">Équipe 1</div>
-                        <div class="match">Équipe 2</div>
-                    </div>
-                    <div class="arrow">
-                        <i class="fas fa-arrow-down"></i>
-                    </div>
-                    <div class="match-group">
-                        <div class="match">Vainqueur 1</div>
-                    </div>
-                </div>
+          <h2>Roadmap des Matchs</h2>
+          <div class="roadmap-container">
+              <!-- Premier tour - demi-finales -->
+              <div class="bracket-row">
+                  <div class="match-group">
+                      <div class="match">Équipe 1</div>
+                      <div class="match">Équipe 2</div>
+                  </div>
+                  <div class="arrow">
+                      <i class="fas fa-arrow-down"></i>
+                  </div>
+                  <div class="match-group">
+                      <div class="match">Vainqueur 1</div>
+                  </div>
+              </div>
 
-                <!-- Finale -->
-                <div class="arrow">
-                    <i class="fas fa-arrow-down"></i>
-                </div>
-                <div class="match-group">
-                    <div class="match">Finale</div>
-                </div>
-                <div class="arrow">
-                    <i class="fas fa-arrow-up"></i>
-                </div>
+              <!-- Finale -->
+              <div class="arrow">
+                  <i class="fas fa-arrow-down"></i>
+              </div>
+              <div class="match-group">
+                  <div class="match">Finale</div>
+              </div>
+              <div class="arrow">
+                  <i class="fas fa-arrow-up"></i>
+              </div>
 
-                <!-- Deuxième demi-finale -->
-                <div class="bracket-row">
-                    <div class="match-group">
-                        <div class="match">Vainqueur 2</div>
-                    </div>
-                    <div class="arrow">
-                        <i class="fas fa-arrow-up"></i>
-                    </div>
-                    <div class="match-group">
-                        <div class="match">Équipe 3</div>
-                        <div class="match">Équipe 4</div>
-                    </div>
-                </div>
+              <!-- Deuxième demi-finale -->
+              <div class="bracket-row">
+                  <div class="match-group">
+                      <div class="match">Vainqueur 2</div>
+                  </div>
+                  <div class="arrow">
+                      <i class="fas fa-arrow-up"></i>
+                  </div>
+                  <div class="match-group">
+                      <div class="match">Équipe 3</div>
+                      <div class="match">Équipe 4</div>
+                  </div>
+              </div>
 
-                <!-- Match de classement -->
-                <div class="match-group perdant">
-                    <div class="match">Match de classement</div>
-                    <p>Perdant 1 vs Perdant 2</p>
-                </div>
-            </div>
+              <!-- Match de classement -->
+              <div class="match-group perdant">
+                  <div class="match">Match de classement</div>
+                  <p>Perdant 1 vs Perdant 2</p>
+              </div>
+          </div>
         </section>
 
         <section id="inscription-section">
@@ -532,47 +530,44 @@
     </footer>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
+        // Importations Firebase (v10 syntaxe modulaire)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-        import { getDatabase, ref, set, onValue, push, serverTimestamp, remove } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+        import { getDatabase, ref, set, onValue, push, serverTimestamp, remove, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
 
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        // Configuration Firebase (REMPLACEZ par VOS valeurs)
         const firebaseConfig = {
-          apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
-          authDomain: "tournoifoot-e233b.firebaseapp.com",
-          projectId: "tournoifoot-e233b",
-          storageBucket: "tournoifoot-e233b.firebasestorage.app",
-          messagingSenderId: "915558317701",
-          appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",
-          measurementId: "G-N5NWTN317Y"
+            apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
+            authDomain: "tournoifoot-e233b.firebaseapp.com",
+            projectId: "tournoifoot-e233b",
+            storageBucket: "tournoifoot-e233b.firebasestorage.app",
+            messagingSenderId: "915558317701",
+            appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",
+            measurementId: "G-N5NWTN317Y" // Optionnel
         };
 
-        // Initialize Firebase
+        // Initialisation de Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
+        const analytics = getAnalytics(app); // Optionnel (pour les statistiques)
         const database = getDatabase(app);
 
 
+        // Écouteur d'événements DOMContentLoaded (s'exécute lorsque le HTML est chargé)
         document.addEventListener('DOMContentLoaded', function() {
-            // ... (Le reste de ton code JavaScript, à l'intérieur du DOMContentLoaded) ...
 
-            // Système de navigation amélioré
+            // --- Navigation ---
             const navItems = document.querySelectorAll('.bottom-nav a');
             const sections = document.querySelectorAll('section');
 
-            // Pour le smooth scroll et la mise à jour de la navigation active
+            // Met à jour l'élément de navigation actif en fonction du scroll
             function updateActiveNavItem() {
                 let currentSectionId = '';
                 let minDistance = Infinity;
 
                 sections.forEach(section => {
                     const rect = section.getBoundingClientRect();
-                    const distance = Math.abs(rect.top);
+                    const distance = Math.abs(rect.top); // Distance par rapport au haut de la fenêtre
 
                     if (distance < minDistance) {
                         minDistance = distance;
@@ -588,131 +583,121 @@
                 });
             }
 
+            // Appelle updateActiveNavItem au chargement et à chaque scroll
             updateActiveNavItem();
             window.addEventListener('scroll', updateActiveNavItem);
 
-            // Smooth scroll pour les liens de navigation
+
+            // --- Smooth Scroll ---
             navItems.forEach(item => {
                 item.addEventListener('click', function(event) {
-                    event.preventDefault();
+                    event.preventDefault(); // Empêche le comportement par défaut du lien
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
 
                     if (targetElement) {
                         const navHeight = document.querySelector('.bottom-nav').offsetHeight;
-                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 20;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight+10;
 
                         window.scrollTo({
                             top: targetPosition,
-                            behavior: 'smooth'
+                            behavior: 'smooth' // Défilement doux
                         });
                     }
                 });
             });
 
 
-
-            // Fonction pour charger les joueurs depuis Firebase (avec l'écouteur onValue)
+            // --- Chargement des joueurs depuis Firebase ---
             function loadPlayersFromFirebase() {
-              for (let i = 1; i <= 4; i++) {
-                const equipeId = `equipe${i}-membres`;
-                const playersList = document.getElementById(equipeId);
+                for (let i = 1; i <= 4; i++) {
+                    const equipeId = `equipe${i}-membres`;
+                    const playersList = document.getElementById(equipeId);
+                    const playersRef = ref(database, 'equipes/' + equipeId);
 
-                // Référence à la liste des joueurs de cette équipe
-                const playersRef = ref(database, 'equipes/' + equipeId);
+                    // Écoute les changements et met à jour la liste
+                    onValue(playersRef, (snapshot) => {
+                        const players = snapshot.val() || {};  // Objet vide si aucune donnée
+                        playersList.innerHTML = ''; // Efface la liste existante
 
-                // Écouter les changements de données (ICI, et pas dans ajouterJoueurFirebase)
-                onValue(playersRef, (snapshot) => {
-                  const players = snapshot.val() || {};
+                        // Affiche "Aucun joueur inscrit" si l'équipe est vide
+                        if (Object.keys(players).length === 0) {
+                            playersList.innerHTML = '<li style="color: #999; font-style: italic;">Aucun joueur inscrit</li>';
+                            return;
+                        }
 
-                  // Vider la liste actuelle
-                  playersList.innerHTML = '';
-
-                  // Convertir l'objet en tableau pour faciliter le traitement
-                  const playersArray = Object.values(players);
-
-                  if (playersArray.length === 0) {
-                    // Afficher un message "Aucun joueur inscrit" si l'équipe est vide
-                    playersList.innerHTML = '<li style="color: #999; font-style: italic;">Aucun joueur inscrit</li>';
-                  } else {
-                    // Ajouter chaque joueur à la liste
-                    playersArray.forEach(player => {
-                      const li = document.createElement('li');
-                      li.textContent = `${player.prenom} ${player.nom}`;
-                      li.dataset.email = player.email;  // Conserver les données (facultatif)
-                      li.dataset.tel = player.telephone;
-                      li.dataset.age = player.age;
-                      playersList.appendChild(li);
-
-                      // Animer l'entrée
-                      li.style.animation = 'fadeIn 0.5s';
+                        // Ajoute chaque joueur à la liste
+                        for (const playerId in players) {
+                            const player = players[playerId];
+                            const li = document.createElement('li');
+                            li.textContent = `${player.prenom} ${player.nom}`;
+                            li.dataset.email = player.email;    // Stocke les données (facultatif)
+                            li.dataset.tel = player.telephone;
+                            li.dataset.age = player.age;
+                            playersList.appendChild(li);
+                            li.style.animation = 'fadeIn 0.5s'; // Animation d'apparition
+                        }
                     });
-                  }
-                });
-              }
+                }
             }
 
 
-          // Fonction pour ajouter un joueur à Firebase
-            function ajouterJoueurFirebase(equipeId, joueur) {
+            // --- Ajout d'un joueur à Firebase (fonction asynchrone) ---
+            async function ajouterJoueurFirebase(equipeId, joueur) {
                 const equipeRef = ref(database, 'equipes/' + equipeId);
-                const newPlayerRef = push(equipeRef); // Génère une clé unique
+                const messageDiv = document.getElementById('message'); // Élément pour afficher les messages
 
-                // Vérification du nombre de joueurs *AVANT* d'ajouter.
-                // On utilise `get()` pour récupérer les données une seule fois.
-                const countRef = ref(database, 'equipes/' + equipeId);
-                get(countRef).then((snapshot) => { // Utilisation de 'get'
-                    const players = snapshot.val() || {};
-                    const count = Object.keys(players).length;
+                try {
+                    // 1. Vérifie le nombre de joueurs *AVANT* d'ajouter
+                    const snapshot = await get(equipeRef);  // Récupère les données actuelles
+                    const players = snapshot.val() || {};    // Objet vide si aucune donnée
+                    const count = Object.keys(players).length; // Nombre de joueurs
 
                     if (count >= 5) {
-                        const messageDiv = document.getElementById('message');
                         messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Cette équipe est déjà complète (5 joueurs maximum).</p>';
-                        document.getElementById('formLoader').style.display = 'none';
+                        document.getElementById('formLoader').style.display = 'none'; // Cache le loader
                         return; // Arrête l'exécution de la fonction
                     }
-                    //Si l'equipe n est pas complete, ajout du joueur
-                      set(newPlayerRef, joueur)
-                      .then(() => {
-                        const messageDiv = document.getElementById('message');
-                        messageDiv.innerHTML = `<p style="color: #4CAF50; background-color: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 5px;">Inscription réussie pour ${joueur.prenom} ${joueur.nom} dans l'équipe ${equipeId.replace('-membres', '').replace('equipe', 'Équipe ')} !</p>`;
-                        document.getElementById('formLoader').style.display = 'none';
-                        document.getElementById('inscriptionForm').reset();
-                        setTimeout(() => {
-                          document.getElementById('liste-inscrits').scrollIntoView({ behavior: 'smooth' });
-                        }, 1000);
-                      })
-                      .catch((error) => {
-                        console.error("Erreur lors de l'ajout du joueur:", error);
-                        const messageDiv = document.getElementById('message');
-                        messageDiv.innerHTML = `<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Une erreur est survenue lors de l'inscription: ${error.message}</p>`; // Affiche le message d'erreur Firebase
-                        document.getElementById('formLoader').style.display = 'none';
-                      });
 
-                }).catch((error) => { // Gestion de l'erreur pour 'get'
-                    console.error("Erreur lors de la récupération du nombre de joueurs :", error);
-                      const messageDiv = document.getElementById('message');
-                      messageDiv.innerHTML = `<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Une erreur est survenue lors de la vérification de l'équipe: ${error.message}</p>`;
-                      document.getElementById('formLoader').style.display = 'none';
+                    // 2. Ajoute le joueur si l'équipe n'est pas complète
+                    const newPlayerRef = push(equipeRef); // Crée une référence unique pour le nouveau joueur
+                    await set(newPlayerRef, joueur);     // Ajoute les données du joueur
 
-                });
+                    messageDiv.innerHTML = `<p style="color: #4CAF50; background-color: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 5px;">Inscription réussie pour ${joueur.prenom} ${joueur.nom} dans l'équipe ${equipeId.replace('-membres', '').replace('equipe', 'Équipe ')} !</p>`;
+                    document.getElementById('inscriptionForm').reset(); // Réinitialise le formulaire
+
+                      // Scroll vers la liste après 1 seconde
+                    setTimeout(() => {
+                        document.getElementById('liste-inscrits').scrollIntoView({ behavior: 'smooth' });
+                    }, 1000);
+
+
+
+                } catch (error) {
+                    console.error("Erreur lors de l'ajout ou de la vérification:", error);
+                    messageDiv.innerHTML = `<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Une erreur est survenue: ${error.message}</p>`; // Affiche l'erreur
+
+                } finally {
+                    document.getElementById('formLoader').style.display = 'none'; // Cache le loader dans tous les cas
+                }
             }
 
 
-            // Charger les joueurs au démarrage (appelle loadPlayersFromFirebase)
+            // --- Chargement initial des joueurs ---
             loadPlayersFromFirebase();
 
 
-            // Gestion du formulaire d'inscription (inchangé, sauf appel à la fonction corrigée)
+            // --- Gestion du formulaire d'inscription ---
             const form = document.getElementById('inscriptionForm');
-            const messageDiv = document.getElementById('message');
-            const formLoader = document.getElementById('formLoader');
+            const messageDiv = document.getElementById('message'); // Élément pour afficher les messages
+            const formLoader = document.getElementById('formLoader'); // Le loader
 
             form.addEventListener('submit', function(event) {
-                event.preventDefault();
+                event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
-                formLoader.style.display = 'block';
+                formLoader.style.display = 'block'; // Affiche le loader
 
+                // Récupère les valeurs des champs (trim() supprime les espaces inutiles)
                 const nom = document.getElementById('nom').value.trim();
                 const prenom = document.getElementById('prenom').value.trim();
                 const email = document.getElementById('email').value.trim();
@@ -720,67 +705,71 @@
                 const age = document.getElementById('age').value;
                 const equipe = document.getElementById('equipe').value;
 
+                // Validation des données (vérifie que les champs sont remplis)
                 if (!nom || !prenom || !email || !telephone || !age || !equipe) {
                     messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez remplir tous les champs.</p>';
-                    formLoader.style.display = 'none';
-                    return;
+                    formLoader.style.display = 'none'; // Cache le loader
+                    return; // Arrête l'exécution
                 }
 
+                // Validation du numéro de téléphone (10 chiffres)
                 if (!/^[0-9]{10}$/.test(telephone)) {
                     messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez rentrer un numéro de téléphone valide (10 chiffres).</p>';
                     formLoader.style.display = 'none';
                     return;
                 }
 
+                // Validation de l'âge (entre 1 et 120)
                 if (isNaN(age) || age < 1 || age > 120) {
                     messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">L\'âge doit être un nombre compris entre 1 et 120.</p>';
                     formLoader.style.display = 'none';
                     return;
                 }
 
+                // Crée l'objet joueur
                 const joueur = {
                     nom: nom,
                     prenom: prenom,
                     email: email,
                     telephone: telephone,
                     age: age,
-                    dateInscription: serverTimestamp()
+                    dateInscription: serverTimestamp() // Ajoute un timestamp
                 };
 
-              //Appel de la fonction ajouterJoueurFirebase
+                // Appelle la fonction pour ajouter le joueur à Firebase
                 ajouterJoueurFirebase(equipe, joueur);
             });
 
 
 
-            // Bouton pour réinitialiser les équipes (avec mot de passe)
+            // --- Bouton de réinitialisation (pour les administrateurs) ---
             const footer = document.querySelector('footer');
             const resetButton = document.createElement('button');
             resetButton.textContent = 'Réinitialiser les équipes (Admin)';
             resetButton.className = 'cta-button';
             resetButton.style.marginTop = '20px';
-            resetButton.style.backgroundColor = '#ff3c3c';
+            resetButton.style.backgroundColor = '#ff3c3c'; // Couleur rouge
 
             resetButton.addEventListener('click', function() {
                 const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
-                if (password === 'ditib25five') {
+                if (password === 'ditib25five') { // REMPLACEZ par un mot de passe PLUS SÛR
                     if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
-                        remove(ref(database, 'equipes'))
+                        remove(ref(database, 'equipes')) // Supprime toutes les données des équipes
                             .then(() => {
                                 alert('Toutes les équipes ont été réinitialisées.');
-                                window.location.reload();
+                                window.location.reload(); // Recharge la page pour refléter les changements
                             })
                             .catch((error) => {
-                                console.error("Erreur lors de la réinitialisation des équipes:", error);
-                                alert('Une erreur est survenue lors de la réinitialisation des équipes.');
+                                console.error("Erreur lors de la réinitialisation:", error);
+                                alert('Une erreur est survenue lors de la réinitialisation.');
                             });
                     }
-                } else if (password !== null) {
+                } else if (password !== null) { // Vérifie si l'utilisateur a annulé (password est null)
                     alert('Mot de passe incorrect.');
                 }
             });
 
-            footer.appendChild(resetButton);
+            footer.appendChild(resetButton); // Ajoute le bouton au pied de page
         });
     </script>
 </body>
