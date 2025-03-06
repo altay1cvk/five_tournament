@@ -46,8 +46,7 @@
         .loader { border: 3px solid #f3f3f3; border-top: 3px solid #00aaff; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 0 auto; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @media (min-width: 768px) {
-            body { padding-bottom: 60px; }
-            #hero { padding: 2rem; height: 70vh; }
+            body { padding-bottom: 60px; } #hero { padding: 2rem; height: 70vh; }
             .hero-content { padding: 2.5rem; }
             .hero-content h2 { font-size: 3rem; }
             .hero-content p { font-size: 1.2rem; }
@@ -116,6 +115,16 @@
         .classement li {
             margin-bottom: 8px;
         }
+        
+        .delete-player-btn {
+            margin-left: 10px;
+            background: #ff3c3c;
+            border: none;
+            border-radius: 3px;
+            color: white;
+            padding: 2px 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -161,7 +170,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="match-step" id="step2">
                     <div class="step-title">Étape 2: Finales (13h45-14h30)</div>
                     <div class="bracket-row">
@@ -253,43 +261,30 @@
         <section id="liste-inscrits">
             <h2>Liste des inscrits</h2>
             <div class="inscription-container">
-                <div class="equipe">
-                    <p>Équipe 1</p>
-                    <ul class="membres" id="equipe1-membres"></ul>
-                </div>
-                <div class="equipe">
-                    <p>Équipe 2</p>
-                    <ul class="membres" id="equipe2-membres"></ul>
-                </div>
-                <div class="equipe">
-                    <p>Équipe 3</p>
-                    <ul class="membres" id="equipe3-membres"></ul>
-                </div>
-                <div class="equipe">
-                    <p>Équipe 4</p>
-                    <ul class="membres" id="equipe4-membres"></ul>
-                </div>
+                <div class="equipe"> <p>Équipe 1</p> <ul class="membres" id="equipe1-membres"></ul> </div>
+                <div class="equipe"> <p>Équipe 2</p> <ul class="membres" id="equipe2-membres"></ul> </div>
+                <div class="equipe"> <p>Équipe 3</p> <ul class="membres" id="equipe3-membres"></ul> </div>
+                <div class="equipe"> <p>Équipe 4</p> <ul class="membres" id="equipe4-membres"></ul> </div>
             </div>
         </section>
     </main>
-
     <footer>
         <p>© 2024 Tournoi Five RAMADAN. Tous droits réservés.</p>
     </footer>
-
+            
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";  // Optionnel
         import { getDatabase, ref, set, onValue, push, serverTimestamp, remove, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
         const firebaseConfig = {
-          apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
-          authDomain: "tournoifoot-e233b.firebaseapp.com",
-          projectId: "tournoifoot-e233b",
-          storageBucket: "tournoifoot-e233b.firebasestorage.app",
-          messagingSenderId: "915558317701",
-          appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",
-          measurementId: "G-N5NWTN317Y"
+            apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",  // Remplace par ta clé API Firebase
+            authDomain: "tournoifoot-e233b.firebaseapp.com",
+            projectId: "tournoifoot-e233b",
+            storageBucket: "tournoifoot-e233b.firebasestorage.app",
+            messagingSenderId: "915558317701",
+            appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",
+            measurementId: "G-N5NWTN317Y"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -351,7 +346,6 @@
                             const existingPlayer = teamPlayers[playerId];
                             if (existingPlayer.nom.toLowerCase() === joueur.nom.toLowerCase() &&
                                 existingPlayer.prenom.toLowerCase() === joueur.prenom.toLowerCase()) {
-
                                 messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Un joueur avec ce nom et prénom est déjà inscrit.</p>';
                                 document.getElementById('formLoader').style.display = 'none';
                                 return;
@@ -426,6 +420,7 @@
 
             if (form) {
                 form.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Ajouté pour empêcher la soumission par défaut
                     formLoader.style.display = 'block';
 
                     const nom = document.getElementById('nom').value.trim();
@@ -462,10 +457,11 @@
 
                     ajouterJoueurFirebase(equipe, joueur)
                     .then(() => {
+                        // La promesse then est gérée par ajouterJoueurFirebase
                     })
                     .catch(error => {
                         console.error("Erreur Firebase:", error);
-                         messageDiv.innerHTML = `<p style="color: #ff3c3c;>Erreur Firebase: ${error.message}</p>`;
+                         messageDiv.innerHTML = `<p style="color: #ff3c3c;">Erreur Firebase: ${error.message}</p>`;
 
                     }).finally(() => {
                          formLoader.style.display = 'none';
@@ -488,7 +484,7 @@
             if (footer) {
                 resetButton.addEventListener('click', function() {
                     const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
-                    if (password === 'ditib25five') {
+                    if (password === 'ditib25five') {  //  mot de passe
                         if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
                             remove(ref(database, 'equipes'))
                                 .then(() => {
@@ -507,6 +503,67 @@
                 footer.appendChild(resetButton);
             }
 
+            //  fonctionnalité de suppression de membre individuel
+            function enableAdminMode() {
+                const password = prompt("Entrez le mot de passe admin :");
+                if (password === 'ditib25five') { //  mot de passe 
+                    // Activer le mode admin
+                    const allPlayerItems = document.querySelectorAll('.membres li');
+                    allPlayerItems.forEach(item => {
+                        // Ajouter un bouton de suppression à chaque joueur
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                        deleteBtn.className = 'delete-player-btn';
+                                
+                        deleteBtn.addEventListener('click', function() {
+                            const playerName = item.textContent.trim();
+                            const equipeId = item.parentElement.id;
+                            const playerEmail = item.dataset.email;
+                                    
+                            if (confirm(`Êtes-vous sûr de vouloir supprimer ${playerName} ?`)) {
+                                // Trouver et supprimer le joueur dans Firebase
+                                const equipeRef = ref(database, 'equipes/' + equipeId);
+                                get(equipeRef).then((snapshot) => {
+                                    const players = snapshot.val() || {};
+                                    for (const playerId in players) {
+                                        const player = players[playerId];
+                                            if (player.email === playerEmail) {
+                                                // Supprimer ce joueur
+                                                remove(ref(database, 'equipes/' + equipeId + '/' + playerId))
+                                                    .then(() => {
+                                                        alert(`${playerName} a été supprimé avec succès.`);
+                                                     })
+                                                    .catch((error) => {
+                                                        console.error("Erreur lors de la suppression:", error);
+                                                        alert('Une erreur est survenue lors de la suppression.');
+                                                    });
+                                            break;
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                                
+                        item.appendChild(deleteBtn);
+                    });
+                            
+                    alert('Mode admin activé. Vous pouvez maintenant supprimer des membres individuellement.');
+                } else if (password !== null) {
+                    alert('Mot de passe incorrect.');
+                }
+            }
+
+            // Ajouter un bouton pour activer le mode admin
+            const adminButton = document.createElement('button');
+            adminButton.textContent = 'Mode Admin (Supprimer des membres)';
+            adminButton.className = 'cta-button';
+            adminButton.style.marginTop = '20px';
+            adminButton.style.backgroundColor = '#444';
+            adminButton.style.marginLeft = '10px';
+
+            adminButton.addEventListener('click', enableAdminMode);
+            footer.appendChild(adminButton);
+
         const steps = document.querySelectorAll('.match-step');
         const nextButton = document.getElementById('nextStep');
         let currentStep = 0;
@@ -522,7 +579,7 @@
                 }
             });
 
-            // Mettre à jour le texte du bouton (pas de marge conditionnelle ici)
+            // Mettre à jour le texte du bouton
             if (stepIndex === steps.length - 1) {
                 nextButton.textContent = 'Recommencer';
             } else {
@@ -530,17 +587,17 @@
             }
         }
 
-        // Gestionnaire d'événement pour le bouton (INCHANGÉ)
+        // Gestionnaire d'événement pour le bouton
         if (nextButton) {
             nextButton.addEventListener('click', function() {
                 currentStep = (currentStep + 1) % steps.length;
                 showStep(currentStep);
             });
 
-            // Afficher la première étape au chargement (IMPORTANT)
+            // Afficher la première étape au chargement
             showStep(0);
         }
-        });  // Fin du DOMContentLoaded
-    </script>
+    });  // Fin du DOMContentLoaded
+</script>
 </body>
 </html>
