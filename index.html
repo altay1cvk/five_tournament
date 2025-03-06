@@ -20,13 +20,13 @@
         .cta-button { display: inline-block; background-color: #00aaff; color: #fff; padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; transition: all 0.3s; font-size: 1rem; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); }
         .cta-button:hover, .cta-button:active { background-color: #0077cc; transform: translateY(-2px); }
         section { margin-top: 2rem; padding: 1rem; text-align: center; }
-        section h2 { margin-bottom: 1.5rem; position: relative; display: inline-block; padding-bottom: 0.5rem; }
+        section h2 { margin-bottom: 0.5rem; position: relative; display: inline-block; padding-bottom: 0.5rem; }
         section h2::after { content: ''; position: absolute; bottom: 0; left: 25%; right: 25%; height: 3px; background: linear-gradient(to right, transparent, #00aaff, transparent); }
-        .roadmap-container { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; padding: 1rem; }
+        .roadmap-container { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; padding: 0rem; }
         .match-group { display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10px 0; }
         .match { border: 1px solid #00aaff; padding: 0.7rem; margin: 5px; border-radius: 5px; width: 140px; text-align: center; background-color: #222; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: all 0.3s; }
         .match:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3); }
-        .bracket-row { display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10px 0; }
+        .bracket-row { display: flex; flex-direction: column; align-items: center; width: 100%; margin: 5px 0; }
         .arrow { color: #00aaff; font-size: 1.3rem; margin: 5px; }
         .match-group.perdant { margin-top: 20px; border-top: 1px dashed #444; padding-top: 20px; width: 100%; }
         .inscription-container { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; width: 100%; max-width: 900px; margin: 0 auto; }
@@ -83,9 +83,10 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.8s ease-out;
-            margin-bottom: 30px;
+            margin-bottom: 0px;
             width: 100%;
         }
+        
 
         .match-step.active {
             opacity: 1;
@@ -95,7 +96,7 @@
         .step-title {
             color: #00aaff;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             background-color: rgba(0, 170, 255, 0.1);
             padding: 8px 15px;
             border-radius: 20px;
@@ -237,7 +238,7 @@
                     </div>
                 </div>
                 
-                <button id="nextStep" class="cta-button" style="margin-top: 20px;">Étape suivante</button>
+                <button id="nextStep" class="cta-button" style="margin-top: 0px;">Étape suivante</button>
             </div>
         </section>
 
