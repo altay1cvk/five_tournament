@@ -60,25 +60,12 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         section { animation: fadeIn 0.5s ease-out; }
 
-        /* Animations améliorées pour la roadmap - optimisées pour iPhone */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulseArrow {
-            0% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.7; }
-        }
-
         /* Styles pour les étapes du tournoi */
         .match-step {
             margin-top: 20px; /* Espacement cohérent */
             width: 100%;
             display: none; /* Masqué par défaut */
         }
-
 
         .match-step.active {
             display: block; /* Affiché quand actif */
@@ -128,24 +115,6 @@
 
         .classement li {
             margin-bottom: 8px;
-        }
-
-        /* Optimisations pour iPhone */
-        @supports (-webkit-touch-callout: none) {
-            .match-step {
-                -webkit-transform: translateY(20px);
-                -webkit-transition: all 0.8s ease-out;
-            }
-
-            .match-step.active {
-                -webkit-transform: translateY(0);
-            }
-
-            @-webkit-keyframes pulseArrow {
-                0% { -webkit-transform: scale(1); opacity: 0.7; }
-                50% { -webkit-transform: scale(1.2); opacity: 1; }
-                100% { -webkit-transform: scale(1); opacity: 0.7; }
-            }
         }
     </style>
 </head>
@@ -240,7 +209,6 @@
             <div class="form-container">
                 <h2>Inscription au tournoi</h2>
                 <p>Prix totale (par personne) : 7€ </p>
-                <!-- Formulaire (maintenant avec Formspree ET Firebase) -->
                 <form action="https://formspree.io/f/mkgorlln" method="POST" id="inscriptionForm">
                     <div class="form-group">
                         <label for="nom">Nom :</label>
@@ -253,7 +221,7 @@
                     <div class="form-group">
                         <label for="email">Email :</label>
                         <input type="email" id="email" name="email" required autocomplete="email">
-                        <input type="hidden" name="_replyto" value="">  <!-- Champ _replyto pour Formspree -->
+                        <input type="hidden" name="_replyto" value="">
                     </div>
                     <div class="form-group">
                         <label for="telephone">Téléphone :</label>
@@ -267,14 +235,14 @@
                         <label for="equipe">Équipe:</label>
                         <select id="equipe" name="equipe" required>
                             <option value="">-- Sélectionnez une équipe --</option>
-                            <option value="equipe1-membres">Équipe 1</option>  <!-- Les valeurs correspondent aux IDs des listes -->
+                            <option value="equipe1-membres">Équipe 1</option>
                             <option value="equipe2-membres">Équipe 2</option>
                             <option value="equipe3-membres">Équipe 3</option>
                             <option value="equipe4-membres">Équipe 4</option>
                         </select>
                     </div>
-                    <input type="hidden" name="_subject" value="Nouvelle inscription au tournoi Five Ramadan!"> <!-- Pour Formspree -->
-                    <input type="text" name="_gotcha" style="display:none">  <!-- Honeypot pour Formspree -->
+                    <input type="hidden" name="_subject" value="Nouvelle inscription au tournoi Five Ramadan!">
+                    <input type="text" name="_gotcha" style="display:none">
                     <button type="submit" class="cta-button">Confirmer l'inscription</button>
                     <div class="loader" id="formLoader" style="display: none;"></div>
                 </form>
@@ -310,12 +278,10 @@
     </footer>
 
     <script type="module">
-        // --- Importations Firebase ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";  // Optionnel
         import { getDatabase, ref, set, onValue, push, serverTimestamp, remove, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
-        // --- Configuration Firebase (REMPLACEZ PAR VOS VALEURS) ---
         const firebaseConfig = {
           apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
           authDomain: "tournoifoot-e233b.firebaseapp.com",
@@ -326,14 +292,11 @@
           measurementId: "G-N5NWTN317Y"
         };
 
-        // --- Initialisation de Firebase ---
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app); // Optionnel
         const database = getDatabase(app);
 
-        // --- Code JavaScript ---
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Fonction : Chargement des joueurs depuis Firebase ---
             function loadPlayersFromFirebase() {
                 for (let i = 1; i <= 4; i++) {
                     const equipeId = `equipe${i}-membres`;
@@ -363,12 +326,10 @@
                 }
             }
 
-            // --- Fonction : Ajout d'un joueur à Firebase (SANS envoi d'e-mail) ---
             async function ajouterJoueurFirebase(equipeId, joueur) {
                 const messageDiv = document.getElementById('message');
 
                 try {
-                    // Vérification du nombre de joueurs DANS L'ÉQUIPE SÉLECTIONNÉE (comme avant)
                     const equipeRef = ref(database, 'equipes/' + equipeId);
                     const equipeSnapshot = await get(equipeRef);
                     const equipePlayers = equipeSnapshot.val() || {};
@@ -380,8 +341,7 @@
                         return;
                     }
 
-                    // --- Vérification des doublons DANS TOUTES LES ÉQUIPES (NOUVEAU CODE) ---
-                    const allTeamsRef = ref(database, 'equipes'); // Référence à TOUTES les équipes
+                    const allTeamsRef = ref(database, 'equipes');
                     const allTeamsSnapshot = await get(allTeamsRef);
                     const allTeams = allTeamsSnapshot.val() || {};
 
@@ -394,14 +354,12 @@
 
                                 messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Un joueur avec ce nom et prénom est déjà inscrit.</p>';
                                 document.getElementById('formLoader').style.display = 'none';
-                                return; // Arrête si doublon trouvé
+                                return;
                             }
                         }
                     }
-                    // --- Fin de la vérification des doublons ---
 
-                    // (Le reste de la fonction : ajout à Firebase, message de succès, etc.)
-                    const newPlayerRef = push(equipeRef); // Ajoute à l'équipe sélectionnée
+                    const newPlayerRef = push(equipeRef);
                     await set(newPlayerRef, joueur);
 
                     messageDiv.innerHTML = `<p style="color: #4CAF50; background-color: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 5px;">Inscription réussie pour ${joueur.prenom} ${joueur.nom} dans l'équipe ${equipeId.replace('-membres', '').replace('equipe', 'Équipe ')} !</p>`;
@@ -418,7 +376,6 @@
                 }
             }
 
-            // --- Navigation et Smooth Scroll (le code reste inchangé) ---
             const navItems = document.querySelectorAll('.bottom-nav a');
             const sections = document.querySelectorAll('main > section');
 
@@ -460,22 +417,17 @@
                     }
                 });
             });
-            // --- Fin de la section Navigation/Smooth Scroll ---
 
-            // --- Chargement initial des joueurs ---
             loadPlayersFromFirebase();
 
-            // --- Gestion de la soumission du formulaire (Formspree + Firebase) ---
             const form = document.getElementById('inscriptionForm');
             const messageDiv = document.getElementById('message');
             const formLoader = document.getElementById('formLoader');
 
             if (form) {
                 form.addEventListener('submit', function(event) {
-                    // event.preventDefault(); // On n'empêche PAS la soumission par défaut (Formspree)
                     formLoader.style.display = 'block';
 
-                    // 1. Récupération des données du formulaire
                     const nom = document.getElementById('nom').value.trim();
                     const prenom = document.getElementById('prenom').value.trim();
                     const email = document.getElementById('email').value.trim();
@@ -483,7 +435,6 @@
                     const age = document.getElementById('age').value;
                     const equipe = document.getElementById('equipe').value;
 
-                    // 2. Validation des données (côté client)
                     if (!nom || !prenom || !email || !telephone || !age || !equipe) {
                         messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez remplir tous les champs.</p>';
                         formLoader.style.display = 'none';
@@ -500,24 +451,19 @@
                         return;
                     }
 
-                    // 3. Création de l'objet joueur
                     const joueur = {
                         nom: nom,
                         prenom: prenom,
                         email: email,
                         telephone: telephone,
                         age: age,
-                        dateInscription: serverTimestamp() // Timestamp pour Firebase
+                        dateInscription: serverTimestamp()
                     };
 
-                    // 4. Ajout du joueur à Firebase (SANS envoyer d'e-mail)
                     ajouterJoueurFirebase(equipe, joueur)
                     .then(() => {
-                        // Succès de l'ajout à Firebase (mais pas nécessairement de Formspree)
-                        // Vous pouvez choisir d'afficher un message de succès ici, ou attendre la réponse de Formspree.
                     })
                     .catch(error => {
-                        // Gestion des erreurs Firebase (affichage du message, masquage du loader, etc.)
                         console.error("Erreur Firebase:", error);
                          messageDiv.innerHTML = `<p style="color: #ff3c3c;>Erreur Firebase: ${error.message}</p>`;
 
@@ -525,24 +471,13 @@
                          formLoader.style.display = 'none';
                     });
 
-                    // 5. Remplir le champ _replyto pour Formspree
                     const emailInput = document.getElementById('email');
                      if (emailInput) {
                          document.querySelector('input[name="_replyto"]').value = emailInput.value;
                      }
-
-
-                    // 6. La soumission à Formspree se fait AUTOMATIQUEMENT grâce à l'attribut `action` du formulaire.
-                    //    On n'a pas besoin de fetch() ou de code supplémentaire ici.
-
-                    // Vous *pourriez* utiliser fetch() pour intercepter la réponse de Formspree et afficher
-                    // un message de succès/erreur *spécifique* à Formspree, mais ce n'est pas strictement nécessaire.
-                    // Si vous voulez le faire, ajoutez le code fetch() ici, mais attention à la gestion des erreurs
-                    // (vous aurez à la fois les erreurs Firebase et les erreurs Formspree à gérer).
                 });
             }
 
-            // --- Bouton de réinitialisation (pour les administrateurs) ---
             const footer = document.querySelector('footer');
             const resetButton = document.createElement('button');
             resetButton.textContent = 'Réinitialiser les équipes (Admin)';
@@ -553,7 +488,7 @@
             if (footer) {
                 resetButton.addEventListener('click', function() {
                     const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
-                    if (password === 'ditib25five') { // REMPLACEZ par un mot de passe PLUS SÛR
+                    if (password === 'ditib25five') {
                         if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
                             remove(ref(database, 'equipes'))
                                 .then(() => {
@@ -572,32 +507,29 @@
                 footer.appendChild(resetButton);
             }
 
-        // Animation séquentielle pour la roadmap (MODIFIÉ)
         const steps = document.querySelectorAll('.match-step');
         const nextButton = document.getElementById('nextStep');
         let currentStep = 0;
 
-        // Fonction pour afficher l'étape actuelle (MODIFIÉ)
         function showStep(stepIndex) {
-     steps.forEach((step, index) => {
-         if (index === stepIndex) {
-             step.style.display = 'block'; // Affiche l'étape
-             step.classList.add('active'); //Garder active pour l'animation
-         } else {
-             step.style.display = 'none'; // Masque les autres étapes
-             step.classList.remove('active');
-         }
-     });
+            steps.forEach((step, index) => {
+                if (index === stepIndex) {
+                    step.style.display = 'block'; // Affiche l'étape
+                    step.classList.add('active'); // Garder active pour l'animation
+                } else {
+                    step.style.display = 'none'; // Masque les autres étapes
+                    step.classList.remove('active');
+                }
+            });
 
-     // Mettre à jour le texte du bouton ET la marge conditionnelle
-     if (stepIndex === steps.length - 1) {
-         nextButton.textContent = 'Recommencer';
-         nextButton.style.marginBottom = '40px'; // Ajoute une marge inférieure
-     } else {
-         nextButton.textContent = 'Étape suivante';
-         nextButton.style.marginBottom = '0';   // Réinitialise la marge
-     }
- }
+            // Mettre à jour le texte du bouton (pas de marge conditionnelle ici)
+            if (stepIndex === steps.length - 1) {
+                nextButton.textContent = 'Recommencer';
+            } else {
+                nextButton.textContent = 'Étape suivante';
+            }
+        }
+
         // Gestionnaire d'événement pour le bouton (INCHANGÉ)
         if (nextButton) {
             nextButton.addEventListener('click', function() {
