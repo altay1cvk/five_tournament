@@ -20,9 +20,9 @@
         .cta-button { display: inline-block; background-color: #00aaff; color: #fff; padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; transition: all 0.3s; font-size: 1rem; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); }
         .cta-button:hover, .cta-button:active { background-color: #0077cc; transform: translateY(-2px); }
         section { margin-top: 2rem; padding: 1rem; text-align: center; }
-        section h2 { margin-bottom: 0.5rem; position: relative; display: inline-block; padding-bottom: 0.5rem; }
+        section h2 { margin-bottom: 5px; position: relative; display: inline-block; padding-bottom: 0.5rem; }
         section h2::after { content: ''; position: absolute; bottom: 0; left: 25%; right: 25%; height: 3px; background: linear-gradient(to right, transparent, #00aaff, transparent); }
-        .roadmap-container { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; padding: 0rem; }
+        .roadmap-container { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; padding: 0; }
         .match-group { display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10px 0; }
         .match { border: 1px solid #00aaff; padding: 0.7rem; margin: 5px; border-radius: 5px; width: 140px; text-align: center; background-color: #222; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: all 0.3s; }
         .match:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3); }
@@ -45,7 +45,7 @@
         footer { text-align: center; padding: 1.5rem; margin-top: 3rem; border-top: 1px solid #444; font-size: 0.9rem; color: #aaa; }
         .loader { border: 3px solid #f3f3f3; border-top: 3px solid #00aaff; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 0 auto; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @media (min-width: 768px) { 
+        @media (min-width: 768px) {
             body { padding-bottom: 60px; }
             #hero { padding: 2rem; height: 70vh; }
             .hero-content { padding: 2.5rem; }
@@ -59,7 +59,7 @@
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         section { animation: fadeIn 0.5s ease-out; }
-        
+
         /* Animations améliorées pour la roadmap - optimisées pour iPhone */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -72,35 +72,28 @@
             100% { transform: scale(1); opacity: 0.7; }
         }
 
-        @keyframes highlightMatch {
-            0% { box-shadow: 0 0 0 rgba(0, 170, 255, 0); }
-            50% { box-shadow: 0 0 15px rgba(0, 170, 255, 0.7); }
-            100% { box-shadow: 0 0 0 rgba(0, 170, 255, 0); }
-        }
-
         /* Styles pour les étapes du tournoi */
         .match-step {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease-out;
-            margin-bottom: 0px;
+            margin-top: 20px; /* Espacement cohérent */
             width: 100%;
+            display: none; /* Masqué par défaut */
         }
-        
+
 
         .match-step.active {
-            opacity: 1;
-            transform: translateY(0);
+            display: block; /* Affiché quand actif */
+            animation: fadeInUp 0.5s ease-out;
         }
 
         .step-title {
             color: #00aaff;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 10px; /* Marge inférieure pour espacer du contenu */
             background-color: rgba(0, 170, 255, 0.1);
-            padding: 8px 15px;
+            padding: 4px 10px;
             border-radius: 20px;
-            display: inline-block;
+            display: block; /* Changé de inline-block à block */
+            text-align: center; /* Centrer le titre */
         }
 
         .match-time {
@@ -116,7 +109,7 @@
         }
 
         .classement {
-            margin-top: 30px;
+            margin-top: 40px !important; /* Augmenté et !important */
             padding: 15px;
             background-color: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
@@ -143,11 +136,11 @@
                 -webkit-transform: translateY(20px);
                 -webkit-transition: all 0.8s ease-out;
             }
-            
+
             .match-step.active {
                 -webkit-transform: translateY(0);
             }
-            
+
             @-webkit-keyframes pulseArrow {
                 0% { -webkit-transform: scale(1); opacity: 0.7; }
                 50% { -webkit-transform: scale(1.2); opacity: 1; }
@@ -199,7 +192,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="match-step" id="step2">
                     <div class="step-title">Étape 2: Finales (13h45-14h30)</div>
                     <div class="bracket-row">
@@ -213,7 +206,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="match-step" id="step3">
                     <div class="step-title">Étape 3: Match de classement (13h45-14h30)</div>
                     <div class="match-group">
@@ -225,7 +218,7 @@
                         <p>Perdant 1 vs Perdant 2</p>
                     </div>
                 </div>
-                
+
                 <div class="match-step" id="step4">
                     <div class="classement">
                         <h3>Classement final</h3>
@@ -237,7 +230,7 @@
                         </ol>
                     </div>
                 </div>
-                
+
                 <button id="nextStep" class="cta-button" style="margin-top: 0px;">Étape suivante</button>
             </div>
         </section>
@@ -268,7 +261,6 @@
                     </div>
                     <div class="form-group">
                         <label for="age">Âge :</label>
-                        <input type="number" id="age" name="age" required min="1" max
                         <input type="number" id="age" name="age" required min="1" max="120">
                     </div>
                     <div class="form-group">
@@ -579,41 +571,44 @@
                 });
                 footer.appendChild(resetButton);
             }
-        }); 
-        // Animation séquentielle pour la roadmap
-const steps = document.querySelectorAll('.match-step');
-const nextButton = document.getElementById('nextStep');
-let currentStep = 0;
 
-// Fonction pour afficher l'étape actuelle
-function showStep(stepIndex) {
-    steps.forEach((step, index) => {
-        if (index === stepIndex) {
-            step.classList.add('active');
-        } else {
-            step.classList.remove('active');
+        // Animation séquentielle pour la roadmap (MODIFIÉ)
+        const steps = document.querySelectorAll('.match-step');
+        const nextButton = document.getElementById('nextStep');
+        let currentStep = 0;
+
+        // Fonction pour afficher l'étape actuelle (MODIFIÉ)
+        function showStep(stepIndex) {
+     steps.forEach((step, index) => {
+         if (index === stepIndex) {
+             step.style.display = 'block'; // Affiche l'étape
+             step.classList.add('active'); //Garder active pour l'animation
+         } else {
+             step.style.display = 'none'; // Masque les autres étapes
+             step.classList.remove('active');
+         }
+     });
+
+     // Mettre à jour le texte du bouton ET la marge conditionnelle
+     if (stepIndex === steps.length - 1) {
+         nextButton.textContent = 'Recommencer';
+         nextButton.style.marginBottom = '40px'; // Ajoute une marge inférieure
+     } else {
+         nextButton.textContent = 'Étape suivante';
+         nextButton.style.marginBottom = '0';   // Réinitialise la marge
+     }
+ }
+        // Gestionnaire d'événement pour le bouton (INCHANGÉ)
+        if (nextButton) {
+            nextButton.addEventListener('click', function() {
+                currentStep = (currentStep + 1) % steps.length;
+                showStep(currentStep);
+            });
+
+            // Afficher la première étape au chargement (IMPORTANT)
+            showStep(0);
         }
-    });
-    
-    // Mettre à jour le texte du bouton
-    if (stepIndex === steps.length - 1) {
-        nextButton.textContent = 'Recommencer';
-    } else {
-        nextButton.textContent = 'Étape suivante';
-    }
-}
-
-// Gestionnaire d'événement pour le bouton
-if (nextButton) {
-    nextButton.addEventListener('click', function() {
-        currentStep = (currentStep + 1) % steps.length;
-        showStep(currentStep);
-    });
-    
-    // Afficher la première étape au chargement
-    showStep(0);
-}
-// Fin du DOMContentLoaded
+        });  // Fin du DOMContentLoaded
     </script>
 </body>
 </html>
