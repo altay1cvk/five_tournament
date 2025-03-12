@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tournoi Five RAMADAN</title>
+    <title>Tournoi Five</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* Réinitialisation (reset) des styles par défaut */
+       /* ... (Le CSS reste inchangé - copiez le depuis les réponses précédentes, y compris .message.error et .message.success) ... */
+       /* Réinitialisation (reset) des styles par défaut */
         * {  margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #111; color: #fff; line-height: 1.6; padding-bottom: 80px;}
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #222; border-top: 1px solid #444; display: flex; justify-content: space-around; align-items: center; padding: 0.85rem 0; z-index: 100; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3); }
@@ -39,7 +40,7 @@
         .form-container h2 { font-size: 1.8rem; margin-bottom: 1rem; text-align: center; }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; margin-bottom: 0.3rem; font-size: 0.95rem; color: #ccc; }
-        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group input[type="number"], .form-group select { width: 100%; padding: 0.8rem; border: 1px solid #444; background-color: #333; color: #fff; border-radius: 5px; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group input[type="number"], .form-group select,.form-group input[type="password"] { width: 100%; padding: 0.8rem; border: 1px solid #444; background-color: #333; color: #fff; border-radius: 5px; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
         .form-group input:focus, .form-group select:focus { outline: none; border-color: #00aaff; box-shadow: 0 0 0 2px rgba(0, 170, 255, 0.3); }
         #message { margin-top: 1rem; padding: 0.8rem; border-radius: 5px; font-weight: bold; }
         footer { text-align: center; padding: 1.5rem; margin-top: 3rem; border-top: 1px solid #444; font-size: 0.9rem; color: #aaa; }
@@ -200,6 +201,73 @@
             margin: 0 10px;
             color: #aaa;
         }
+
+        /* Style pour les formulaires de gestion d'équipe (capitaine) */
+        .team-management-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00aaff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .team-management-container h3 {
+            color: #00aaff;
+            margin-bottom: 10px;
+        }
+
+        .team-management-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+          .team-management-form input[type="text"],
+        .team-management-form input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .team-management-form button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            background-color: #00aaff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .team-management-form button:hover {
+            background-color: #0077cc;
+        }
+
+          .modify-team-name-form {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #444;
+        }
+          /* Style pour le message d'erreur/succès */
+        .message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .message.error {
+            color: #ff3c3c;
+            background-color: rgba(255, 60, 60, 0.2);
+        }
+
+        .message.success {
+            color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -213,152 +281,235 @@
     <main>
         <section id="hero">
             <div class="hero-content">
-                <h2>RAMADAN Tournoi Five </h2>
-                <p>Arbouans - Street Soccer</p>
-                <p>13h00 - 14h30</p>
-                <p>2 matchs de 45 min par équipe</p>
+                <h2>Tournoi Five</h2>
+                <p>Arena 25, Montbéliard</p>
+                <p>Dimanche 6 avril 2025</p>
+                <p>15h00 - 16h30</p>
+                <p>3 matchs de 30 min par équipe</p>
                 <div id="countdown" class="countdown-timer">Chargement du compte à rebours...</div>
                 <a href="#inscription-section" class="cta-button">S'inscrire maintenant</a>
             </div>
         </section>
 
         <section id="roadmap">
-            <h2>Déroulement des Matchs</h2>
+           <h2>Déroulement des Matchs</h2>
             <div class="roadmap-container">
+                <!-- Étape 1: Quarts de finale -->
                 <div class="match-step" id="step1">
-                    <div class="step-title">Étape 1: Matchs de poule (13h00-13h45)</div>
+                    <div class="step-title">Étape 1: Quarts de finale (15h00)</div>
                     <div class="bracket-row">
                         <div class="match-group">
                             <div class="match" id="match1">
-                                Équipe 1 vs Équipe 2
-                                <div class="match-time">13h00</div>
-                                <div class="match-duration">45 min</div>
-                                 <div id="score-match1" class="score-display"></div>
+                                <span class="team1-name">Équipe 1</span> vs <span class="team2-name">Équipe 2</span>
+                                <div class="match-time">15h00</div>
+                                <div class="match-duration">30 min</div>
+                                    <div id="score-match1" class="score-display"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="bracket-row">
                         <div class="match-group">
                             <div class="match" id="match2">
-                                Équipe 3 vs Équipe 4
-                                <div class="match-time">13h00</div>
-                                <div class="match-duration">45 min</div>
+                                <span class="team3-name">Équipe 3</span> vs <span class="team4-name">Équipe 4</span>
+                                <div class="match-time">15h00</div>
+                                <div class="match-duration">30 min</div>
                                 <div id="score-match2" class="score-display"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="match-step" id="step2">
-                    <div class="step-title">Étape 2: Finales (13h45-14h30)</div>
-                    <div class="bracket-row">
-                        <div class="match-group">
-                            <div class="match" id="match-finale">
-                                Finale - Match pour la 1ère place
-                                <div class="match-time">13h45</div>
-                                <div class="match-duration">45 min</div>
-                                <div id="score-finale" class="score-display"></div>
+                            <div class="match-group">
+                            <div class="match" id="match3">
+                               <span class="team5-name">Équipe 5</span> vs <span class="team6-name">Équipe 6</span>
+                                <div class="match-time">15h00</div>
+                                <div class="match-duration">30 min</div>
+                                    <div id="score-match3" class="score-display"></div>
                             </div>
-                            <p>Vainqueur 1 vs Vainqueur 2</p>
+                        </div>
+                        <div class="match-group">
+                            <div class="match" id="match4">
+                                <span class="team7-name">Équipe 7</span> vs <span class="team8-name">Équipe 8</span>
+                                <div class="match-time">15h00</div>
+                                <div class="match-duration">30 min</div>
+                                <div id="score-match4" class="score-display"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="match-step" id="step3">
-                    <div class="step-title">Étape 3: Match de classement (13h45-14h30)</div>
-                    <div class="match-group">
-                        <div class="match" id="match-classement">
-                            Match pour la 3ème place
-                            <div class="match-time">13h45</div>
-                            <div class="match-duration">45 min</div>
-                            <div id="score-classement" class="score-display"></div>
+                <!-- Étape 2: Demi-finales -->
+                <div class="match-step" id="step2">
+                    <div class="step-title">Étape 2: Demi-finales (15h30)</div>
+                    <div class="bracket-row">
+                        <div class="match-group">
+                            <div class="match" id="demi-finale-principale1">
+                                 <span id="demi1-team1"></span> vs <span id="demi1-team2"></span>
+                                <div class="match-time">15h30</div>
+                                <div class="match-duration">30 min</div>
+                                <div id="score-demi-finale-principale1" class="score-display"></div>
+                            </div>
                         </div>
-                        <p>Perdant 1 vs Perdant 2</p>
+                        <div class="match-group">
+                            <div class="match" id="demi-finale-principale2">
+                                <span id="demi2-team1"></span> vs <span id="demi2-team2"></span>
+                                <div class="match-time">15h30</div>
+                                <div class="match-duration">30 min</div>
+                                <div id="score-demi-finale-principale2" class="score-display"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-title">Étape 2: Demi-finales Consolantes(15h30)</div>
+                    <div class="bracket-row">
+                        <div class="match-group">
+                            <div class="match" id="demi-finale-consolante1">
+                                 <span id="demiC1-team1"></span> vs <span id="demiC1-team2"></span>
+                                <div class="match-time">15h30</div>
+                                <div class="match-duration">30 min</div>
+                                <div id="score-demi-finale-consolante1" class="score-display"></div>
+                            </div>
+                        </div>
+                        <div class="match-group">
+                            <div class="match" id="demi-finale-consolante2">
+                                <span id="demiC2-team1"></span> vs <span id="demiC2-team2"></span>
+                                <div class="match-time">15h30</div>
+                                <div class="match-duration">30 min</div>
+                                <div id="score-demi-finale-consolante2" class="score-display"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Étape 3: Finales -->
+        <div class="match-step" id="step3">
+            <div class="step-title">Étape 3: Finale 1 (16h00) - Places 1 & 2</div>
+                <div class="match-group">
+                    <div class="match" id="match-finale1">
+                         <span id="finale-team1"></span> vs <span id="finale-team2"></span>
+                        <div class="match-time">16h00</div>
+                        <div class="match-duration">30 min</div>
+                        <div id="score-finale" class="score-display"></div>
+                    </div>
+                </div>
+
+            <div class="step-title">Étape 3: Finale 2 (16h00) - Places 3 & 4</div>
+                <div class="match-group">
+                    <div class="match" id="match-finale2">
+                         <span id="finale2-team1"></span> vs <span id="finale2-team2"></span>
+                        <div class="match-time">16h00</div>
+                        <div class="match-duration">30 min</div>
+                        <div id="score-finale2" class="score-display"></div>
+                    </div>
+                </div>
+            
+            <div class="step-title">Étape 3: Finale 3 (16h00) - Places 5 & 6</div>
+                <div class="match-group">
+                    <div class="match" id="match-finale3">
+                         <span id="finaleC-team1"></span> vs <span id="finaleC-team2"></span>
+                        <div class="match-time">16h00</div>
+                        <div class="match-duration">30 min</div>
+                        <div id="score-finale3" class="score-display"></div>
+                    </div>
+                </div>
+
+            <div class="step-title">Étape 3: Finale 4 (16h00) - Places 7 & 8</div>
+                <div class="match-group">
+                    <div class="match" id="match-finale4">
+                         <span id="finaleC2-team1"></span> vs <span id="finaleC2-team2"></span>
+                        <div class="match-time">16h00</div>
+                        <div class="match-duration">30 min</div>
+                        <div id="score-finale4" class="score-display"></div>
+                    </div>
+                </div>
+        </div>
 
                 <div class="match-step" id="step4">
                     <div class="classement">
                         <h3>Classement final</h3>
-                        <ol>
-                            <li>Equipe 2</li>
-                            <li>Equipe 4</li>
-                            <li>Equipe 1</li>
-                            <li>Equipe 3</li>
+                        <ol id="final-ranking">
+                            <!-- Le classement sera mis à jour dynamiquement -->
                         </ol>
                     </div>
                 </div>
 
                 <button id="nextStep" class="cta-button" style="margin-top: 0px;">Étape suivante</button>
                 <button id="adminScoreBtn" class="cta-button" style="margin-top: 15px; background-color: #444;">Administration des scores</button>
+                 <button id="resetScoresBtn" class="cta-button" style="margin-top: 15px; background-color: #ff3c3c;">Réinitialiser les scores (Admin)</button>
             </div>
         </section>
 
         <section id="inscription-section">
-            <h2>Inscription</h2>
+            <h2>Inscription (Capitaine)</h2>
             <div class="form-container">
-                <h2>Inscription au tournoi</h2>
-                <p>Prix totale (par personne) : 7€ </p>
-                <form action="https://formspree.io/f/mkgorlln" method="POST" id="inscriptionForm">
+                <h2>Inscription de l'équipe</h2>
+                <p>Prix total (par personne) : 7€ </p>
+                 <form id="inscriptionForm">
                     <div class="form-group">
-                        <label for="nom">Nom :</label>
-                        <input type="text" id="nom" name="nom" required autocomplete="family-name">
+                        <label for="nomEquipe">Nom de l'équipe :</label>
+                        <input type="text" id="nomEquipe" name="nomEquipe" required>
+                    </div>
+                     <div class="form-group">
+                            <label for="teamPassword">Mot de passe de l'équipe :</label>
+                            <input type="password" id="teamPassword" name="teamPassword" required>
+                        </div>
+                    <div class="form-group">
+                        <label for="nomCapitaine">Nom du Capitaine :</label>
+                        <input type="text" id="nomCapitaine" name="nomCapitaine" required autocomplete="family-name">
                     </div>
                     <div class="form-group">
-                        <label for="prenom">Prénom :</label>
-                        <input type="text" id="prenom" name="prenom" required autocomplete="given-name">
+                        <label for="prenomCapitaine">Prénom du Capitaine :</label>
+                        <input type="text" id="prenomCapitaine" name="prenomCapitaine" required autocomplete="given-name">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email :</label>
-                        <input type="email" id="email" name="email" required autocomplete="email">
-                        <input type="hidden" name="_replyto" value="">
+                        <label for="emailCapitaine">Email du Capitaine :</label>
+                        <input type="email" id="emailCapitaine" name="emailCapitaine" required autocomplete="email">
+                         <input type="hidden" name="_replyto" value="">
                     </div>
                     <div class="form-group">
-                        <label for="telephone">Téléphone :</label>
-                        <input type="tel" id="telephone" name="telephone" required pattern="[0-9]{10}" title="Veuillez entrer un numéro de téléphone à 10 chiffres" autocomplete="tel">
+                        <label for="telephoneCapitaine">Téléphone du Capitaine :</label>
+                        <input type="tel" id="telephoneCapitaine" name="telephoneCapitaine" required pattern="[0-9]{10}" title="Veuillez entrer un numéro de téléphone à 10 chiffres" autocomplete="tel">
                     </div>
                     <div class="form-group">
-                        <label for="age">Âge :</label>
-                        <input type="number" id="age" name="age" required min="1" max="120">
+                        <label for="ageCapitaine">Âge du Capitaine :</label>
+                        <input type="number" id="ageCapitaine" name="ageCapitaine" required min="1" max="120">
                     </div>
-                    <div class="form-group">
+                      <div class="form-group">
                         <label for="equipe">Équipe:</label>
                         <select id="equipe" name="equipe" required>
                             <option value="">-- Sélectionnez une équipe --</option>
-                            <option value="equipe1-membres">Équipe 1</option>
-                            <option value="equipe2-membres">Équipe 2</option>
-                            <option value="equipe3-membres">Équipe 3</option>
-                            <option value="equipe4-membres">Équipe 4</option>
+                            <option value="equipe1">Équipe 1</option>
+                            <option value="equipe2">Équipe 2</option>
+                            <option value="equipe3">Équipe 3</option>
+                            <option value="equipe4">Équipe 4</option>
+                            <option value="equipe5">Équipe 5</option>
+                            <option value="equipe6">Équipe 6</option>
+                            <option value="equipe7">Équipe 7</option>
+                            <option value="equipe8">Équipe 8</option>
                         </select>
                     </div>
-                    <input type="hidden" name="_subject" value="Nouvelle inscription au tournoi Five Ramadan!">
+                    <input type="hidden" name="_subject" value="Nouvelle inscription d'équipe!">
                     <input type="text" name="_gotcha" style="display:none">
-                    <button type="submit" class="cta-button">Confirmer l'inscription</button>
-                    <div class="loader" id="formLoader" style="display: none;"></div>
+                    <button type="submit" class="cta-button">Inscrire l'équipe</button>
+                    <div class="loader" id="formLoader"></div>
                 </form>
-                <div id="message"></div>
+                <div id="message" class="message"></div> <!-- Ajout de la classe message -->
             </div>
         </section>
 
         <section id="liste-inscrits">
-            <h2>Liste des inscrits</h2>
-            <div class="inscription-container">
-                <div class="equipe"> <p>Équipe 1</p> <ul class="membres" id="equipe1-membres"></ul> </div>
-                <div class="equipe"> <p>Équipe 2</p> <ul class="membres" id="equipe2-membres"></ul> </div>
-                <div class="equipe"> <p>Équipe 3</p> <ul class="membres" id="equipe3-membres"></ul> </div>
-                <div class="equipe"> <p>Équipe 4</p> <ul class="membres" id="equipe4-membres"></ul> </div>
+           <h2>Liste des équipes</h2>
+            <div class="inscription-container" id="equipes-container">
+                <!-- Les équipes et leurs joueurs seront ajoutés ici dynamiquement -->
             </div>
         </section>
     </main>
+
     <footer>
-        <p>© 2024 Tournoi Five RAMADAN. Tous droits réservés.</p>
+        <p>© 2024 Tournoi Five. Tous droits réservés.</p>
     </footer>
-            
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";  // Optionnel
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
         import { getDatabase, ref, set, onValue, push, serverTimestamp, remove, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
-        const firebaseConfig = {
+      const firebaseConfig = {
             apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
             authDomain: "tournoifoot-e233b.firebaseapp.com",
             projectId: "tournoifoot-e233b",
@@ -372,334 +523,666 @@
         const analytics = getAnalytics(app); // Optionnel
         const database = getDatabase(app);
 
-        // Fonction pour démarrer le compte à rebours
-        function startCountdown() {
-            const tournamentDate = new Date("March 8, 2025 13:00:00").getTime();
-            const countdownElement = document.getElementById('countdown');
-            const countdownInterval = setInterval(function() {
-                const now = new Date().getTime();
-                const distance = tournamentDate - now;
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+// Fonction pour démarrer le compte à rebours
+function startCountdown() {
+    const tournamentDate = new Date("April 6, 2025 15:00:00").getTime();
+    const countdownElement = document.getElementById('countdown');
+    const countdownInterval = setInterval(() => {  // Utilisation d'une arrow function
+        const now = new Date().getTime();
+        const distance = tournamentDate - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                countdownElement.innerHTML = `<div>Début du tournoi dans: ${days}j ${hours}h ${minutes}m ${seconds}s</div>`;
-
-                if (distance < 0) {
-                    clearInterval(countdownInterval);
-                    countdownElement.innerHTML = "Le tournoi a commencé!";
-                }
-            }, 1000);
+        let countdownText = "<div>Début du tournoi dans: ";
+        if (days > 0) {
+          countdownText += `${days}j `;
         }
+        countdownText += `${hours}h ${minutes}m ${seconds}s</div>`;
 
-        // Fonction pour afficher le formulaire d'administration
-        function showAdminScoreForm() {
-            const password = prompt("Entrez le mot de passe admin:");
-            if (password === 'ditib25five') {
-                const adminForm = document.createElement('div');
-                adminForm.className = 'admin-form-container';
-                adminForm.innerHTML = `
-                    <h3>Administration des scores</h3>
-                    <form id="scoreForm">
-                        <div class="admin-form-group">
-                            <label>Match 1:</label>
-                            <span class="team-name">Équipe 1</span> <input type="number" id="score-equipe1" min="0" required>
-                            <span class="vs">vs</span>
-                            <input type="number" id="score-equipe2" min="0" required> <span class="team-name">Équipe 2</span>
-                        </div>
-                        <div class="admin-form-group">
-                            <label>Match 2:</label>
-                            <span class="team-name">Équipe 3</span> <input type="number" id="score-equipe3" min="0" required>
-                            <span class="vs">vs</span>
-                            <input type="number" id="score-equipe4" min="0" required> <span class="team-name">Équipe 4</span>
-                        </div>
-                        <button type="submit" class="cta-button">Enregistrer les scores</button>
-                    </form>
-                `;
-                document.getElementById('roadmap').appendChild(adminForm);
-                document.getElementById('scoreForm').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    saveScores();
-                });
-            } else {
-                alert('Mot de passe incorrect');
-            }
+        countdownElement.innerHTML = countdownText;
+
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            countdownElement.innerHTML = "Le tournoi a commencé!";
         }
-
-        // Fonction pour enregistrer les scores
-        function saveScores() {
-            const score1 = document.getElementById('score-equipe1').value;
-            const score2 = document.getElementById('score-equipe2').value;
-            const score3 = document.getElementById('score-equipe3').value;
-            const score4 = document.getElementById('score-equipe4').value;
-
-            set(ref(database, 'scores/match1'), { equipe1: score1, equipe2: score2 });
-            set(ref(database, 'scores/match2'), { equipe3: score3, equipe4: score4 });
-
-            document.getElementById('score-match1').innerHTML = `Score: ${score1} - ${score2}`;
-            document.getElementById('score-match2').innerHTML = `Score: ${score3} - ${score4}`;
-
-            updateNextMatches(score1, score2, score3, score4);
-            alert('Scores enregistrés avec succès');
-        }
-
-        // Fonction pour mettre à jour les matchs suivants
-        function updateNextMatches(score1, score2, score3, score4) {
-            const winner1 = parseInt(score1) > parseInt(score2) ? 'Équipe 1' : 'Équipe 2';
-            const loser1 = parseInt(score1) > parseInt(score2) ? 'Équipe 2' : 'Équipe 1';
-            const winner2 = parseInt(score3) > parseInt(score4) ? 'Équipe 3' : 'Équipe 4';
-            const loser2 = parseInt(score3) > parseInt(score4) ? 'Équipe 4' : 'Équipe 3';
-
-            document.getElementById('match-finale').innerHTML = `
-                ${winner1} vs ${winner2}
-                <div class="match-time">13h45</div>
-                <div class="match-duration">45 min</div>
-                <div id="score-finale" class="score-display"></div>
-            `;
-            document.getElementById('match-classement').innerHTML = `
-                ${loser1} vs ${loser2}
-                <div class="match-time">13h45</div>
-                <div class="match-duration">45 min</div>
-                <div id="score-classement" class="score-display"></div>
-            `;
-
-            set(ref(database, 'matchs/finale'), { equipe1: winner1, equipe2: winner2 });
-            set(ref(database, 'matchs/classement'), { equipe1: loser1, equipe2: loser2 });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            startCountdown();
-
-            const adminScoreBtn = document.getElementById('adminScoreBtn');
-            if (adminScoreBtn) {
-                adminScoreBtn.addEventListener('click', showAdminScoreForm);
-            }
-
-            const scoreMatch1Ref = ref(database, 'scores/match1');
-            onValue(scoreMatch1Ref, (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    document.getElementById('score-match1').innerHTML = `Score: ${data.equipe1} - ${data.equipe2}`;
-                }
-            });
-
-            const scoreMatch2Ref = ref(database, 'scores/match2');
-            onValue(scoreMatch2Ref, (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    document.getElementById('score-match2').innerHTML = `Score: ${data.equipe3} - ${data.equipe4}`;
-                }
-            });
-
-            const finaleRef = ref(database, 'matchs/finale');
-            onValue(finaleRef, (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    document.getElementById('match-finale').innerHTML = `
-                        ${data.equipe1} vs ${data.equipe2}
-                        <div class="match-time">13h45</div>
-                        <div class="match-duration">45 min</div>
-                        <div id="score-finale" class="score-display"></div>
-                    `;
-                }
-            });
-
-            const classementRef = ref(database, 'matchs/classement');
-            onValue(classementRef, (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    document.getElementById('match-classement').innerHTML = `
-                        ${data.equipe1} vs ${data.equipe2}
-                        <div class="match-time">13h45</div>
-                        <div class="match-duration">45 min</div>
-                        <div id="score-classement" class="score-display"></div>
-                    `;
-                }
-            });
-
-            function loadPlayersFromFirebase() {
-                for (let i = 1; i <= 4; i++) {
-                    const equipeId = `equipe${i}-membres`;
-                    const playersList = document.getElementById(equipeId);
-                    const playersRef = ref(database, 'equipes/' + equipeId);
-
-                    onValue(playersRef, (snapshot) => {
-                        const players = snapshot.val() || {};
-                        playersList.innerHTML = '';
-
-                        if (Object.keys(players).length === 0) {
-                            playersList.innerHTML = '<li style="color: #999; font-style: italic;">Aucun joueur inscrit</li>';
-                            return;
-                        }
-
-                        for (const playerId in players) {
-                            const player = players[playerId];
-                            const li = document.createElement('li');
-                            li.textContent = `${player.prenom} ${player.nom}`;
-                            li.dataset.email = player.email;
-                            li.dataset.tel = player.telephone;
-                            li.dataset.age = player.age;
-                            playersList.appendChild(li);
-                            li.style.animation = 'fadeIn 0.5s';
-                        }
-                    });
-                }
-            }
-
-            async function ajouterJoueurFirebase(equipeId, joueur) {
-                const messageDiv = document.getElementById('message');
-
-                try {
-                    const equipeRef = ref(database, 'equipes/' + equipeId);
-                    const equipeSnapshot = await get(equipeRef);
-                    const equipePlayers = equipeSnapshot.val() || {};
-                    const equipeCount = Object.keys(equipePlayers).length;
-
-if (equipeCount >= 5) {
-    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Cette équipe est déjà complète (5 joueurs maximum).</p>';
-    document.getElementById('formLoader').style.display = 'none';
-    return;
+    }, 1000);
 }
 
-const allTeamsRef = ref(database, 'equipes');
-const allTeamsSnapshot = await get(allTeamsRef);
-const allTeams = allTeamsSnapshot.val() || {};
 
-for (const teamId in allTeams) {
-    const teamPlayers = allTeams[teamId];
-    for (const playerId in teamPlayers) {
-        const existingPlayer = teamPlayers[playerId];
-        if (existingPlayer.nom.toLowerCase() === joueur.nom.toLowerCase() &&
-            existingPlayer.prenom.toLowerCase() === joueur.prenom.toLowerCase()) {
-            messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Un joueur avec ce nom et prénom est déjà inscrit.</p>';
-            document.getElementById('formLoader').style.display = 'none';
-            return;
-        }
+// Fonction pour afficher le formulaire d'administration des scores
+function showAdminScoreForm() {
+    const password = prompt("Entrez le mot de passe admin:");
+    if (password === 'ditib25five') { // Mot de passe admin global
+        const adminForm = document.createElement('div');
+        adminForm.className = 'admin-form-container';
+        adminForm.innerHTML = `
+            <h3>Administration des scores</h3>
+            <form id="scoreForm">
+                <!-- Quarts de finale -->
+                <div class="admin-form-group">
+                    <label>Match 1:</label>
+                    <span class="team-name" id="team1-name"></span> <input type="number" id="score-equipe1" min="0" required>
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-equipe2" min="0" required> <span class="team-name" id="team2-name"></span>
+                </div>
+                <div class="admin-form-group">
+                    <label>Match 2:</label>
+                    <span class="team-name" id="team3-name"></span> <input type="number" id="score-equipe3" min="0" required>
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-equipe4" min="0" required> <span class="team-name" id="team4-name"></span>
+                </div>
+                <div class="admin-form-group">
+                    <label>Match 3:</label>
+                    <span class="team-name" id="team5-name"></span> <input type="number" id="score-equipe5" min="0" required>
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-equipe6" min="0" required> <span class="team-name" id="team6-name"></span>
+                </div>
+                <div class="admin-form-group">
+                    <label>Match 4:</label>
+                    <span class="team-name" id="team7-name"></span> <input type="number" id="score-equipe7" min="0" required>
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-equipe8" min="0" required> <span class="team-name" id="team8-name"></span>
+                </div>
+
+                <!-- Demi-finales principales (inputs initialement cachés) -->
+                <div class="admin-form-group" style="display:none;">
+                    <label>Demi-finale 1:</label>
+                    <span class="team-name" id="demi1-team1"></span> <input type="number" id="score-demi1-1" min="0">
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-demi1-2" min="0"> <span class="team-name" id="demi1-team2"></span>
+                </div>
+                <div class="admin-form-group" style="display:none;">
+                    <label>Demi-finale 2:</label>
+                    <span class="team-name" id="demi2-team1"></span> <input type="number" id="score-demi2-1" min="0">
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-demi2-2" min="0"> <span class="team-name" id="demi2-team2"></span>
+                </div>
+
+                 <!-- Demi-finales consolantes (inputs initialement cachés) -->
+                <div class="admin-form-group" style="display:none;">
+                    <label>Demi-finale Consolante 1:</label>
+                    <span class="team-name" id="demiC1-team1"></span> <input type="number" id="score-demiC1-1" min="0">
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-demiC1-2" min="0"> <span class="team-name" id="demiC1-team2"></span>
+                </div>
+                <div class="admin-form-group" style="display:none;">
+                    <label>Demi-finale Consolante 2:</label>
+                    <span class="team-name" id="demiC2-team1"></span> <input type="number" id="score-demiC2-1" min="0">
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-demiC2-2" min="0"> <span class="team-name" id="demiC2-team2"></span>
+                </div>
+
+                <!-- Finale et Finale Consolante (inputs initialement cachés) -->
+                <div class="admin-form-group" style="display:none;">
+                    <label>Finale 1:</label>
+                    <span class="team-name" id="finale-team1"></span> <input type="number" id="score-finale-1" min="0">
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-finale-2" min="0"> <span class="team-name" id="finale-team2"></span>
+                </div>
+                <div class="admin-form-group" style="display:none;">
+                    <label>Finale 2 :</label>
+                    <span class="team-name" id="finale2-team1"></span> <input type="number" id="score-finale2-1" min="0">
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-finale2-2" min="0"> <span class="team-name" id="finale2-team2"></span>
+                </div>
+                <div class="admin-form-group" style="display:none;">
+                    <label>Finale 3:</label>
+                    <span class="team-name" id="finaleC-team1"></span> <input type="number" id="score-finaleC-1" min="0">
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-finaleC-2" min="0"> <span class="team-name" id="finaleC-team2"></span>
+                </div>
+                <div class="admin-form-group" style="display:none;">
+                    <label>Finale 4:</label>
+                    <span class="team-name" id="finaleC2-team1"></span> <input type="number" id="score-finaleC2-1" min="0">
+                    <span class="vs">vs</span>
+                    <input type="number" id="score-finaleC2-2" min="0"> <span class="team-name" id="finaleC2-team2"></span>
+                </div>
+                <button type="submit" class="cta-button">Enregistrer les scores</button>
+            </form>
+        `;
+        document.getElementById('roadmap').appendChild(adminForm);
+        document.getElementById('scoreForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveScores();
+        });
+    } else {
+        alert('Mot de passe incorrect');
     }
 }
 
-const newPlayerRef = push(equipeRef);
-await set(newPlayerRef, joueur);
+// Fonction pour enregistrer les scores et mettre à jour le tournoi
+function saveScores() {
+    // 1. Récupérer et enregistrer les scores des QUARTS DE FINALE
+    const scoresQuarts = {
+        match1: { equipe1: document.getElementById('score-equipe1').value, equipe2: document.getElementById('score-equipe2').value },
+        match2: { equipe3: document.getElementById('score-equipe3').value, equipe4: document.getElementById('score-equipe4').value },
+        match3: { equipe5: document.getElementById('score-equipe5').value, equipe6: document.getElementById('score-equipe6').value },
+        match4: { equipe7: document.getElementById('score-equipe7').value, equipe8: document.getElementById('score-equipe8').value }
+    };
 
-messageDiv.innerHTML = `<p style="color: #4CAF50; background-color: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 5px;">Inscription réussie pour ${joueur.prenom} ${joueur.nom} dans l'équipe ${equipeId.replace('-membres', '').replace('equipe', 'Équipe ')} !</p>`;
-document.getElementById('inscriptionForm').reset();
-setTimeout(() => {
-    document.getElementById('liste-inscrits').scrollIntoView({ behavior: 'smooth' });
-}, 1000);
+    for (const matchId in scoresQuarts) {
+        set(ref(database, 'scores/' + matchId), scoresQuarts[matchId]);
+        // Pas besoin de mettre à jour l'affichage ici, onValue s'en charge
+    }
 
-} catch (error) {
-console.error("Erreur lors de l'ajout/vérification:", error);
-messageDiv.innerHTML = `<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Une erreur est survenue: ${error.message}</p>`;
-} finally {
-document.getElementById('formLoader').style.display = 'none';
+
+    // 2. Déterminer les gagnants/perdants des QUARTS et mettre à jour les DEMI-FINALES
+    const winners = {};
+    const losers = {};
+    for (let i = 1; i <= 4; i++) {
+        const score1 = parseInt(scoresQuarts[`match${i}`][`equipe${i * 2 - 1}`]);
+        const score2 = parseInt(scoresQuarts[`match${i}`][`equipe${i * 2}`]);
+        winners[`match${i}`] = score1 > score2 ? document.getElementById(`team${i*2 - 1}-name`).textContent : document.getElementById(`team${i*2}-name`).textContent;
+        losers[`match${i}`]  = score1 > score2 ? document.getElementById(`team${i*2}-name`).textContent   : document.getElementById(`team${i*2 - 1}-name`).textContent;
+    }
+
+    // Mettre à jour les *noms* des équipes dans les demi-finales (AVANT de récupérer les scores)
+    document.getElementById('demi1-team1').textContent = winners.match1;
+    document.getElementById('demi1-team2').textContent = winners.match2;
+    document.getElementById('demi2-team1').textContent = winners.match3;
+    document.getElementById('demi2-team2').textContent = winners.match4;
+    document.getElementById('demiC1-team1').textContent = losers.match1;
+    document.getElementById('demiC1-team2').textContent = losers.match2;
+    document.getElementById('demiC2-team1').textContent = losers.match3;
+    document.getElementById('demiC2-team2').textContent = losers.match4;
+
+    // Afficher les inputs des demi-finales (maintenant qu'on a les noms)
+    const demiFinalesInputs = document.querySelectorAll('.admin-form-group[style="display:none;"]');
+    demiFinalesInputs.forEach(inputGroup => inputGroup.style.display = 'block');
+
+
+    // 3. Récupérer et enregistrer les scores des DEMI-FINALES
+    const scoresDemis = {
+        demiPrincipale1: { equipe1: document.getElementById('score-demi1-1').value, equipe2: document.getElementById('score-demi1-2').value },
+        demiPrincipale2: { equipe1: document.getElementById('score-demi2-1').value, equipe2: document.getElementById('score-demi2-2').value },
+        demiConsolante1: { equipe1: document.getElementById('score-demiC1-1').value, equipe2: document.getElementById('score-demiC1-2').value },
+        demiConsolante2: { equipe1: document.getElementById('score-demiC2-1').value, equipe2: document.getElementById('score-demiC2-2').value }
+    };
+
+    for (const demiId in scoresDemis) {
+        set(ref(database, 'scores/' + demiId), scoresDemis[demiId]);
+        // Pas de mise à jour de l'affichage ici, onValue s'en charge
+    }
+
+
+    // 4. Déterminer les équipes pour TOUTES les FINALES
+    const winnerDemi1 = parseInt(scoresDemis.demiPrincipale1.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale1.equipe2 || 0) ? winners.match1 : winners.match2;
+    const loserDemi1  = parseInt(scoresDemis.demiPrincipale1.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale1.equipe2 || 0) ? winners.match2 : winners.match1;
+    const winnerDemi2 = parseInt(scoresDemis.demiPrincipale2.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale2.equipe2 || 0) ? winners.match3 : winners.match4;
+    const loserDemi2  = parseInt(scoresDemis.demiPrincipale2.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale2.equipe2 || 0) ? winners.match4 : winners.match3;
+    const winnerDemiC1 = parseInt(scoresDemis.demiConsolante1.equipe1 || 0) > parseInt(scoresDemis.demiConsolante1.equipe2 || 0) ? losers.match1 : losers.match2;
+    const loserDemiC1_ = parseInt(scoresDemis.demiConsolante1.equipe1 || 0) > parseInt(scoresDemis.demiConsolante1.equipe2 || 0) ? losers.match2 : losers.match1;
+    const winnerDemiC2 = parseInt(scoresDemis.demiConsolante2.equipe1 || 0) > parseInt(scoresDemis.demiConsolante2.equipe2 || 0) ? losers.match3 : losers.match4;
+    const loserDemiC2_ = parseInt(scoresDemis.demiConsolante2.equipe1 || 0) > parseInt(scoresDemis.demiConsolante2.equipe2 || 0) ? losers.match4 : losers.match3;
+
+
+    // 5. Mettre à jour les *noms* des équipes pour les FINALES (AVANT de récupérer les scores)
+    document.getElementById('finale-team1').textContent = winnerDemi1;
+    document.getElementById('finale-team2').textContent = winnerDemi2;
+    document.getElementById('finale2-team1').textContent = loserDemi1;
+    document.getElementById('finale2-team2').textContent = loserDemi2;
+    document.getElementById('finaleC-team1').textContent = winnerDemiC1;
+    document.getElementById('finaleC-team2').textContent = winnerDemiC2;
+    document.getElementById('finaleC2-team1').textContent = loserDemiC1_;
+    document.getElementById('finaleC2-team2').textContent = loserDemiC2_;
+
+    // Afficher les inputs des finales (maintenant qu'on a les noms)
+    const finaleInputs = document.querySelectorAll('.admin-form-group[style="display:none;"]');
+     finaleInputs.forEach(inputGroup => inputGroup.style.display = 'block');
+
+
+    // 6. Récupérer et enregistrer les scores des FINALES
+    const scoresFinales = {
+        finale1: { equipe1: document.getElementById('score-finale-1').value, equipe2: document.getElementById('score-finale-2').value },
+        finale2: { equipe1: document.getElementById('score-finale2-1').value, equipe2: document.getElementById('score-finale2-2').value },
+        finale3: { equipe1: document.getElementById('score-finaleC-1').value, equipe2: document.getElementById('score-finaleC-2').value },
+        finale4: { equipe1: document.getElementById('score-finaleC2-1').value, equipe2: document.getElementById('score-finaleC2-2').value }
+    };
+
+    for (const finaleId in scoresFinales) {
+        set(ref(database, 'scores/' + finaleId), scoresFinales[finaleId]);
+        // Pas de mise à jour de l'affichage ici, onValue s'en charge
+    }
+
+
+    // 7. Calculer et afficher le CLASSEMENT FINAL (1 à 8, avec gestion des égalités)
+    let ranking = [];
+
+    function addTeamsToRanking(team1, score1, team2, score2) {
+        score1 = parseInt(score1 || 0);
+        score2 = parseInt(score2 || 0);
+        if (score1 > score2) {
+            ranking.push(team1);
+            ranking.push(team2);
+        } else if (score2 > score1) {
+            ranking.push(team2);
+            ranking.push(team1);
+        } else {
+            ranking.push(team1, team2); // Égalité
+        }
+    }
+
+    addTeamsToRanking(winnerDemi1, scoresFinales.finale1.equipe1, winnerDemi2, scoresFinales.finale1.equipe2);
+    addTeamsToRanking(loserDemi1, scoresFinales.finale2.equipe1, loserDemi2, scoresFinales.finale2.equipe2);
+    addTeamsToRanking(winnerDemiC1, scoresFinales.finale3.equipe1, winnerDemiC2, scoresFinales.finale3.equipe2);
+    addTeamsToRanking(loserDemiC1_, scoresFinales.finale4.equipe1, loserDemiC2_, scoresFinales.finale4.equipe2);
+
+    const finalRankingList = document.getElementById('final-ranking');
+    finalRankingList.innerHTML = '';
+    ranking.forEach((team, index) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${index + 1}. ${team}`;
+        finalRankingList.appendChild(listItem);
+    });
+
+    alert('Scores enregistrés avec succès'); // Message de confirmation
 }
+
+// -------------------------------------------------------------
+//  GESTION DES INSCRIPTIONS (Capitaine + Joueurs)
+// -------------------------------------------------------------
+
+// Fonction pour inscrire une équipe (par le capitaine)
+async function inscrireEquipe(event) {
+    event.preventDefault();
+    const form = document.getElementById('inscriptionForm');
+    const messageDiv = document.getElementById('message');
+    const loader = document.getElementById('formLoader');
+
+    const nomEquipe = document.getElementById('nomEquipe').value.trim();
+    const teamPassword = document.getElementById('teamPassword').value;
+    const nomCapitaine = document.getElementById('nomCapitaine').value.trim();
+    const prenomCapitaine = document.getElementById('prenomCapitaine').value.trim();
+    const emailCapitaine = document.getElementById('emailCapitaine').value.trim();
+    const telephoneCapitaine = document.getElementById('telephoneCapitaine').value.trim();
+    const ageCapitaine = document.getElementById('ageCapitaine').value;
+    const equipe = document.getElementById('equipe').value; // equipe1, equipe2...
+
+    if (!nomEquipe || !teamPassword || !nomCapitaine || !prenomCapitaine || !emailCapitaine || !telephoneCapitaine || !ageCapitaine || !equipe) {
+        messageDiv.innerHTML = '<p class="message error">Veuillez remplir tous les champs.</p>';
+        return;
+    }
+    if (!/^[0-9]{10}$/.test(telephoneCapitaine)) {
+        messageDiv.innerHTML = '<p class="message error">Veuillez rentrer un numéro de téléphone valide (10 chiffres).</p>';
+        return;
+    }
+     if (isNaN(ageCapitaine) || ageCapitaine < 1 || ageCapitaine > 120) {
+        messageDiv.innerHTML = '<p class="message error">L\'âge doit être un nombre compris entre 1 et 120.</p>';
+        formLoader.style.display = 'none';
+        return;
+    }
+
+    loader.style.display = 'block';
+
+    try {
+        // Vérifie si le nom d'équipe est déjà pris (IMPORTANT!)
+        const equipesRef = ref(database, 'equipes');
+        const snapshot = await get(equipesRef);
+        if (snapshot.exists()) {
+            const equipes = snapshot.val();
+            for (const key in equipes) {
+                if (equipes[key].nomEquipe === nomEquipe) {
+                    messageDiv.innerHTML = '<p class="message error">Ce nom d\'équipe est déjà pris.</p>';
+                    loader.style.display = 'none';
+                    return;
+                }
+            }
+        }
+
+        // Crée l'objet equipeData *avant* l'appel à set()
+        const equipeData = {
+            nomEquipe: nomEquipe,
+            motDePasse: teamPassword,
+            capitaine: {
+                nom: nomCapitaine,
+                prenom: prenomCapitaine,
+                email: emailCapitaine,
+                telephone: telephoneCapitaine,
+                age: ageCapitaine,
+            },
+            membres: {},
+             dateInscription: serverTimestamp()
+
+        };
+        // Enregistre les données de l'équipe dans Firebase
+        await set(ref(database, 'equipes/' + equipe), equipeData);
+
+
+        messageDiv.innerHTML = `<p class="message success">Équipe "${nomEquipe}" inscrite avec succès!</p>`;
+        form.reset();
+        loadTeams(); // Recharge la liste des équipes
+
+    } catch (error) {
+        console.error("Erreur lors de l'inscription de l'équipe:", error);
+        messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
+    } finally {
+        loader.style.display = 'none';
+    }
 }
 
+// Fonction pour charger et afficher les équipes (et leurs membres)
+function loadTeams() {
+    const equipesContainer = document.getElementById('equipes-container');
+    equipesContainer.innerHTML = ''; // Efface le contenu précédent
+
+    const equipesRef = ref(database, 'equipes');
+    onValue(equipesRef, (snapshot) => {
+        if (snapshot.exists()) {
+            const equipes = snapshot.val();
+            for (const equipeId in equipes) {
+                const equipeData = equipes[equipeId];
+                const equipeDiv = document.createElement('div');
+                equipeDiv.className = 'equipe';
+                equipeDiv.innerHTML = `<p>${equipeData.nomEquipe}</p>`;
+
+                const membresList = document.createElement('ul');
+                membresList.className = 'membres';
+
+                // Affiche le capitaine
+                const capitaineItem = document.createElement('li');
+                capitaineItem.textContent = `Capitaine: ${equipeData.capitaine.prenom} ${equipeData.capitaine.nom}`;
+                membresList.appendChild(capitaineItem);
+
+                // Affiche les membres (s'il y en a)
+                if (equipeData.membres) {
+                    for (const membreId in equipeData.membres) {
+                        const membre = equipeData.membres[membreId];
+                        const membreItem = document.createElement('li');
+                        membreItem.textContent = `${membre.prenom} ${membre.nom}`;
+                         // Ajoute un bouton de suppression pour le capitaine
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                        deleteBtn.className = 'delete-player-btn';
+                        deleteBtn.onclick = () => deletePlayer(equipeId, membreId, equipeData.motDePasse);
+                        membreItem.appendChild(deleteBtn);
+                        membresList.appendChild(membreItem);
+                    }
+                } else {
+                    membresList.innerHTML += '<li style="font-style: italic; color: #999;">Aucun joueur ajouté</li>';
+                }
+                equipeDiv.appendChild(membresList);
+
+                // Formulaire pour ajouter un joueur (pour le capitaine)
+                const addPlayerForm = document.createElement('form');
+                addPlayerForm.className = 'team-management-form';
+                addPlayerForm.innerHTML = `
+                    <h3>Ajouter un joueur</h3>
+                    <input type="text" placeholder="Prénom" data-field="prenom" required>
+                    <input type="text" placeholder="Nom" data-field="nom" required>
+                    <input type="password" placeholder="Mot de passe équipe" data-field="password" required>
+                    <button type="submit">Ajouter</button>
+                    <div class="message"></div>
+                `;
+                addPlayerForm.onsubmit = (event) => addPlayer(event, equipeId);
+                equipeDiv.appendChild(addPlayerForm);
+
+                 // Formulaire pour MODIFIER LE NOM DE L'ÉQUIPE (pour le capitaine)
+                const modifyTeamNameForm = document.createElement('form');
+                modifyTeamNameForm.className = 'team-management-form modify-team-name-form';
+                modifyTeamNameForm.innerHTML = `
+                    <h3>Modifier le nom de l'équipe</h3>
+                    <input type="text" placeholder="Nouveau nom" data-field="newTeamName" required>
+                    <input type="password" placeholder="Mot de passe équipe" data-field="password" required>
+                    <button type="submit">Modifier</button>
+                    <div class="message"></div>
+                `;
+
+                modifyTeamNameForm.onsubmit = (event) => modifyTeamName(event, equipeId, equipeData.nomEquipe);
+                equipeDiv.appendChild(modifyTeamNameForm);
+
+                equipesContainer.appendChild(equipeDiv);
+            }
+        } else {
+            equipesContainer.innerHTML = '<p>Aucune équipe inscrite pour le moment.</p>';
+        }
+    });
+}
+
+// Fonction pour supprimer un joueur (par le capitaine)
+async function deletePlayer(equipeId, membreId, teamPassword) {
+    const enteredPassword = prompt("Entrez le mot de passe de l'équipe pour confirmer la suppression:");
+    if (enteredPassword === teamPassword) {
+        try {
+            await remove(ref(database, `equipes/${equipeId}/membres/${membreId}`));
+            alert('Joueur supprimé avec succès.');
+            // Pas besoin de recharger, onValue s'en charge
+        } catch (error) {
+            console.error("Erreur lors de la suppression du joueur:", error);
+            alert("Erreur lors de la suppression du joueur.");
+        }
+    } else {
+        alert("Mot de passe incorrect.");
+    }
+}
+
+// Fonction pour ajouter un joueur (par le capitaine)
+async function addPlayer(event, equipeId) {
+    event.preventDefault();
+    const form = event.target;
+    const messageDiv = form.querySelector('.message');
+    const prenom = form.querySelector('[data-field="prenom"]').value.trim();
+    const nom = form.querySelector('[data-field="nom"]').value.trim();
+    const password = form.querySelector('[data-field="password"]').value;
+
+    if (!prenom || !nom || !password) {
+        messageDiv.innerHTML = '<p class="message error">Tous les champs sont obligatoires.</p>';
+        return;
+    }
+     messageDiv.innerHTML = ''; // Efface les messages précédents
+
+    try {
+        // 1. Vérifier le mot de passe
+        const equipeRef = ref(database, 'equipes/' + equipeId);
+        const snapshot = await get(equipeRef);
+        if (!snapshot.exists() || snapshot.val().motDePasse !== password) {
+            messageDiv.innerHTML = '<p class="message error">Mot de passe incorrect.</p>';
+            return;
+        }
+
+        // 2. Vérifier la limite de joueurs (5 membres + 1 capitaine = 6)
+        const membres = snapshot.val().membres || {};
+        if (Object.keys(membres).length >= 5) {
+            messageDiv.innerHTML = '<p class="message error">Limite de joueurs atteinte (5 + capitaine).</p>';
+            return;
+        }
+
+        // 3. Vérifier si le joueur existe déjà (dans n'importe quelle équipe!)
+           const allTeamsRef = ref(database, 'equipes');
+            const allTeamsSnapshot = await get(allTeamsRef);
+            const allTeams = allTeamsSnapshot.val() || {};
+
+            for (const teamId in allTeams) {
+                const teamPlayers = allTeams[teamId].membres;
+                 if (teamPlayers) { // Vérifie si 'membres' existe
+                    for (const playerId in teamPlayers) {
+                        const existingPlayer = teamPlayers[playerId];
+                        if (existingPlayer.nom.toLowerCase() === nom.toLowerCase() &&
+                            existingPlayer.prenom.toLowerCase() === prenom.toLowerCase()) {
+                            messageDiv.innerHTML = '<p class="message error">Un joueur avec ce nom et prénom est déjà inscrit.</p>';
+                            return; // Important : arrêter la fonction ici
+                        }
+                    }
+                 }
+            }
+
+        // 4. Ajouter le joueur
+        const newPlayerRef = push(ref(database, 'equipes/' + equipeId + '/membres'));
+        await set(newPlayerRef, { prenom: prenom, nom: nom });
+        messageDiv.innerHTML = '<p class="message success">Joueur ajouté!</p>';
+        form.reset();
+
+    } catch (error) {
+        console.error("Erreur lors de l'ajout du joueur:", error);
+        messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
+    }
+}
+
+// Fonction pour modifier le nom de l'équipe (par le capitaine)
+async function modifyTeamName(event, equipeId, oldTeamName) {
+    event.preventDefault();
+    const form = event.target;
+    const messageDiv = form.querySelector('.message');
+    const newTeamName = form.querySelector('[data-field="newTeamName"]').value.trim();
+    const password = form.querySelector('[data-field="password"]').value;
+
+    if (!newTeamName || !password) {
+        messageDiv.innerHTML = '<p class="message error">Tous les champs sont obligatoires.</p>';
+        return;
+    }
+
+    try {
+        // 1. Vérifier le mot de passe
+        const equipeRef = ref(database, 'equipes/' + equipeId);
+        const snapshot = await get(equipeRef);
+         if (!snapshot.exists() || snapshot.val().motDePasse !== password) {
+            messageDiv.innerHTML = '<p class="message error">Mot de passe incorrect.</p>';
+            return;
+        }
+
+        // 2. Vérifier si le nouveau nom est déjà pris
+        const equipesRef = ref(database, 'equipes');
+        const allTeamsSnapshot = await get(equipesRef);
+        if (allTeamsSnapshot.exists()) {
+            const equipes = allTeamsSnapshot.val();
+            for (const key in equipes) {
+                if (key !== equipeId && equipes[key].nomEquipe === newTeamName) {
+                    messageDiv.innerHTML = '<p class="message error">Ce nom d\'équipe est déjà pris.</p>';
+                    return;
+                }
+            }
+        }
+
+        // 3. Mettre à jour le nom de l'équipe dans Firebase
+        await set(ref(database, 'equipes/' + equipeId + '/nomEquipe'), newTeamName);
+
+        // 4. Mettre à jour les noms d'équipe dans le DÉROULEMENT DES MATCHS
+        updateTeamNamesInMatches(equipeId, newTeamName);
+
+
+        messageDiv.innerHTML = '<p class="message success">Nom d\'équipe mis à jour!</p>';
+        form.reset();
+
+
+    } catch (error) {
+        console.error("Erreur lors de la modification du nom de l'équipe:", error);
+        messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
+    }
+}
+
+// Fonction CRUCIALE pour mettre à jour les noms d'équipe DYNAMIQUEMENT
+function updateTeamNamesInMatches(equipeId, newTeamName) {
+
+    // Met à jour le nom dans la liste des équipes (section #liste-inscrits)
+     const equipeDiv = document.querySelector(`#equipes-container .equipe p`);
+    if (equipeDiv && equipeDiv.textContent === document.getElementById(`team${equipeId.slice(-1)}-name`).textContent) {
+        equipeDiv.textContent = newTeamName;
+    }
+
+    // Met à jour les noms dans les QUARTS DE FINALE
+    for (let i = 1; i <= 8; i++) {
+        const teamSpan = document.getElementById(`team${i}-name`);
+        if (teamSpan && equipeId === `equipe${i}`) {
+            teamSpan.textContent = newTeamName;
+        }
+    }
+
+    // Met à jour les noms dans les DEMI-FINALES/FINALES (si déjà déterminées)
+    const allMatchSpans = document.querySelectorAll('.match span'); // Sélectionne *tous* les spans dans les matchs
+    allMatchSpans.forEach(span => {
+        if (span.textContent === document.getElementById(`team${equipeId.slice(-1)}-name`).textContent) {
+             span.textContent = newTeamName;
+         }
+    });
+}
+
+// Fonction pour réinitialiser les scores (ADMIN)
+function resetScores() {
+    const password = prompt("Entrez le mot de passe admin pour réinitialiser les scores:");
+    if (password === 'ditib25five') {
+        if (confirm('Êtes-vous sûr de vouloir réinitialiser TOUS les scores? Cette action est irréversible.')) {
+            try {
+                // Supprime TOUS les scores de Firebase
+                remove(ref(database, 'scores'));
+
+                // Réinitialise l'affichage des scores et des équipes dans le déroulement des matchs
+                const scoreDisplays = document.querySelectorAll('.score-display');
+                scoreDisplays.forEach(display => display.textContent = '');
+
+                // Remet les noms d'équipe par défaut (Équipe 1, Équipe 2, etc.) dans les QUARTS DE FINALE
+                for (let i = 1; i <= 8; i++) {
+                    document.getElementById(`team${i}-name`).textContent = `Équipe ${i}`;
+                }
+
+                // Efface les noms d'équipe dans les DEMI-FINALES et FINALES
+                const teamSpans = document.querySelectorAll('.match span[id^="demi"], .match span[id^="finale"]');
+                teamSpans.forEach(span => span.textContent = '');
+
+                //Efface le classement
+                const finalRankingList = document.getElementById('final-ranking');
+                 finalRankingList.innerHTML = '';
+
+                alert('Scores réinitialisés avec succès!');
+
+            } catch (error) {
+                console.error("Erreur lors de la réinitialisation des scores:", error);
+                alert("Erreur lors de la réinitialisation des scores.");
+            }
+        }
+    } else {
+        alert("Mot de passe incorrect.");
+    }
+}
+
+
+// Gestion de la navigation et du défilement (inchangé)
 const navItems = document.querySelectorAll('.bottom-nav a');
 const sections = document.querySelectorAll('main > section');
 
 function updateActiveNavItem() {
-let currentSectionId = '';
-let minDistance = Infinity;
+    let currentSectionId = '';
+    let minDistance = Infinity;
 
-sections.forEach(section => {
-const rect = section.getBoundingClientRect();
-const distance = Math.abs(rect.top);
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.abs(rect.top);
 
-if (distance < minDistance) {
-    minDistance = distance;
-    currentSectionId = section.id;
-}
-});
+        if (distance < minDistance) {
+            minDistance = distance;
+            currentSectionId = section.id;
+        }
+    });
 
-navItems.forEach(item => {
-item.classList.remove('active');
-if (item.getAttribute('href') === `#${currentSectionId}`) {
-    item.classList.add('active');
-}
-});
+    navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href') === `#${currentSectionId}`) {
+            item.classList.add('active');
+        }
+    });
 }
 
 updateActiveNavItem();
 window.addEventListener('scroll', updateActiveNavItem);
 
 navItems.forEach(item => {
-item.addEventListener('click', function(event) {
-event.preventDefault();
-const targetId = this.getAttribute('href');
-const targetElement = document.querySelector(targetId);
+    item.addEventListener('click', function(event) {
+        event.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
 
-if (targetElement) {
-    const navHeight = document.querySelector('.bottom-nav').offsetHeight;
-    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight + 10;
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-}
-});
-});
-
-loadPlayersFromFirebase();
-
-const form = document.getElementById('inscriptionForm');
-const messageDiv = document.getElementById('message');
-const formLoader = document.getElementById('formLoader');
-
-if (form) {
-form.addEventListener('submit', function(event) {
-event.preventDefault(); // Ajouté pour empêcher la soumission par défaut
-formLoader.style.display = 'block';
-
-const nom = document.getElementById('nom').value.trim();
-const prenom = document.getElementById('prenom').value.trim();
-const email = document.getElementById('email').value.trim();
-const telephone = document.getElementById('telephone').value.trim();
-const age = document.getElementById('age').value;
-const equipe = document.getElementById('equipe').value;
-
-if (!nom || !prenom || !email || !telephone || !age || !equipe) {
-    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez remplir tous les champs.</p>';
-    formLoader.style.display = 'none';
-    return;
-}
-if (!/^[0-9]{10}$/.test(telephone)) {
-    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">Veuillez rentrer un numéro de téléphone valide (10 chiffres).</p>';
-    formLoader.style.display = 'none';
-    return;
-}
-if (isNaN(age) || age < 1 || age > 120) {
-    messageDiv.innerHTML = '<p style="color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); padding: 10px; border-radius: 5px;">L\'âge doit être un nombre compris entre 1 et 120.</p>';
-    formLoader.style.display = 'none';
-    return;
-}
-
-const joueur = {
-    nom: nom,
-    prenom: prenom,
-    email: email,
-    telephone: telephone,
-    age: age,
-    dateInscription: serverTimestamp()
-};
-
-ajouterJoueurFirebase(equipe, joueur)
-.then(() => {
-    // La promesse then est gérée par ajouterJoueurFirebase
-})
-.catch(error => {
-    console.error("Erreur Firebase:", error);
-     messageDiv.innerHTML = `<p style="color: #ff3c3c;">Erreur Firebase: ${error.message}</p>`;
-
-}).finally(() => {
-     formLoader.style.display = 'none';
+        if (targetElement) {
+            const navHeight = document.querySelector('.bottom-nav').offsetHeight;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight + 10;
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+        }
+    });
 });
 
-const emailInput = document.getElementById('email');
- if (emailInput) {
-     document.querySelector('input[name="_replyto"]').value = emailInput.value;
- }
-});
-}
 
+
+
+// Bouton de réinitialisation des ÉQUIPES (Admin)
 const footer = document.querySelector('footer');
 const resetButton = document.createElement('button');
 resetButton.textContent = 'Réinitialiser les équipes (Admin)';
@@ -708,78 +1191,88 @@ resetButton.style.marginTop = '20px';
 resetButton.style.backgroundColor = '#ff3c3c';
 
 if (footer) {
-resetButton.addEventListener('click', function() {
-const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
-if (password === 'ditib25five') {  //  mot de passe
-    if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
-        remove(ref(database, 'equipes'))
-            .then(() => {
-                alert('Toutes les équipes ont été réinitialisées.');
-                window.location.reload();
-            })
-            .catch((error) => {
-                console.error("Erreur lors de la réinitialisation:", error);
-                alert('Une erreur est survenue lors de la réinitialisation.');
-            });
-    }
-} else if (password !== null) {
-    alert('Mot de passe incorrect.');
-}
-});
-footer.appendChild(resetButton);
-}
-
-//  fonctionnalité de suppression de membre individuel
-function enableAdminMode() {
-const password = prompt("Entrez le mot de passe admin :");
-if (password === 'ditib25five') { //  mot de passe 
-// Activer le mode admin
-const allPlayerItems = document.querySelectorAll('.membres li');
-allPlayerItems.forEach(item => {
-    // Ajouter un bouton de suppression à chaque joueur
-    const deleteBtn = document.createElement('button');
-    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-    deleteBtn.className = 'delete-player-btn';
-            
-    deleteBtn.addEventListener('click', function() {
-        const playerName = item.textContent.trim();
-        const equipeId = item.parentElement.id;
-        const playerEmail = item.dataset.email;
-                
-        if (confirm(`Êtes-vous sûr de vouloir supprimer ${playerName} ?`)) {
-            // Trouver et supprimer le joueur dans Firebase
-            const equipeRef = ref(database, 'equipes/' + equipeId);
-            get(equipeRef).then((snapshot) => {
-                const players = snapshot.val() || {};
-                for (const playerId in players) {
-                    const player = players[playerId];
-                        if (player.email === playerEmail) {
-                            // Supprimer ce joueur
-                            remove(ref(database, 'equipes/' + equipeId + '/' + playerId))
-                                .then(() => {
-                                    alert(`${playerName} a été supprimé avec succès.`);
-                                 })
-                                .catch((error) => {
-                                    console.error("Erreur lors de la suppression:", error);
-                                    alert('Une erreur est survenue lors de la suppression.');
-                                });
-                        break;
-                    }
-                }
-            });
+    resetButton.addEventListener('click', function() {
+        const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
+        if (password === 'ditib25five') { //  mot de passe
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
+                remove(ref(database, 'equipes'))
+                     .then(() => {
+                        // Réinitialise aussi les scores (appel de la fonction)
+                        resetScores(); // Réinitialisation des scores *après* les équipes
+                        alert('Toutes les équipes et les scores ont été réinitialisés.');
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error("Erreur lors de la réinitialisation:", error);
+                        alert('Une erreur est survenue lors de la réinitialisation.');
+                    });
+            }
+        } else if (password !== null) {
+            alert('Mot de passe incorrect.');
         }
     });
-            
-    item.appendChild(deleteBtn);
-});
-        
-alert('Mode admin activé. Vous pouvez maintenant supprimer des membres individuellement.');
-} else if (password !== null) {
-alert('Mot de passe incorrect.');
-}
+    footer.appendChild(resetButton);
 }
 
-// Ajouter un bouton pour activer le mode admin
+
+// Fonctionnalité de suppression de membre individuel (Admin)
+function enableAdminMode() {
+    const password = prompt("Entrez le mot de passe admin :");
+    if (password === 'ditib25five') { //  mot de passe
+        // Activer le mode admin
+        const allPlayerItems = document.querySelectorAll('.membres li');
+        allPlayerItems.forEach(item => {
+             // Vérifie si l'élément li contient déjà un bouton de suppression
+            if (!item.querySelector('.delete-player-btn')) {
+                // Ajouter un bouton de suppression à chaque joueur
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                deleteBtn.className = 'delete-player-btn';
+
+                deleteBtn.addEventListener('click', function () {
+                    const playerName = item.textContent.trim();
+                    const equipeId = item.parentElement.parentElement.querySelector('p').textContent.trim();
+                    const playerEmail = item.dataset.email;
+
+                    if (confirm(`Êtes-vous sûr de vouloir supprimer ${playerName} ?`)) {
+                        // Trouver et supprimer le joueur dans Firebase
+                        const equipesRef = ref(database, 'equipes');
+                        get(equipesRef).then((snapshot) => {
+                            const equipes = snapshot.val() || {};
+                            for (const key in equipes) {
+                                if (equipes[key].nomEquipe === equipeId) {
+                                    const teamPlayers = equipes[key].membres;
+                                     if(teamPlayers){
+                                        for (const playerId in teamPlayers) {
+                                            const player = teamPlayers[playerId];
+                                            if (player.nom + " " + player.prenom === playerName) {
+                                                remove(ref(database, 'equipes/' + key + '/membres/' + playerId))
+                                                    .then(() => {
+                                                        alert(`${playerName} a été supprimé avec succès.`);
+                                                    })
+                                                    .catch((error) => {
+                                                        console.error("Erreur lors de la suppression:", error);
+                                                        alert('Une erreur est survenue lors de la suppression.');
+                                                    });
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+
+                item.appendChild(deleteBtn);
+            }
+        });
+
+        alert('Mode admin activé. Vous pouvez maintenant supprimer des membres individuellement.');
+    } else if (password !== null) {
+        alert('Mot de passe incorrect.');
+    }
+}
+// Ajouter un bouton pour activer le mode admin (dans le footer)
 const adminButton = document.createElement('button');
 adminButton.textContent = 'Mode Admin (Supprimer des membres)';
 adminButton.className = 'cta-button';
@@ -790,40 +1283,135 @@ adminButton.style.marginLeft = '10px';
 adminButton.addEventListener('click', enableAdminMode);
 footer.appendChild(adminButton);
 
+// Gestion des étapes du tournoi (affichage)
 const steps = document.querySelectorAll('.match-step');
 const nextButton = document.getElementById('nextStep');
 let currentStep = 0;
 
 function showStep(stepIndex) {
-steps.forEach((step, index) => {
-if (index === stepIndex) {
-step.style.display = 'block'; // Affiche l'étape
-step.classList.add('active'); // Garder active pour l'animation
-} else {
-step.style.display = 'none'; // Masque les autres étapes
-step.classList.remove('active');
-}
-});
+    steps.forEach((step, index) => {
+        if (index === stepIndex) {
+            step.style.display = 'block';
+            step.classList.add('active');
+        } else {
+            step.style.display = 'none';
+            step.classList.remove('active');
+        }
+    });
 
-// Mettre à jour le texte du bouton
-if (stepIndex === steps.length - 1) {
-nextButton.textContent = 'Recommencer';
-} else {
-nextButton.textContent = 'Étape suivante';
-}
+    if (stepIndex === steps.length - 1) {
+        nextButton.textContent = 'Recommencer';
+    } else {
+        nextButton.textContent = 'Étape suivante';
+    }
 }
 
-// Gestionnaire d'événement pour le bouton
 if (nextButton) {
-nextButton.addEventListener('click', function() {
-currentStep = (currentStep + 1) % steps.length;
-showStep(currentStep);
-});
-
-// Afficher la première étape au chargement
-showStep(0);
+    nextButton.addEventListener('click', function() {
+        currentStep = (currentStep + 1) % steps.length;
+        showStep(currentStep);
+    });
+    showStep(0); // Afficher la première étape au chargement
 }
-});  // Fin du DOMContentLoaded
+
+// Chargement initial des données et démarrage
+document.addEventListener('DOMContentLoaded', function() {
+    startCountdown();
+    loadTeams(); // Charger les équipes (et leurs joueurs)
+
+      // Ajout de l'écouteur d'événements pour le formulaire d'inscription
+    const inscriptionForm = document.getElementById('inscriptionForm');
+    if (inscriptionForm) {
+        inscriptionForm.addEventListener('submit', inscrireEquipe);
+    }
+
+    const adminScoreBtn = document.getElementById('adminScoreBtn');
+    if (adminScoreBtn) {
+        adminScoreBtn.addEventListener('click', showAdminScoreForm);
+    }
+
+    //Bouton reset
+    const resetScoresBtn = document.getElementById('resetScoresBtn');
+    if (resetScoresBtn) {
+        resetScoresBtn.addEventListener('click', resetScores);
+    }
+    // Initialisation des écouteurs pour les scores des quarts de finale
+    for (let i = 1; i <= 4; i++) {
+        const matchRef = ref(database, `scores/match${i}`);
+        onValue(matchRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                    document.getElementById(`score-match${i}`).innerHTML = `Score: ${data.equipe1} - ${data.equipe2}`;
+            }
+        });
+    }
+    // Écouteurs pour les demi-finales PRINCIPALES
+    const demiPrincipale1Ref = ref(database, 'scores/demiPrincipale1');
+    onValue(demiPrincipale1Ref, (snapshot) => {
+        const data = snapshot.val();
+            if (data) {
+                document.getElementById('score-demi-finale-principale1').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
+            }
+    });
+
+    const demiPrincipale2Ref = ref(database, 'scores/demiPrincipale2');
+    onValue(demiPrincipale2Ref, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            document.getElementById('score-demi-finale-principale2').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
+        }
+    });
+
+    // Écouteurs pour les demi-finales CONSOLANTES
+    const demiConsolante1Ref = ref(database, 'scores/demiConsolante1');
+    onValue(demiConsolante1Ref, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            document.getElementById('score-demi-finale-consolante1').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
+        }
+    });
+
+    const demiConsolante2Ref = ref(database, 'scores/demiConsolante2');
+    onValue(demiConsolante2Ref, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+                document.getElementById('score-demi-finale-consolante2').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
+        }
+    });
+        // Écouteur pour la FINALE 1
+    const finaleRef = ref(database, 'scores/finale1');
+    onValue(finaleRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+                document.getElementById('score-finale').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
+            }
+    });
+
+    // Écouteur pour la FINALE 2
+const finale2Ref = ref(database, 'scores/finale2');
+    onValue(finale2Ref, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+        document.getElementById('score-finale2').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
+    }
+});
+// Écouteur pour la FINALE 3
+const finale3Ref = ref(database, 'scores/finale3');
+    onValue(finale3Ref, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+        document.getElementById('score-finale3').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
+    }
+});
+// Écouteur pour la FINALE 4
+const finale4Ref = ref(database, 'scores/finale4');
+    onValue(finale4Ref, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+        document.getElementById('score-finale4').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
+    }
+});
+});
 </script>
 </body>
 </html>
