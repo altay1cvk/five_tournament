@@ -247,11 +247,6 @@
             background-color: #0077cc;
         }
 
-          .modify-team-name-form {
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px dashed #444;
-        }
           /* Style pour le message d'erreur/succès */
         .message {
             margin-top: 10px;
@@ -647,10 +642,41 @@ function showAdminScoreForm() {
             e.preventDefault();
             saveScores();
         });
+
+        // Pré-remplir les noms d'équipe dans le formulaire admin
+        loadTeamNamesForAdmin();
+
+
     } else {
         alert('Mot de passe incorrect');
     }
 }
+
+//Fonction pour préremplir les noms dans admin
+function loadTeamNamesForAdmin() {
+    const teamNames = {};
+
+    // Récupérer les noms des équipes depuis Firebase
+    const equipesRef = ref(database, 'equipes');
+    get(equipesRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            const equipes = snapshot.val();
+            for (const equipeId in equipes) {
+                //Trouver dans quel match l'équipe est
+                const teamNumber = parseInt(equipeId.replace('equipe', ''));
+                teamNames[teamNumber] = equipes[equipeId].nomEquipe;
+            }
+          // Mettre à jour les noms dans le formulaire
+          for (let i = 1; i <= 8; i++) {
+            const teamNameElement = document.getElementById(`team${i}-name`);
+            if (teamNameElement && teamNames[i]) {
+                teamNameElement.textContent = teamNames[i];
+            }
+          }
+        }
+    });
+}
+
 
 // Fonction pour enregistrer les scores et mettre à jour le tournoi
 function saveScores() {
@@ -671,14 +697,27 @@ function saveScores() {
     // 2. Déterminer les gagnants/perdants des QUARTS et mettre à jour les DEMI-FINALES
     const winners = {};
     const losers = {};
-    for (let i = 1; i <= 4; i++) {
+      for (let i = 1; i <= 4; i++) {
+        const team1Name = document.getElementById(`team${i * 2 - 1}-name`).textContent;
+        const team2Name = document.getElementById(`team${i * 2}-name`).textContent;
         const score1 = parseInt(scoresQuarts[`match${i}`][`equipe${i * 2 - 1}`]);
         const score2 = parseInt(scoresQuarts[`match${i}`][`equipe${i * 2}`]);
-        winners[`match${i}`] = score1 > score2 ? document.getElementById(`team${i*2 - 1}-name`).textContent : document.getElementById(`team${i*2}-name`).textContent;
-        losers[`match${i}`]  = score1 > score2 ? document.getElementById(`team${i*2}-name`).textContent   : document.getElementById(`team${i*2 - 1}-name`).textContent;
+
+        winners[`match${i}`] = score1 > score2 ? team1Name : team2Name;
+        losers[`match${i}`] = score1 > score2 ? team2Name : team1Name;
     }
 
     // Mettre à jour les *noms* des équipes dans les demi-finales (AVANT de récupérer les scores)
+    document.getElementById('demi1-team1').textContent = winners.match1;
+    document.getElementById('demi1-team2').textContent = winners.match2;
+    document.getElementById('demi2-team1').textContent = winners.match3;
+    document.getElementById('demi2-team2').textContent = winners.match4;
+    document.getElementById('demiC1-team1').textContent = losers.match1;
+    document.getElementById('demiC1-team2').textContent = losers.match2;
+    document.getElementById('demiC2-team1').textContent = losers.match3;
+    document.getElementById('demiC2-team2').textContent = losers.match4;
+
+      // Pré-remplir les spans des demi-finales dans le formulaire admin
     document.getElementById('demi1-team1').textContent = winners.match1;
     document.getElementById('demi1-team2').textContent = winners.match2;
     document.getElementById('demi2-team1').textContent = winners.match3;
@@ -727,6 +766,17 @@ function saveScores() {
     document.getElementById('finaleC-team2').textContent = winnerDemiC2;
     document.getElementById('finaleC2-team1').textContent = loserDemiC1_;
     document.getElementById('finaleC2-team2').textContent = loserDemiC2_;
+
+     // Pré-remplir les spans des finales dans le formulaire
+    document.getElementById('finale-team1').textContent = winnerDemi1;
+    document.getElementById('finale-team2').textContent = winnerDemi2;
+    document.getElementById('finale2-team1').textContent = loserDemi1;
+    document.getElementById('finale2-team2').textContent = loserDemi2;
+    document.getElementById('finaleC-team1').textContent = winnerDemiC1;
+    document.getElementById('finaleC-team2').textContent = winnerDemiC2;
+    document.getElementById('finaleC2-team1').textContent = loserDemiC1_;
+    document.getElementById('finaleC2-team2').textContent = loserDemiC2_;
+
 
     // Afficher les inputs des finales (maintenant qu'on a les noms)
     const finaleInputs = document.querySelectorAll('.admin-form-group[style="display:none;"]');
@@ -854,11 +904,27 @@ async function inscrireEquipe(event) {
         form.reset();
         loadTeams(); // Recharge la liste des équipes
 
+         //Mettre à jour dynamiquement le nom de l'équipe dans déroulement des matchs
+        updateTeamNameInMatchDisplay(equipe, nomEquipe);
+
+
     } catch (error) {
         console.error("Erreur lors de l'inscription de l'équipe:", error);
         messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
     } finally {
         loader.style.display = 'none';
+    }
+}
+
+//Fonction pour mettre à jour le nom de l'équipe dans déroulement des matchs
+function updateTeamNameInMatchDisplay(equipeId, newTeamName) {
+    // Extraire le numéro de l'équipe (ex: "equipe1" -> 1)
+    const teamNumber = parseInt(equipeId.replace('equipe', ''));
+
+    // Mettre à jour le nom dans le span correspondant
+    const teamSpan = document.querySelector(`.team${teamNumber}-name`);
+    if (teamSpan) {
+        teamSpan.textContent = newTeamName;
     }
 }
 
@@ -917,20 +983,6 @@ function loadTeams() {
                 `;
                 addPlayerForm.onsubmit = (event) => addPlayer(event, equipeId);
                 equipeDiv.appendChild(addPlayerForm);
-
-                 // Formulaire pour MODIFIER LE NOM DE L'ÉQUIPE (pour le capitaine)
-                const modifyTeamNameForm = document.createElement('form');
-                modifyTeamNameForm.className = 'team-management-form modify-team-name-form';
-                modifyTeamNameForm.innerHTML = `
-                    <h3>Modifier le nom de l'équipe</h3>
-                    <input type="text" placeholder="Nouveau nom" data-field="newTeamName" required>
-                    <input type="password" placeholder="Mot de passe équipe" data-field="password" required>
-                    <button type="submit">Modifier</button>
-                    <div class="message"></div>
-                `;
-
-                modifyTeamNameForm.onsubmit = (event) => modifyTeamName(event, equipeId, equipeData.nomEquipe);
-                equipeDiv.appendChild(modifyTeamNameForm);
 
                 equipesContainer.appendChild(equipeDiv);
             }
@@ -1017,84 +1069,6 @@ async function addPlayer(event, equipeId) {
         console.error("Erreur lors de l'ajout du joueur:", error);
         messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
     }
-}
-
-// Fonction pour modifier le nom de l'équipe (par le capitaine)
-async function modifyTeamName(event, equipeId, oldTeamName) {
-    event.preventDefault();
-    const form = event.target;
-    const messageDiv = form.querySelector('.message');
-    const newTeamName = form.querySelector('[data-field="newTeamName"]').value.trim();
-    const password = form.querySelector('[data-field="password"]').value;
-
-    if (!newTeamName || !password) {
-        messageDiv.innerHTML = '<p class="message error">Tous les champs sont obligatoires.</p>';
-        return;
-    }
-
-    try {
-        // 1. Vérifier le mot de passe
-        const equipeRef = ref(database, 'equipes/' + equipeId);
-        const snapshot = await get(equipeRef);
-         if (!snapshot.exists() || snapshot.val().motDePasse !== password) {
-            messageDiv.innerHTML = '<p class="message error">Mot de passe incorrect.</p>';
-            return;
-        }
-
-        // 2. Vérifier si le nouveau nom est déjà pris
-        const equipesRef = ref(database, 'equipes');
-        const allTeamsSnapshot = await get(equipesRef);
-        if (allTeamsSnapshot.exists()) {
-            const equipes = allTeamsSnapshot.val();
-            for (const key in equipes) {
-                if (key !== equipeId && equipes[key].nomEquipe === newTeamName) {
-                    messageDiv.innerHTML = '<p class="message error">Ce nom d\'équipe est déjà pris.</p>';
-                    return;
-                }
-            }
-        }
-
-        // 3. Mettre à jour le nom de l'équipe dans Firebase
-        await set(ref(database, 'equipes/' + equipeId + '/nomEquipe'), newTeamName);
-
-        // 4. Mettre à jour les noms d'équipe dans le DÉROULEMENT DES MATCHS
-        updateTeamNamesInMatches(equipeId, newTeamName);
-
-
-        messageDiv.innerHTML = '<p class="message success">Nom d\'équipe mis à jour!</p>';
-        form.reset();
-
-
-    } catch (error) {
-        console.error("Erreur lors de la modification du nom de l'équipe:", error);
-        messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
-    }
-}
-
-// Fonction CRUCIALE pour mettre à jour les noms d'équipe DYNAMIQUEMENT
-function updateTeamNamesInMatches(equipeId, newTeamName) {
-
-    // Met à jour le nom dans la liste des équipes (section #liste-inscrits)
-     const equipeDiv = document.querySelector(`#equipes-container .equipe p`);
-    if (equipeDiv && equipeDiv.textContent === document.getElementById(`team${equipeId.slice(-1)}-name`).textContent) {
-        equipeDiv.textContent = newTeamName;
-    }
-
-    // Met à jour les noms dans les QUARTS DE FINALE
-    for (let i = 1; i <= 8; i++) {
-        const teamSpan = document.getElementById(`team${i}-name`);
-        if (teamSpan && equipeId === `equipe${i}`) {
-            teamSpan.textContent = newTeamName;
-        }
-    }
-
-    // Met à jour les noms dans les DEMI-FINALES/FINALES (si déjà déterminées)
-    const allMatchSpans = document.querySelectorAll('.match span'); // Sélectionne *tous* les spans dans les matchs
-    allMatchSpans.forEach(span => {
-        if (span.textContent === document.getElementById(`team${equipeId.slice(-1)}-name`).textContent) {
-             span.textContent = newTeamName;
-         }
-    });
 }
 
 // Fonction pour réinitialiser les scores (ADMIN)
