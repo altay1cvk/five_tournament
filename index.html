@@ -515,6 +515,15 @@
         const analytics = getAnalytics(app);
         const database = getDatabase(app);
 
+
+function escapeICSValue(str) {
+     return str.replace(/\\/g, '\\\\')
+             .replace(/;/g, '\\;')
+             .replace(/,/g, '\\,')
+             .replace(/\n/g, '\\n');
+ }
+
+
 // Fonction pour démarrer le compte à rebours
 function startCountdown() {
     const tournamentDate = new Date("April 6, 2025 15:00:00").getTime();
@@ -569,9 +578,9 @@ function generateCalendarUrl(type) {
                     `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`, // Timestamp actuel
                     `DTSTART:${eventDetails.start}`,
                     `DTEND:${eventDetails.end}`,
-                    `SUMMARY:${encodeURIComponent(eventDetails.title)}`,
-                    `DESCRIPTION:${encodeURIComponent(eventDetails.details)}`,
-                    `LOCATION:${encodeURIComponent(eventDetails.location)}`,
+                    `SUMMARY:${escapeICSValue(eventDetails.title)}`,  // <--- CORRECTION ICI
+                    `DESCRIPTION:${escapeICSValue(eventDetails.details)}`, // <--- CORRECTION ICI
+                    `LOCATION:${escapeICSValue(eventDetails.location)}`, // <--- CORRECTION ICI
                     'BEGIN:VALARM',
                     'ACTION:DISPLAY',
                     'TRIGGER:PT0M', //  <--  C'est ici:  PT0M signifie 0 minutes avant/après = à l'heure
