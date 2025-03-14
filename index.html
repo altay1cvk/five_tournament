@@ -30,7 +30,7 @@
         .arrow { color: #00aaff; font-size: 1.3rem; margin: 5px; }
         .match-group.perdant { margin-top: 20px; border-top: 1px dashed #444; padding-top: 20px; width: 100%; }
         .inscription-container { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; width: 100%; max-width: 900px; margin: 0 auto; }
-        .equipe { margin: 0.5rem 0; border: 1px solid #444; padding: 1rem; border-radius: 8px; width: 90%; max-width: 500px; background-color: #222; transition: transform 0.3s; }
+        .equipe { margin: 0.5rem; border: 1px solid #444; padding: 1rem; border-radius: 8px; width: 90%; max-width: 500px; background-color: #222; transition: transform 0.3s; }
         .equipe:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
         .equipe p { font-weight: bold; margin-bottom: 0.5rem; font-size: 1.1rem; color: #00aaff; }
         .membres { list-style: none; padding-left: 0; margin-top: 0.5rem; }
@@ -512,7 +512,7 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app); // Optionnel
+        const analytics = getAnalytics(app);
         const database = getDatabase(app);
 
 // Fonction pour démarrer le compte à rebours
@@ -543,6 +543,7 @@ function startCountdown() {
     }, 1000);
 }
 
+// MODIFICATION ICI : Ajout du choix du type de calendrier
 function generateCalendarUrl(type) {
     const eventDetails = {
         title: "Tournoi Five - Convocation",
@@ -587,6 +588,14 @@ function generateCalendarUrl(type) {
             downloadLink.click();
             document.body.removeChild(downloadLink); // Nettoyage
             return; // Important: Arrêter la fonction après le téléchargement
+
+        case 'iphone': // Redirection vers le format ics pour iPhone
+            generateCalendarUrl('ics');
+            return; // On sort pour éviter d'ouvrir une fenêtre en plus
+        
+        case 'android': // URL pour Google Calendar (qui fonctionne sur Android)
+             generateCalendarUrl('google');
+            return; // On sort pour éviter d'ouvrir une fenêtre en plus
 
         default:
             console.error('Type de calendrier non supporté.');
@@ -1115,8 +1124,8 @@ async function addPlayer(event, equipeId) {
             }
         }
 
-        // 4. Ajouter le joueur
-        const newPlayerRef = push(ref(database, 'equipes/' + equipeId + '/membres'));
+                // 4. Ajouter le joueur
+                const newPlayerRef = push(ref(database, 'equipes/' + equipeId + '/membres'));
         await set(newPlayerRef, { prenom: prenom, nom: nom });
         messageDiv.innerHTML = '<p class="message success">Joueur ajouté!</p>';
         form.reset();
@@ -1487,18 +1496,18 @@ const finale4Ref = ref(database, 'scores/finale4');
     }
 });
 
-    // Gestion de l'ajout au calendrier
+   // Gestion de l'ajout au calendrier
     const addToCalendarBtn = document.getElementById('add-to-calendar-btn');
     if (addToCalendarBtn) {
         addToCalendarBtn.addEventListener('click', function() {
             // Demander à l'utilisateur de choisir le type de calendrier
-            const calendarType = prompt("Choisissez votre calendrier :  'google' ou 'ics' (pour Apple Calendar/Outlook):");
+            const calendarType = prompt("Choisissez votre calendrier :  'iphone' (Apple Calendar), 'android' (Google Calendar), ou 'ics' (fichier .ics pour Outlook, etc.):");
             if (calendarType) {
                 generateCalendarUrl(calendarType.toLowerCase());
             }
         });
     }
 });
-</script>
+    </script>
 </body>
 </html>
