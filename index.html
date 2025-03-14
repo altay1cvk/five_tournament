@@ -545,64 +545,54 @@ function startCountdown() {
 
 // MODIFICATION ICI : Ajout du choix du type de calendrier
 function generateCalendarUrl(type) {
-    const eventDetails = {
-        title: "Tournoi Five - Convocation",
-        start: "20250406T143000", // 14h30 (heure de convocation)
-        end: "20250406T170000",   // 17h00 (estimation de fin, ajustez si besoin)
-        details: "Convocation pour le Tournoi Five à l'Arena 25. Début des matchs à 15h00.\nAdresse: Arena 25, 2 rue Pierre Donzelot, Montbéliard",
-        location: "Arena 25, 2 rue Pierre Donzelot, Montbéliard"
-    };
+        const eventDetails = {
+            title: "Tournoi Five - Convocation",
+            start: "20250406T143000", // 14h30 (heure de convocation)
+            end: "20250406T170000",   // 17h00 (estimation de fin, ajustez si besoin)
+            details: "Convocation pour le Tournoi Five à l'Arena 25. Début des matchs à 15h00.\nAdresse: Arena 25, 2 rue Pierre Donzelot, Montbéliard",
+            location: "Arena 25, 2 rue Pierre Donzelot, Montbéliard"
+        };
 
-    let calendarUrl = "";
+        let calendarUrl = "";
 
-    switch (type) {
-        case 'google':
-            calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.start}/${eventDetails.end}&details=${encodeURIComponent(eventDetails.details)}&location=${encodeURIComponent(eventDetails.location)}`;
-            break;
-        case 'ics': // Format iCalendar (pour Apple Calendar, Outlook, etc.)
-            const icsData = [
-                'BEGIN:VCALENDAR',
-                'VERSION:2.0',
-                'PRODID:-//hacksw/handcal//NONSGML v1.0//EN',
-                'BEGIN:VEVENT',
-                `UID:${Math.random().toString()}`, // ID unique (obligatoire)
-                `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`, // Timestamp de création
-                `DTSTART:${eventDetails.start}`,
-                `DTEND:${eventDetails.end}`,
-                `SUMMARY:${eventDetails.title}`,
-                `DESCRIPTION:${eventDetails.details}`,
-                `LOCATION:${eventDetails.location}`,
-                'END:VEVENT',
-                'END:VCALENDAR'
-            ].join('\r\n');
+        switch (type) {
+            case 'google':
+                calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.start}/${eventDetails.end}&details=${encodeURIComponent(eventDetails.details)}&location=${encodeURIComponent(eventDetails.location)}`;
+                break;
+            case 'ics': // Format iCalendar (pour Apple Calendar, Outlook, etc.)
+                const icsData = [
+                    'BEGIN:VCALENDAR',
+                    'VERSION:2.0',
+                    'PRODID:-//hacksw/handcal//NONSGML v1.0//EN',
+                    'BEGIN:VEVENT',
+                    `UID:${Math.random().toString()}`,
+                    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
+                    `DTSTART:${eventDetails.start}`,
+                    `DTEND:${eventDetails.end}`,
+                    `SUMMARY:${eventDetails.title}`,
+                    `DESCRIPTION:${eventDetails.details}`,
+                    `LOCATION:${eventDetails.location}`,
+                    'END:VEVENT',
+                    'END:VCALENDAR'
+                ].join('\r\n');
 
-            // Créer un objet Blob et un URL pour le téléchargement
-            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
-            calendarUrl = URL.createObjectURL(blob);
+                const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+                calendarUrl = URL.createObjectURL(blob);
 
-             // Créer un lien de téléchargement (invisible, déclenché par JS)
-            const downloadLink = document.createElement('a');
-            downloadLink.href = calendarUrl;
-            downloadLink.download = 'tournoi_five.ics'; // Nom du fichier
-            document.body.appendChild(downloadLink); // Nécessaire pour Firefox
-            downloadLink.click();
-            document.body.removeChild(downloadLink); // Nettoyage
-            return; // Important: Arrêter la fonction après le téléchargement
+                const downloadLink = document.createElement('a');
+                downloadLink.href = calendarUrl;
+                downloadLink.download = 'tournoi_five.ics';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                return; // Arrêt après téléchargement
 
-        case 'iphone': // Redirection vers le format ics pour iPhone
-            generateCalendarUrl('ics');
-            return; // On sort pour éviter d'ouvrir une fenêtre en plus
-        
-        case 'android': // URL pour Google Calendar (qui fonctionne sur Android)
-             generateCalendarUrl('google');
-            return; // On sort pour éviter d'ouvrir une fenêtre en plus
-
-        default:
-            console.error('Type de calendrier non supporté.');
-            return;
+            default:
+                console.error('Type de calendrier non supporté.');
+                return;
+        }
+        window.open(calendarUrl, '_blank');
     }
-   window.open(calendarUrl, '_blank'); // Ouvre dans un nouvel onglet
-}
 
 // Fonction pour afficher le formulaire d'administration des scores
 function showAdminScoreForm() {
@@ -1497,17 +1487,49 @@ const finale4Ref = ref(database, 'scores/finale4');
 });
 
    // Gestion de l'ajout au calendrier
-    const addToCalendarBtn = document.getElementById('add-to-calendar-btn');
-    if (addToCalendarBtn) {
-        addToCalendarBtn.addEventListener('click', function() {
-            // Demander à l'utilisateur de choisir le type de calendrier
-            const calendarType = prompt("Choisissez votre calendrier :  'iphone' (Apple Calendar), 'android' (Google Calendar), ou 'ics' (fichier .ics pour Outlook, etc.):");
-            if (calendarType) {
-                generateCalendarUrl(calendarType.toLowerCase());
-            }
-        });
-    }
-});
-    </script>
+   const addToCalendarBtn = document.getElementById('add-to-calendar-btn');
+        if (addToCalendarBtn) {
+            addToCalendarBtn.addEventListener('click', function() {
+                // Création d'une boîte de dialogue modale (plus conviviale)
+                const dialog = document.createElement('div');
+                dialog.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: #222;
+                    padding: 20px;
+                    border: 1px solid #444;
+                    border-radius: 8px;
+                    z-index: 1000;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+                `;
+
+                dialog.innerHTML = `
+                    <h3 style="margin-bottom: 15px; color: #00aaff;">Ajouter au calendrier</h3>
+                    <p style="margin-bottom: 10px;">Choisissez votre type de calendrier :</p>
+                    <button class="calendar-option" data-type="google">Google Calendar</button><br>
+                    <button class="calendar-option" data-type="ics">Calendrier Apple / Outlook (.ics)</button><br>
+                    <button class="calendar-cancel" style="margin-top: 15px; background-color: #ff3c3c;">Annuler</button>
+                `;
+
+                document.body.appendChild(dialog);
+
+                // Gestion des clics sur les options
+                dialog.querySelectorAll('.calendar-option').forEach(button => {
+                    button.addEventListener('click', function() {
+                        generateCalendarUrl(this.dataset.type);
+                        document.body.removeChild(dialog); // Fermer la boîte de dialogue
+                    });
+                });
+
+                // Gestion de l'annulation
+                dialog.querySelector('.calendar-cancel').addEventListener('click', function() {
+                    document.body.removeChild(dialog);
+                });
+            });
+        }
+    });
+</script>
 </body>
 </html>
