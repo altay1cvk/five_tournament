@@ -557,25 +557,29 @@ function generateCalendarUrl(type) {
 
         switch (type) {
             case 'google':
-                calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.start}/${eventDetails.end}&details=${encodeURIComponent(eventDetails.details)}&location=${encodeURIComponent(eventDetails.location)}`;
+                calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.start}/${eventDetails.end}&details=${encodeURIComponent(eventDetails.details)}&location=${encodeURIComponent(eventDetails.location)}&add=popup-0`;
                 break;
             case 'ics': // Format iCalendar (pour Apple Calendar, Outlook, etc.)
                 const icsData = [
                     'BEGIN:VCALENDAR',
                     'VERSION:2.0',
-                    'PRODID:-//hacksw/handcal//NONSGML v1.0//EN',
+                    'PRODID:-//YourAppName//NONSGML v1.0//EN', // Changez YourAppName
                     'BEGIN:VEVENT',
-                    `UID:${Math.random().toString()}`,
-                    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
+                    `UID:${Math.random().toString()}@yourdomain.com`, // Changez yourdomain.com, UID unique
+                    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`, // Timestamp actuel
                     `DTSTART:${eventDetails.start}`,
                     `DTEND:${eventDetails.end}`,
-                    `SUMMARY:${eventDetails.title}`,
-                    `DESCRIPTION:${eventDetails.details}`,
-                    `LOCATION:${eventDetails.location}`,
+                    `SUMMARY:${encodeURIComponent(eventDetails.title)}`,
+                    `DESCRIPTION:${encodeURIComponent(eventDetails.details)}`,
+                    `LOCATION:${encodeURIComponent(eventDetails.location)}`,
+                    'BEGIN:VALARM',
+                    'ACTION:DISPLAY',
+                    'TRIGGER:PT0M', //  <--  C'est ici:  PT0M signifie 0 minutes avant/après = à l'heure
+                    'DESCRIPTION:Rappel: Tournoi Five',
+                    'END:VALARM',
                     'END:VEVENT',
                     'END:VCALENDAR'
                 ].join('\r\n');
-
                 const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
                 calendarUrl = URL.createObjectURL(blob);
 
