@@ -6,10 +6,10 @@
     <title>Tournoi Five</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* (Le CSS reste inchangé) */
-        /* Réinitialisation (reset) des styles par défaut */
+        /* (Le CSS reste inchangé, mais il est bien organisé) */
         * {  margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #111; color: #fff; line-height: 1.6; padding-bottom: 80px;}
+        /* ... (le reste de votre CSS) ... */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #222; border-top: 1px solid #444; display: flex; justify-content: space-around; align-items: center; padding: 0.85rem 0; z-index: 100; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3); }
         .bottom-nav a { color: #aaa; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 0.85rem; transition: color 0.2s; padding: 0.5rem; width: 25%; text-align: center; }
         .bottom-nav a i { font-size: 1.3rem; margin-bottom: 0.2rem; }
@@ -940,7 +940,6 @@ async function inscrireEquipe(event) {
     const loader = document.getElementById('formLoader');
     const equipeSelect = document.getElementById('equipe');
 
-
     const nomEquipe = document.getElementById('nomEquipe').value.trim();
     const teamPassword = document.getElementById('teamPassword').value;
     const nomCapitaine = document.getElementById('nomCapitaine').value.trim();
@@ -948,10 +947,10 @@ async function inscrireEquipe(event) {
     const emailCapitaine = document.getElementById('emailCapitaine').value.trim();
     const telephoneCapitaine = document.getElementById('telephoneCapitaine').value.trim();
     const ageCapitaine = document.getElementById('ageCapitaine').value;
-    const equipe = equipeSelect.value;
+    const equipe = equipeSelect.value; // On garde ça pour le menu déroulant, mais on ne l'utilise pas comme clé.
 
 
-    // Validation (gardez votre validation existante)
+    // --- Validation (Gardez votre validation existante) ---
     if (!nomEquipe || !teamPassword || !nomCapitaine || !prenomCapitaine || !emailCapitaine || !telephoneCapitaine || !ageCapitaine || !equipe) {
         messageDiv.innerHTML = '<p class="message error">Veuillez remplir tous les champs.</p>';
         return;
@@ -969,69 +968,64 @@ async function inscrireEquipe(event) {
     loader.style.display = 'block';
 
     try {
-        // Vérification du nom d'équipe (gardez votre vérification Firebase existante)
+        // --- Vérification des noms d'équipe en double ET de l'équipe selectionnée ---
         const equipesRef = ref(database, 'equipes');
         const snapshot = await get(equipesRef);
+
         if (snapshot.exists()) {
             const equipes = snapshot.val();
-            for (const key in equipes) {
-                if (equipes[key].nomEquipe === nomEquipe) {
+
+            // Vérifier si le nom de l'équipe est déjà pris
+            for (const equipeId in equipes) {
+                if (equipes[equipeId].nomEquipe === nomEquipe) {
                     messageDiv.innerHTML = '<p class="message error">Ce nom d\'équipe est déjà pris.</p>';
                     loader.style.display = 'none';
                     return;
                 }
             }
-        }
 
-          // Vérification si l'équipe est déjà prise
-        if (snapshot.exists() && equipes[equipe]) { // Ajout de snapshot.exists()
-            messageDiv.innerHTML = '<p class="message error">Cette équipe est déjà inscrite.</p>';
-            loader.style.display = 'none';
-            return;
+            //Vérifier si une équipe avec cette valeur est déjà enregistrée
+            for (const key in equipes) {
+                if (key === equipe) {
+                    messageDiv.innerHTML = '<p class="message error">Cette équipe est déjà inscrite.</p>';
+                    loader.style.display = 'none';
+                    return;
+                }
+            }
         }
-
-        // Enregistrement dans Firebase (gardez votre code existant)
+         // Préparation des données de l'équipe
         const equipeData = {
-            nomEquipe: nomEquipe,
-            motDePasse: teamPassword,
-            capitaine: {
+          nomEquipe: nomEquipe,
+          motDePasse: teamPassword,  //Camel case pour cohérence
+          capitaine: {
                 nom: nomCapitaine,
                 prenom: prenomCapitaine,
                 email: emailCapitaine,
                 telephone: telephoneCapitaine,
-                age: ageCapitaine,
-            },
-            membres: {},
-            dateInscription: serverTimestamp()
+                age: parseInt(ageCapitaine), //Convertir en nombre
+          },
+          membres: {}, //Initialiser à vide, on ajoutera les membres après
+          timestamp: serverTimestamp(), //Optionnel, mais utile.
         };
 
-        //Desactiver la selection
-        equipeSelect.classList.add('equipe-select-disabled');
+        // ---  ENREGISTREMENT avec push() pour une clé UNIQUE ---
+        //On utilise la valeur de l'equipe selectionné.
+        const newEquipeRef = ref(database, 'equipes/' + equipe); // Crée une nouvelle référence avec une clé unique
+        await set(newEquipeRef, equipeData); // Enregistre les données sous cette clé unique
 
-        await set(ref(database, 'equipes/' + equipe), equipeData);
         messageDiv.innerHTML = `<p class="message success">Équipe "${nomEquipe}" inscrite avec succès!</p>`;
-
-        //Mettre à jour dynamiquement le nom de l'équipe dans déroulement des matchs
-        updateTeamNameInMatchDisplay(equipe, nomEquipe);
-        loadTeams();
-
-        form.reset();  // Réinitialiser le formulaire
-
-          // Effacer les champs spécifiques pour une nouvelle inscription, mais *APRES* le reset
-        document.getElementById('nomEquipe').value = '';
-        document.getElementById('teamPassword').value = '';
-        document.getElementById('nomCapitaine').value = '';
-        document.getElementById('prenomCapitaine').value = '';
-        document.getElementById('emailCapitaine').value = '';
-        document.getElementById('telephoneCapitaine').value = '';
-        document.getElementById('ageCapitaine').value = '';
-        equipeSelect.value = ''; // Réinitialiser la sélection *après* avoir potentiellement désactivé l'option
-
+        loadTeams(); // Recharger la liste des équipes (très important!)
+        form.reset();
+        // --- Mettre à jour la valeur de l'équipe dans l'affichage des matchs ---
+        // On va chercher l'ID de la nouvelle équipe créée.
+        const newEquipeId = newEquipeRef.key; // Récupère la clé générée par push()
+        updateTeamNameInMatchDisplay(newEquipeId, nomEquipe);
+        updateEquipeInfo();// Mettre à jour le formulaire (très important pour refléter l'état de la base de données).
 
 
     } catch (error) {
-            console.error("Erreur lors de l'inscription de l'équipe:", error);
-            messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
+        console.error("Erreur lors de l'inscription de l'équipe:", error);
+        messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
     } finally {
         loader.style.display = 'none';
     }
@@ -1039,14 +1033,11 @@ async function inscrireEquipe(event) {
 
 //Fonction pour mettre à jour le nom de l'équipe dans déroulement des matchs
 function updateTeamNameInMatchDisplay(equipeId, newTeamName) {
-    // Extraire le numéro de l'équipe (ex: "equipe1" -> 1)
-    const teamNumber = parseInt(equipeId.replace('equipe', ''));
-
-    // Mettre à jour le nom dans le span correspondant
-    const teamSpan = document.querySelector(`.team${teamNumber}-name`);
-    if (teamSpan) {
-        teamSpan.textContent = newTeamName;
-    }
+// teamNumber n'est plus un entier, c'est 'equipe1', 'equipe2', etc.
+const teamSpan = document.querySelector(`.match .${equipeId}-name`);
+if (teamSpan) {
+teamSpan.textContent = newTeamName;
+}
 }
 
 // Fonction pour charger et afficher les équipes (et leurs membres)
@@ -1091,8 +1082,8 @@ function loadTeams() {
                 }
                 equipeDiv.appendChild(membresList);
 
-                                // Formulaire pour ajouter un joueur (pour le capitaine)
-                                const addPlayerForm = document.createElement('form');
+                // Formulaire pour ajouter un joueur (pour le capitaine)
+                const addPlayerForm = document.createElement('form');
                 addPlayerForm.className = 'team-management-form';
                 addPlayerForm.innerHTML = `
                     <h3>Ajouter un joueur</h3>
@@ -1365,7 +1356,7 @@ function enableAdminMode() {
 
                 deleteBtn.addEventListener('click', function () {
                     const playerName = item.textContent.trim();
-                    const equipeId = item.parentElement.parentElement.querySelector('p').textContent.trim();
+                    const equipeId = item.parentElement.parentElement.querySelector('p').textContent.trim();  //On récupère correctement le nom de l'équipe.
                     const playerEmail = item.dataset.email;
 
                     if (confirm(`Êtes-vous sûr de vouloir supprimer ${playerName} ?`)) {
@@ -1374,11 +1365,13 @@ function enableAdminMode() {
                         get(equipesRef).then((snapshot) => {
                             const equipes = snapshot.val() || {};
                             for (const key in equipes) {
+                                 //On compare avec le nom de l'équipe récupéré
                                 if (equipes[key].nomEquipe === equipeId) {
                                     const teamPlayers = equipes[key].membres;
                                     if (teamPlayers) {
                                         for (const playerId in teamPlayers) {
                                             const player = teamPlayers[playerId];
+                                            //Comparaison correcte du nom *et* du prénom
                                             if (player.nom + " " + player.prenom === playerName) {
                                                 remove(ref(database, 'equipes/' + key + '/membres/' + playerId))
                                                     .then(() => {
@@ -1645,6 +1638,7 @@ const finale4Ref = ref(database, 'scores/finale4');
             });
         }
     });
+
 </script>
 </body>
 </html>
