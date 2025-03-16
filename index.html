@@ -6,6 +6,7 @@
     <title>Tournoi Five</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        /* (Le CSS reste inchangé) */
         /* Réinitialisation (reset) des styles par défaut */
         * {  margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #111; color: #fff; line-height: 1.6; padding-bottom: 80px;}
@@ -115,7 +116,7 @@
         .classement li {
             margin-bottom: 8px;
         }
-        
+
         .delete-player-btn {
             margin-left: 10px;
             background: #ff3c3c;
@@ -262,6 +263,16 @@
             color: #4CAF50;
             background-color: rgba(76, 175, 80, 0.2);
         }
+        .equipe-select-disabled {
+            opacity: 0.5;  /* Grisé */
+            pointer-events: none; /* Empêche les clics */
+        }
+
+        .equipe-info {
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
     </style>
 </head>
 <body>
@@ -392,7 +403,7 @@
                         <div id="score-finale2" class="score-display"></div>
                     </div>
                 </div>
-            
+
             <div class="step-title">Étape 3: Finale 3 (16h00) - Places 5 & 6</div>
                 <div class="match-group">
                     <div class="match" id="match-finale3">
@@ -476,6 +487,7 @@
                             <option value="equipe7">Équipe 7</option>
                             <option value="equipe8">Équipe 8</option>
                         </select>
+                          <div class="equipe-info" id="equipe-info"></div>
                     </div>
                     <button type="submit" class="cta-button">Inscrire l'équipe</button>
                     <div class="loader" id="formLoader"></div>
@@ -524,8 +536,7 @@ function escapeICSValue(str) {
  }
 
 
-// Fonction pour démarrer le compte à rebours
-function startCountdown() {
+ function startCountdown() {
     const tournamentDate = new Date("April 6, 2025 15:00:00").getTime();
     const countdownElement = document.getElementById('countdown');
     const countdownInterval = setInterval(() => {
@@ -645,55 +656,55 @@ function showAdminScoreForm() {
                 <!-- Demi-finales principales (inputs initialement cachés) -->
                 <div class="admin-form-group" style="display:none;">
                     <label>Demi-finale 1:</label>
-                    <span class="team-name" id="demi1-team1"></span> <input type="number" id="score-demi1-1" min="0">
+                    <span class="team-name" id="admin-demi1-team1"></span> <input type="number" id="score-demi1-1" min="0">
                     <span class="vs">vs</span>
-                    <input type="number" id="score-demi1-2" min="0"> <span class="team-name" id="demi1-team2"></span>
+                    <input type="number" id="score-demi1-2" min="0"> <span class="team-name" id="admin-demi1-team2"></span>
                 </div>
                 <div class="admin-form-group" style="display:none;">
                     <label>Demi-finale 2:</label>
-                    <span class="team-name" id="demi2-team1"></span> <input type="number" id="score-demi2-1" min="0">
+                    <span class="team-name" id="admin-demi2-team1"></span> <input type="number" id="score-demi2-1" min="0">
                     <span class="vs">vs</span>
-                    <input type="number" id="score-demi2-2" min="0"> <span class="team-name" id="demi2-team2"></span>
+                    <input type="number" id="score-demi2-2" min="0"> <span class="team-name" id="admin-demi2-team2"></span>
                 </div>
 
                  <!-- Demi-finales consolantes (inputs initialement cachés) -->
                 <div class="admin-form-group" style="display:none;">
                     <label>Demi-finale Consolante 1:</label>
-                    <span class="team-name" id="demiC1-team1"></span> <input type="number" id="score-demiC1-1" min="0">
+                    <span class="team-name" id="admin-demiC1-team1"></span> <input type="number" id="score-demiC1-1" min="0">
                     <span class="vs">vs</span>
-                    <input type="number" id="score-demiC1-2" min="0"> <span class="team-name" id="demiC1-team2"></span>
+                    <input type="number" id="score-demiC1-2" min="0"> <span class="team-name" id="admin-demiC1-team2"></span>
                 </div>
                 <div class="admin-form-group" style="display:none;">
                     <label>Demi-finale Consolante 2:</label>
-                    <span class="team-name" id="demiC2-team1"></span> <input type="number" id="score-demiC2-1" min="0">
+                    <span class="team-name" id="admin-demiC2-team1"></span> <input type="number" id="score-demiC2-1" min="0">
                     <span class="vs">vs</span>
-                    <input type="number" id="score-demiC2-2" min="0"> <span class="team-name" id="demiC2-team2"></span>
+                    <input type="number" id="score-demiC2-2" min="0"> <span class="team-name" id="admin-demiC2-team2"></span>
                 </div>
 
                 <!-- Finale et Finale Consolante (inputs initialement cachés) -->
                 <div class="admin-form-group" style="display:none;">
                     <label>Finale 1:</label>
-                    <span class="team-name" id="finale-team1"></span> <input type="number" id="score-finale-1" min="0">
+                    <span class="team-name" id="admin-finale-team1"></span> <input type="number" id="score-finale-1" min="0">
                     <span class="vs">vs</span>
-                    <input type="number" id="score-finale-2" min="0"> <span class="team-name" id="finale-team2"></span>
+                    <input type="number" id="score-finale-2" min="0"> <span class="team-name" id="admin-finale-team2"></span>
                 </div>
                 <div class="admin-form-group" style="display:none;">
                     <label>Finale 2 :</label>
-                    <span class="team-name" id="finale2-team1"></span> <input type="number" id="score-finale2-1" min="0">
+                    <span class="team-name" id="admin-finale2-team1"></span> <input type="number" id="score-finale2-1" min="0">
                     <span class="vs">vs</span>
-                    <input type="number" id="score-finale2-2" min="0"> <span class="team-name" id="finale2-team2"></span>
+                    <input type="number" id="score-finale2-2" min="0"> <span class="team-name" id="admin-finale2-team2"></span>
                 </div>
                 <div class="admin-form-group" style="display:none;">
                     <label>Finale 3:</label>
-                    <span class="team-name" id="finaleC-team1"></span> <input type="number" id="score-finaleC-1" min="0">
+                    <span class="team-name" id="admin-finaleC-team1"></span> <input type="number" id="score-finaleC-1" min="0">
                     <span class="vs">vs</span>
-                    <input type="number" id="score-finaleC-2" min="0"> <span class="team-name" id="finaleC-team2"></span>
+                    <input type="number" id="score-finaleC-2" min="0"> <span class="team-name" id="admin-finaleC-team2"></span>
                 </div>
                 <div class="admin-form-group" style="display:none;">
                     <label>Finale 4:</label>
-                    <span class="team-name" id="finaleC2-team1"></span> <input type="number" id="score-finaleC2-1" min="0">
+                    <span class="team-name" id="admin-finaleC2-team1"></span> <input type="number" id="score-finaleC2-1" min="0">
                     <span class="vs">vs</span>
-                    <input type="number" id="score-finaleC2-2" min="0"> <span class="team-name" id="finaleC2-team2"></span>
+                    <input type="number" id="score-finaleC2-2" min="0"> <span class="team-name" id="admin-finaleC2-team2"></span>
                 </div>
                 <button type="submit" class="cta-button">Enregistrer les scores</button>
             </form>
@@ -734,10 +745,38 @@ function loadTeamNamesForAdmin() {
                 teamNameElement.textContent = teamNames[i];
             }
           }
+
+            // Préremplir les spans des demi-finales *après* avoir chargé les équipes initiales.
+            //Il faut s'assurer que les id des spans dans le form admin correspondent.
+            if (winners && losers){
+                document.getElementById('admin-demi1-team1').textContent = winners.match1 || "";
+                document.getElementById('admin-demi1-team2').textContent = winners.match2 || "";
+                document.getElementById('admin-demi2-team1').textContent = winners.match3 || "";
+                document.getElementById('admin-demi2-team2').textContent = winners.match4 || "";
+                document.getElementById('admin-demiC1-team1').textContent = losers.match1 || "";
+                document.getElementById('admin-demiC1-team2').textContent = losers.match2 || "";
+                document.getElementById('admin-demiC2-team1').textContent = losers.match3 || "";
+                document.getElementById('admin-demiC2-team2').textContent = losers.match4 || "";
+           }
+           if(winnerDemi1 && winnerDemi2 && loserDemi1 && loserDemi2 && winnerDemiC1 && winnerDemiC2 && loserDemiC1_ && loserDemiC2_){
+                document.getElementById('admin-finale-team1').textContent = winnerDemi1 || "";
+                document.getElementById('admin-finale-team2').textContent = winnerDemi2 || "";
+                document.getElementById('admin-finale2-team1').textContent = loserDemi1 || "";
+                document.getElementById('admin-finale2-team2').textContent = loserDemi2 || "";
+                document.getElementById('admin-finaleC-team1').textContent = winnerDemiC1 || "";
+                document.getElementById('admin-finaleC-team2').textContent = winnerDemiC2 || "";
+                document.getElementById('admin-finaleC2-team1').textContent = loserDemiC1_ || "";
+                document.getElementById('admin-finaleC2-team2').textContent = loserDemiC2_ || "";
+           }
+
         }
     });
 }
 
+
+// Variables globales pour stocker les gagnants/perdants (et les noms des équipes des demis/finales)
+let winners, losers;
+let winnerDemi1, winnerDemi2, loserDemi1, loserDemi2, winnerDemiC1, winnerDemiC2, loserDemiC1_, loserDemiC2_;
 
 // Fonction pour enregistrer les scores et mettre à jour le tournoi
 function saveScores() {
@@ -751,13 +790,11 @@ function saveScores() {
 
     for (const matchId in scoresQuarts) {
         set(ref(database, 'scores/' + matchId), scoresQuarts[matchId]);
-        // Pas besoin de mettre à jour l'affichage ici, onValue s'en charge
     }
 
-
     // 2. Déterminer les gagnants/perdants des QUARTS et mettre à jour les DEMI-FINALES
-    const winners = {};
-    const losers = {};
+     winners = {};
+     losers = {};
       for (let i = 1; i <= 4; i++) {
         const team1Name = document.getElementById(`team${i * 2 - 1}-name`).textContent;
         const team2Name = document.getElementById(`team${i * 2}-name`).textContent;
@@ -779,14 +816,14 @@ function saveScores() {
     document.getElementById('demiC2-team2').textContent = losers.match4;
 
       // Pré-remplir les spans des demi-finales dans le formulaire admin
-    document.getElementById('demi1-team1').textContent = winners.match1;
-    document.getElementById('demi1-team2').textContent = winners.match2;
-    document.getElementById('demi2-team1').textContent = winners.match3;
-    document.getElementById('demi2-team2').textContent = winners.match4;
-    document.getElementById('demiC1-team1').textContent = losers.match1;
-    document.getElementById('demiC1-team2').textContent = losers.match2;
-    document.getElementById('demiC2-team1').textContent = losers.match3;
-    document.getElementById('demiC2-team2').textContent = losers.match4;
+    document.getElementById('admin-demi1-team1').textContent = winners.match1;
+    document.getElementById('admin-demi1-team2').textContent = winners.match2;
+    document.getElementById('admin-demi2-team1').textContent = winners.match3;
+    document.getElementById('admin-demi2-team2').textContent = winners.match4;
+    document.getElementById('admin-demiC1-team1').textContent = losers.match1;
+    document.getElementById('admin-demiC1-team2').textContent = losers.match2;
+    document.getElementById('admin-demiC2-team1').textContent = losers.match3;
+    document.getElementById('admin-demiC2-team2').textContent = losers.match4;
 
     // Afficher les inputs des demi-finales (maintenant qu'on a les noms)
     const demiFinalesInputs = document.querySelectorAll('.admin-form-group[style="display:none;"]');
@@ -808,14 +845,14 @@ function saveScores() {
 
 
     // 4. Déterminer les équipes pour TOUTES les FINALES
-    const winnerDemi1 = parseInt(scoresDemis.demiPrincipale1.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale1.equipe2 || 0) ? winners.match1 : winners.match2;
-    const loserDemi1  = parseInt(scoresDemis.demiPrincipale1.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale1.equipe2 || 0) ? winners.match2 : winners.match1;
-    const winnerDemi2 = parseInt(scoresDemis.demiPrincipale2.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale2.equipe2 || 0) ? winners.match3 : winners.match4;
-    const loserDemi2  = parseInt(scoresDemis.demiPrincipale2.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale2.equipe2 || 0) ? winners.match4 : winners.match3;
-    const winnerDemiC1 = parseInt(scoresDemis.demiConsolante1.equipe1 || 0) > parseInt(scoresDemis.demiConsolante1.equipe2 || 0) ? losers.match1 : losers.match2;
-    const loserDemiC1_ = parseInt(scoresDemis.demiConsolante1.equipe1 || 0) > parseInt(scoresDemis.demiConsolante1.equipe2 || 0) ? losers.match2 : losers.match1;
-    const winnerDemiC2 = parseInt(scoresDemis.demiConsolante2.equipe1 || 0) > parseInt(scoresDemis.demiConsolante2.equipe2 || 0) ? losers.match3 : losers.match4;
-    const loserDemiC2_ = parseInt(scoresDemis.demiConsolante2.equipe1 || 0) > parseInt(scoresDemis.demiConsolante2.equipe2 || 0) ? losers.match4 : losers.match3;
+     winnerDemi1 = parseInt(scoresDemis.demiPrincipale1.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale1.equipe2 || 0) ? winners.match1 : winners.match2;
+     loserDemi1  = parseInt(scoresDemis.demiPrincipale1.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale1.equipe2 || 0) ? winners.match2 : winners.match1;
+     winnerDemi2 = parseInt(scoresDemis.demiPrincipale2.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale2.equipe2 || 0) ? winners.match3 : winners.match4;
+     loserDemi2  = parseInt(scoresDemis.demiPrincipale2.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale2.equipe2 || 0) ? winners.match4 : winners.match3;
+     winnerDemiC1 = parseInt(scoresDemis.demiConsolante1.equipe1 || 0) > parseInt(scoresDemis.demiConsolante1.equipe2 || 0) ? losers.match1 : losers.match2;
+     loserDemiC1_ = parseInt(scoresDemis.demiConsolante1.equipe1 || 0) > parseInt(scoresDemis.demiConsolante1.equipe2 || 0) ? losers.match2 : losers.match1;
+     winnerDemiC2 = parseInt(scoresDemis.demiConsolante2.equipe1 || 0) > parseInt(scoresDemis.demiConsolante2.equipe2 || 0) ? losers.match3 : losers.match4;
+     loserDemiC2_ = parseInt(scoresDemis.demiConsolante2.equipe1 || 0) > parseInt(scoresDemis.demiConsolante2.equipe2 || 0) ? losers.match4 : losers.match3;
 
 
     // 5. Mettre à jour les *noms* des équipes pour les FINALES (AVANT de récupérer les scores)
@@ -829,14 +866,14 @@ function saveScores() {
     document.getElementById('finaleC2-team2').textContent = loserDemiC2_;
 
      // Pré-remplir les spans des finales dans le formulaire
-    document.getElementById('finale-team1').textContent = winnerDemi1;
-    document.getElementById('finale-team2').textContent = winnerDemi2;
-    document.getElementById('finale2-team1').textContent = loserDemi1;
-    document.getElementById('finale2-team2').textContent = loserDemi2;
-    document.getElementById('finaleC-team1').textContent = winnerDemiC1;
-    document.getElementById('finaleC-team2').textContent = winnerDemiC2;
-    document.getElementById('finaleC2-team1').textContent = loserDemiC1_;
-    document.getElementById('finaleC2-team2').textContent = loserDemiC2_;
+    document.getElementById('admin-finale-team1').textContent = winnerDemi1;
+    document.getElementById('admin-finale-team2').textContent = winnerDemi2;
+    document.getElementById('admin-finale2-team1').textContent = loserDemi1;
+    document.getElementById('admin-finale2-team2').textContent = loserDemi2;
+    document.getElementById('admin-finaleC-team1').textContent = winnerDemiC1;
+    document.getElementById('admin-finaleC-team2').textContent = winnerDemiC2;
+    document.getElementById('admin-finaleC2-team1').textContent = loserDemiC1_;
+    document.getElementById('admin-finaleC2-team2').textContent = loserDemiC2_;
 
 
     // Afficher les inputs des finales (maintenant qu'on a les noms)
@@ -901,6 +938,8 @@ async function inscrireEquipe(event) {
     const form = document.getElementById('inscriptionForm');
     const messageDiv = document.getElementById('message');
     const loader = document.getElementById('formLoader');
+    const equipeSelect = document.getElementById('equipe');
+
 
     const nomEquipe = document.getElementById('nomEquipe').value.trim();
     const teamPassword = document.getElementById('teamPassword').value;
@@ -909,7 +948,8 @@ async function inscrireEquipe(event) {
     const emailCapitaine = document.getElementById('emailCapitaine').value.trim();
     const telephoneCapitaine = document.getElementById('telephoneCapitaine').value.trim();
     const ageCapitaine = document.getElementById('ageCapitaine').value;
-    const equipe = document.getElementById('equipe').value;
+    const equipe = equipeSelect.value;
+
 
     // Validation (gardez votre validation existante)
     if (!nomEquipe || !teamPassword || !nomCapitaine || !prenomCapitaine || !emailCapitaine || !telephoneCapitaine || !ageCapitaine || !equipe) {
@@ -943,6 +983,13 @@ async function inscrireEquipe(event) {
             }
         }
 
+          // Vérification si l'équipe est déjà prise
+        if (snapshot.exists() && equipes[equipe]) { // Ajout de snapshot.exists()
+            messageDiv.innerHTML = '<p class="message error">Cette équipe est déjà inscrite.</p>';
+            loader.style.display = 'none';
+            return;
+        }
+
         // Enregistrement dans Firebase (gardez votre code existant)
         const equipeData = {
             nomEquipe: nomEquipe,
@@ -957,6 +1004,10 @@ async function inscrireEquipe(event) {
             membres: {},
             dateInscription: serverTimestamp()
         };
+
+        //Desactiver la selection
+        equipeSelect.classList.add('equipe-select-disabled');
+
         await set(ref(database, 'equipes/' + equipe), equipeData);
         messageDiv.innerHTML = `<p class="message success">Équipe "${nomEquipe}" inscrite avec succès!</p>`;
 
@@ -966,7 +1017,7 @@ async function inscrireEquipe(event) {
 
         form.reset();  // Réinitialiser le formulaire
 
-        // Effacer les champs spécifiques pour une nouvelle inscription
+          // Effacer les champs spécifiques pour une nouvelle inscription, mais *APRES* le reset
         document.getElementById('nomEquipe').value = '';
         document.getElementById('teamPassword').value = '';
         document.getElementById('nomCapitaine').value = '';
@@ -974,7 +1025,8 @@ async function inscrireEquipe(event) {
         document.getElementById('emailCapitaine').value = '';
         document.getElementById('telephoneCapitaine').value = '';
         document.getElementById('ageCapitaine').value = '';
-        document.getElementById('equipe').value = ''; // Réinitialiser la sélection de l'équipe
+        equipeSelect.value = ''; // Réinitialiser la sélection *après* avoir potentiellement désactivé l'option
+
 
 
     } catch (error) {
@@ -1039,8 +1091,8 @@ function loadTeams() {
                 }
                 equipeDiv.appendChild(membresList);
 
-                // Formulaire pour ajouter un joueur (pour le capitaine)
-                const addPlayerForm = document.createElement('form');
+                                // Formulaire pour ajouter un joueur (pour le capitaine)
+                                const addPlayerForm = document.createElement('form');
                 addPlayerForm.className = 'team-management-form';
                 addPlayerForm.innerHTML = `
                     <h3>Ajouter un joueur</h3>
@@ -1127,8 +1179,8 @@ async function addPlayer(event, equipeId) {
             }
         }
 
-                // 4. Ajouter le joueur
-                const newPlayerRef = push(ref(database, 'equipes/' + equipeId + '/membres'));
+        // 4. Ajouter le joueur
+        const newPlayerRef = push(ref(database, 'equipes/' + equipeId + '/membres'));
         await set(newPlayerRef, { prenom: prenom, nom: nom });
         messageDiv.innerHTML = '<p class="message success">Joueur ajouté!</p>';
         form.reset();
@@ -1276,8 +1328,13 @@ if (footer) {
                     .then(() => {
                         // Réinitialise aussi les scores (appel de la fonction)
                         resetScores(); // Réinitialisation des scores *après* les équipes
+                         // Réinitialiser l'état du sélecteur d'équipe
+                        const equipeSelect = document.getElementById('equipe');
+                        equipeSelect.classList.remove('equipe-select-disabled'); // Réactiver
+                        equipeSelect.value = ''; // Effacer la sélection
+                        updateEquipeInfo();
                         alert('Toutes les équipes et les scores ont été réinitialisés.');
-                        window.location.reload();
+
                     })
                     .catch((error) => {
                         console.error("Erreur lors de la réinitialisation:", error);
@@ -1391,10 +1448,50 @@ if (nextButton) {
     showStep(0); // Afficher la première étape au chargement
 }
 
+// Fonction pour mettre à jour l'état du sélecteur d'équipe et afficher des infos
+function updateEquipeInfo() {
+    const equipeSelect = document.getElementById('equipe');
+    const equipeInfoDiv = document.getElementById('equipe-info');
+
+    const equipesRef = ref(database, 'equipes');
+     // Utilisation de 'get' au lieu de 'onValue' pour une seule lecture
+    get(equipesRef).then((snapshot) => {
+        const equipes = snapshot.val() || {};
+        let selectedTeam = equipeSelect.value;
+
+        // Vérifier si l'équipe sélectionnée existe et est déjà inscrite.
+        if (selectedTeam && equipes[selectedTeam])
+        {
+          equipeSelect.classList.add('equipe-select-disabled'); // La désactiver si elle existe
+          equipeInfoDiv.textContent = "Cette équipe est déjà inscrite.";
+        }
+        else{
+          equipeInfoDiv.textContent = "";
+           equipeSelect.classList.remove('equipe-select-disabled');
+        }
+
+
+        // Mettre à jour l'état de *toutes* les options
+        for (let i = 1; i <= 8; i++) {
+            const option = equipeSelect.querySelector(`option[value="equipe${i}"]`);
+            if (option) { // Vérification importante
+                if (equipes[`equipe${i}`]) {
+                    option.disabled = true; // Désactiver l'option
+                    option.style.color = '#999'; // Griser (facultatif, mais recommandé)
+                } else {
+                    option.disabled = false;
+                    option.style.color = '';  // Couleur par défaut
+                }
+            }
+        }
+    });
+}
+
 // Chargement initial des données et démarrage
 document.addEventListener('DOMContentLoaded', function() {
     startCountdown();
     loadTeams(); // Charger les équipes (et leurs joueurs)
+    updateEquipeInfo(); //Très important à appeler au chargement *ET* après des changements
 
       // Ajout de l'écouteur d'événements pour le formulaire d'inscription
     const inscriptionForm = document.getElementById('inscriptionForm');
@@ -1412,6 +1509,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (resetScoresBtn) {
         resetScoresBtn.addEventListener('click', resetScores);
     }
+        // Écouteur pour le changement de sélection d'équipe
+    const equipeSelect = document.getElementById('equipe');
+      if (equipeSelect){
+        equipeSelect.addEventListener('change', updateEquipeInfo);
+      }
 
       // Bouton pour afficher les numéros de téléphone (ADMIN)
     const showPhoneNumbersBtn = document.createElement('button');
