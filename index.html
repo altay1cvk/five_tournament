@@ -6,273 +6,102 @@
     <title>Tournoi Five</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* (Le CSS reste inchangé, mais il est bien organisé) */
-        * {  margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #111; color: #fff; line-height: 1.6; padding-bottom: 80px;}
-        /* ... (le reste de votre CSS) ... */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #111; color: #fff; line-height: 1.6; padding-bottom: 80px; }
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #222; border-top: 1px solid #444; display: flex; justify-content: space-around; align-items: center; padding: 0.85rem 0; z-index: 100; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3); }
         .bottom-nav a { color: #aaa; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 0.85rem; transition: color 0.2s; padding: 0.5rem; width: 25%; text-align: center; }
         .bottom-nav a i { font-size: 1.3rem; margin-bottom: 0.2rem; }
         .bottom-nav a.active { color: #00aaff; }
-        #hero { background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/800x600/?soccer') center/cover no-repeat; height: 60vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 1rem; }
+        #hero { background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/800x600/?soccer,stadium') center/cover no-repeat; min-height: 60vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 1rem; }
         .hero-content { max-width: 800px; background-color: rgba(0, 0, 0, 0.7); padding: 1.5rem; border-radius: 10px; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
         .hero-content h2 { font-size: 2.2rem; margin-bottom: 0.8rem; text-shadow: 0 0 10px rgba(0, 170, 255, 0.8); }
         .hero-content p { font-size: 1.1rem; margin-bottom: 1rem; }
-        .cta-button { display: inline-block; background-color: #00aaff; color: #fff; padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; transition: all 0.3s; font-size: 1rem; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); }
+        .cta-button { display: inline-block; background-color: #00aaff; color: #fff; padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; transition: all 0.3s; font-size: 1rem; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); margin-right: 5px; margin-bottom: 5px; }
         .cta-button:hover, .cta-button:active { background-color: #0077cc; transform: translateY(-2px); }
-        section { margin-top: 2rem; padding: 1rem; text-align: center; }
-        section h2 { margin-bottom: 5px; position: relative; display: inline-block; padding-bottom: 0.5rem; }
-        section h2::after { content: ''; position: absolute; bottom: 0; left: 25%; right: 25%; height: 3px; background: linear-gradient(to right, transparent, #00aaff, transparent); }
+        section { margin-top: 2rem; padding: 1rem; text-align: center; animation: fadeIn 0.5s ease-out; }
+        section h2 { margin-bottom: 15px; position: relative; display: inline-block; padding-bottom: 0.5rem; color: #00aaff; }
+        section h2::after { content: ''; position: absolute; bottom: 0; left: 15%; right: 15%; height: 3px; background: linear-gradient(to right, transparent, #00aaff, transparent); }
         .roadmap-container { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; padding: 0; }
-        .match-group { display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10px 0; }
-        .match { border: 1px solid #00aaff; padding: 0.7rem; margin: 5px; border-radius: 5px; width: 140px; text-align: center; background-color: #222; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: all 0.3s; }
-        .match:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3); }
+        .match-step { margin-top: 20px; width: 100%; display: none; }
+        .match-step.active { display: block; animation: fadeInUp 0.5s ease-out; }
+        .step-title { color: #00aaff; font-weight: bold; margin-bottom: 15px; background-color: rgba(0, 170, 255, 0.1); padding: 5px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(0, 170, 255, 0.2); }
         .bracket-row { display: flex; flex-direction: column; align-items: center; width: 100%; margin: 5px 0; }
-        .arrow { color: #00aaff; font-size: 1.3rem; margin: 5px; }
-        .match-group.perdant { margin-top: 20px; border-top: 1px dashed #444; padding-top: 20px; width: 100%; }
+        .match-group { display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10px 0; }
+        .match { border: 1px solid #00aaff; padding: 0.8rem; margin: 5px; border-radius: 5px; width: 90%; max-width: 200px; text-align: center; background-color: #222; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: all 0.3s; position: relative; }
+        .match:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3); }
+        .match .team-name { font-weight: bold; display: inline-block; margin: 0 3px; }
+        .match .vs { color: #aaa; font-weight: normal; margin: 0 5px; }
+        .match-time { font-size: 0.8rem; color: #00aaff; margin-top: 5px; font-weight: bold; }
+        .match-duration { font-size: 0.7rem; color: #aaa; }
+        .score-display { font-weight: bold; color: #fff; background-color: rgba(0, 170, 255, 0.3); padding: 3px 8px; border-radius: 4px; margin: 8px auto 0 auto; display: none; font-size: 0.9em; }
+        .classement { margin-top: 40px !important; padding: 15px; background-color: rgba(0, 0, 0, 0.3); border-radius: 10px; border: 1px dashed #00aaff; max-width: 400px; margin-left: auto; margin-right: auto; }
+        .classement h3 { margin-bottom: 15px; color: #00aaff; }
+        .classement ol { text-align: left; padding-left: 30px; }
+        .classement li { margin-bottom: 8px; font-size: 1.1em; }
         .inscription-container { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; width: 100%; max-width: 900px; margin: 0 auto; }
-        .equipe { margin: 0.5rem; border: 1px solid #444; padding: 1rem; border-radius: 8px; width: 90%; max-width: 500px; background-color: #222; transition: transform 0.3s; }
+        .equipe { margin: 0.5rem; border: 1px solid #444; padding: 1rem; border-radius: 8px; width: 90%; max-width: 500px; background-color: #222; transition: transform 0.3s, box-shadow 0.3s; text-align: left; }
         .equipe:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
-        .equipe p { font-weight: bold; margin-bottom: 0.5rem; font-size: 1.1rem; color: #00aaff; }
-        .membres { list-style: none; padding-left: 0; margin-top: 0.5rem; }
-        .membres li { margin-bottom: 0.5rem; min-height: 1.2em; padding: 0.5rem; border-radius: 4px; background-color: #333; }
-        .form-container { max-width: 95%; margin: 1rem auto; padding: 1.5rem; background-color: rgba(0, 0, 0, 0.7); border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
-        .form-container h2 { font-size: 1.8rem; margin-bottom: 1rem; text-align: center; }
+        .equipe p:first-of-type { font-weight: bold; margin-bottom: 0.8rem; font-size: 1.2rem; color: #00aaff; border-bottom: 1px solid #444; padding-bottom: 0.5rem; }
+        .membres { list-style: none; padding-left: 0; margin-top: 0.8rem; }
+        .membres li { margin-bottom: 0.6rem; min-height: 1.2em; padding: 0.6rem; border-radius: 4px; background-color: #333; display: flex; justify-content: space-between; align-items: center; }
+        .delete-player-btn { background: #ff3c3c; border: none; border-radius: 50%; color: white; padding: 0; cursor: pointer; font-size: 0.8em; width: 20px; height: 20px; line-height: 20px; text-align: center; transition: background-color 0.2s; }
+        .delete-player-btn:hover { background-color: #cc3030; }
+        .delete-team-btn { display: block; width: calc(100% - 20px); margin: 15px auto 5px auto; padding: 8px 10px; font-size: 0.9em; font-weight: bold; background-color: #c0392b; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; }
+        .delete-team-btn:hover { background-color: #a53125; }
+        .form-container { max-width: 95%; margin: 1rem auto; padding: 1.5rem; background-color: rgba(34, 34, 34, 0.8); border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); border: 1px solid #444; }
+        .form-container h2 { font-size: 1.8rem; margin-bottom: 1.5rem; }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; margin-bottom: 0.3rem; font-size: 0.95rem; color: #ccc; }
-        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group input[type="number"], .form-group select,.form-group input[type="password"] { width: 100%; padding: 0.8rem; border: 1px solid #444; background-color: #333; color: #fff; border-radius: 5px; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group input[type="number"], .form-group select, .form-group input[type="password"] { width: 100%; padding: 0.8rem; border: 1px solid #444; background-color: #333; color: #fff; border-radius: 5px; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
         .form-group input:focus, .form-group select:focus { outline: none; border-color: #00aaff; box-shadow: 0 0 0 2px rgba(0, 170, 255, 0.3); }
-        #message { margin-top: 1rem; padding: 0.8rem; border-radius: 5px; font-weight: bold; }
+        .message { margin-top: 1rem; padding: 0.8rem; border-radius: 5px; font-weight: bold; min-height: 1.5em; }
+        #draw-message { background-color: rgba(0, 170, 255, 0.1); border: 1px dashed #00aaff; display: none; }
         footer { text-align: center; padding: 1.5rem; margin-top: 3rem; border-top: 1px solid #444; font-size: 0.9rem; color: #aaa; }
         .loader { border: 3px solid #f3f3f3; border-top: 3px solid #00aaff; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 0 auto; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .admin-form-container { background-color: rgba(0, 0, 0, 0.8); border: 1px solid #00aaff; border-radius: 8px; padding: 20px; margin-top: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .admin-form-container h3 { color: #00aaff; margin-bottom: 15px; }
+        .admin-form-group { margin-bottom: 15px; text-align: left; display: flex; align-items: center; flex-wrap: wrap; }
+        .admin-form-group label { display: block; margin-bottom: 5px; color: #ccc; width: 80px; /* Largeur fixe label */}
+        .admin-form-group input[type="number"] { width: 60px; padding: 8px; border: 1px solid #444; background-color: #333; color: #fff; border-radius: 4px; text-align: center; margin: 0 5px; }
+        .admin-form-container .team-name { display: inline-block; width: 100px; /* Ajusté */ text-align: right; margin-right: 5px; font-weight: normal; }
+        .admin-form-container .vs { display: inline-block; margin: 0 5px; color: #aaa; }
+        .team-management-container { background-color: rgba(0, 0, 0, 0.7); border: 1px solid #00aaff; border-radius: 8px; padding: 15px; margin-top: 15px; text-align: left; }
+        .team-management-container h3 { color: #00aaff; margin-bottom: 10px; }
+        .team-management-form label { display: block; margin-bottom: 5px; color: #ccc; }
+        .team-management-form input[type="text"], .team-management-form input[type="password"] { width: 100%; padding: 8px; border: 1px solid #444; background-color: #333; color: #fff; border-radius: 4px; margin-bottom: 10px; }
+        .team-management-form button { padding: 8px 15px; border: none; border-radius: 4px; color: white; background-color: #00aaff; cursor: pointer; transition: background-color 0.3s; }
+        .team-management-form button:hover { background-color: #0077cc; }
+        .message.error { color: #ff3c3c; background-color: rgba(255, 60, 60, 0.2); border: 1px solid rgba(255, 60, 60, 0.5); }
+        .message.success { color: #4CAF50; background-color: rgba(76, 175, 80, 0.2); border: 1px solid rgba(76, 175, 80, 0.5); }
+        .message.info { color: #00aaff; background-color: rgba(0, 170, 255, 0.1); border: 1px solid rgba(0, 170, 255, 0.3); }
+        .equipe-select-disabled { opacity: 0.5; pointer-events: none; }
+        .equipe-info { margin-top: 5px; font-size: 0.9em; color: #aaa; }
+        .calendar-dialog { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #222; padding: 25px; border: 1px solid #444; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.6); width: 90%; max-width: 350px; text-align: center; }
+        .calendar-dialog h3 { margin-bottom: 15px; color: #00aaff; }
+        .calendar-dialog p { margin-bottom: 15px; }
+        .calendar-option, .calendar-cancel { display: block; width: 100%; padding: 10px 15px; border: none; border-radius: 5px; color: white; background-color: #00aaff; cursor: pointer; transition: background-color 0.3s; margin-bottom: 10px; font-size: 1rem; }
+        .calendar-option:hover { background-color: #0077cc; }
+        .calendar-cancel { background-color: #ff3c3c; margin-top: 10px; }
+        .calendar-cancel:hover { background-color: #cc3030; }
         @media (min-width: 768px) {
-            body { padding-bottom: 60px; } #hero { padding: 2rem; height: 70vh; }
+            body { padding-bottom: 60px; }
+            #hero { padding: 2rem; min-height: 70vh; }
             .hero-content { padding: 2.5rem; }
             .hero-content h2 { font-size: 3rem; }
             .hero-content p { font-size: 1.2rem; }
             .cta-button { padding: 1rem 2rem; font-size: 1.1rem; }
-            .bracket-row { flex-direction: row; justify-content: center; }
-            .inscription-container{ flex-direction: row; flex-wrap: wrap; }
+            .bracket-row { flex-direction: row; justify-content: center; flex-wrap: wrap; }
+            .match-group { width: auto; /* Ne prend plus toute la largeur */}
+            .match { width: 160px; /* Un peu plus large sur desktop */ }
+            .inscription-container { flex-direction: row; flex-wrap: wrap; }
             .equipe { width: 45%; }
             .form-container { max-width: 600px; padding: 2rem; }
+            .admin-form-container .team-name { width: 120px; }
+            .admin-form-group label { width: 100px; }
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        section { animation: fadeIn 0.5s ease-out; }
-
-        /* Styles pour les étapes du tournoi */
-        .match-step {
-            margin-top: 20px; /* Espacement cohérent */
-            width: 100%;
-            display: none; /* Masqué par défaut */
-        }
-
-        .match-step.active {
-            display: block; /* Affiché quand actif */
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        .step-title {
-            color: #00aaff;
-            font-weight: bold;
-            margin-bottom: 10px; /* Marge inférieure pour espacer du contenu */
-            background-color: rgba(0, 170, 255, 0.1);
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: block; /* Changé de inline-block à block */
-            text-align: center; /* Centrer le titre */
-        }
-
-        .match-time {
-            font-size: 0.8rem;
-            color: #00aaff;
-            margin-top: 5px;
-            font-weight: bold;
-        }
-
-        .match-duration {
-            font-size: 0.7rem;
-            color: #aaa;
-        }
-
-        .classement {
-            margin-top: 40px !important; /* Augmenté et !important */
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            border: 1px dashed #00aaff;
-        }
-
-        .classement h3 {
-            margin-bottom: 15px;
-            color: #00aaff;
-        }
-
-        .classement ol {
-            text-align: left;
-            padding-left: 30px;
-        }
-
-        .classement li {
-            margin-bottom: 8px;
-        }
-
-        .delete-player-btn {
-            margin-left: 10px;
-            background: #ff3c3c;
-            border: none;
-            border-radius: 3px;
-            color: white;
-            padding: 2px 5px;
-            cursor: pointer;
-        }
-
-         /* Styles pour le compte à rebours */
-         .countdown-timer {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #00aaff;
-            border: 1px solid rgba(0, 170, 255, 0.3);
-            box-shadow: 0 0 10px rgba(0, 170, 255, 0.2);
-        }
-
-        /* Styles pour l'affichage des scores */
-        .score-display {
-            font-weight: bold;
-            color: #fff;
-            background-color: rgba(0, 170, 255, 0.3);
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin: 5px 0;
-            display: inline-block;
-        }
-
-        /* Style pour le formulaire d'administration */
-        .admin-form-container {
-            background-color: rgba(0, 0, 0, 0.8);
-            border: 1px solid #00aaff;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .admin-form-container h3 {
-            color: #00aaff;
-            margin-bottom: 15px;
-        }
-
-        .admin-form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .admin-form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #ccc;
-        }
-
-        .admin-form-group input {
-            width: 60px;
-            padding: 8px;
-            border: 1px solid #444;
-            background-color: #333;
-            color: #fff;
-            border-radius: 4px;
-            text-align: center;
-        }
-
-        .team-name {
-            display: inline-block;
-            width: 120px;
-            text-align: right;
-            margin-right: 10px;
-        }
-
-        .vs {
-            display: inline-block;
-            margin: 0 10px;
-            color: #aaa;
-        }
-
-        /* Style pour les formulaires de gestion d'équipe (capitaine) */
-        .team-management-container {
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 1px solid #00aaff;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            text-align: left;
-        }
-
-        .team-management-container h3 {
-            color: #00aaff;
-            margin-bottom: 10px;
-        }
-
-        .team-management-form label {
-            display: block;
-            margin-bottom: 5px;
-            color: #ccc;
-        }
-          .team-management-form input[type="text"],
-        .team-management-form input[type="password"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #444;
-            background-color: #333;
-            color: #fff;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-
-        .team-management-form button {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            background-color: #00aaff;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .team-management-form button:hover {
-            background-color: #0077cc;
-        }
-
-          /* Style pour le message d'erreur/succès */
-        .message {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .message.error {
-            color: #ff3c3c;
-            background-color: rgba(255, 60, 60, 0.2);
-        }
-
-        .message.success {
-            color: #4CAF50;
-            background-color: rgba(76, 175, 80, 0.2);
-        }
-        .equipe-select-disabled {
-            opacity: 0.5;  /* Grisé */
-            pointer-events: none; /* Empêche les clics */
-        }
-
-        .equipe-info {
-            margin-top: 5px;
-            font-size: 0.9em;
-            color: #aaa;
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -291,7 +120,7 @@
                 <p>Dimanche 6 avril 2025</p>
                 <p>15h00 - 16h30</p>
                 <p>3 matchs de 30 min par équipe</p>
-                <div id="countdown" class="countdown-timer">Chargement du compte à rebours...</div>
+                <div id="countdown" class="countdown-timer">Chargement...</div>
                 <a href="#inscription-section" class="cta-button">S'inscrire maintenant</a>
                 <button id="add-to-calendar-btn" class="cta-button" style="background-color: #f00;">Ajouter au calendrier</button>
             </div>
@@ -300,212 +129,87 @@
         <section id="roadmap">
            <h2>Déroulement des Matchs</h2>
             <div class="roadmap-container">
-                <!-- Étape 1: Quarts de finale -->
-                <div class="match-step" id="step1">
+                <div class="match-step active" id="step1">
                     <div class="step-title">Étape 1: Quarts de finale (15h00)</div>
                     <div class="bracket-row">
-                        <div class="match-group">
-                            <div class="match" id="match1">
-                                <span class="team1-name">Équipe 1</span> vs <span class="team2-name">Équipe 2</span>
-                                <div class="match-time">15h00</div>
-                                <div class="match-duration">30 min</div>
-                                    <div id="score-match1" class="score-display"></div>
-                            </div>
-                        </div>
-                        <div class="match-group">
-                            <div class="match" id="match2">
-                                <span class="team3-name">Équipe 3</span> vs <span class="team4-name">Équipe 4</span>
-                                <div class="match-time">15h00</div>
-                                <div class="match-duration">30 min</div>
-                                <div id="score-match2" class="score-display"></div>
-                            </div>
-                        </div>
-                            <div class="match-group">
-                            <div class="match" id="match3">
-                               <span class="team5-name">Équipe 5</span> vs <span class="team6-name">Équipe 6</span>
-                                <div class="match-time">15h00</div>
-                                <div class="match-duration">30 min</div>
-                                    <div id="score-match3" class="score-display"></div>
-                            </div>
-                        </div>
-                        <div class="match-group">
-                            <div class="match" id="match4">
-                                <span class="team7-name">Équipe 7</span> vs <span class="team8-name">Équipe 8</span>
-                                <div class="match-time">15h00</div>
-                                <div class="match-duration">30 min</div>
-                                <div id="score-match4" class="score-display"></div>
-                            </div>
-                        </div>
+                        <div class="match-group"><div class="match" id="match1"><span class="team-name match1-teamA-name">?</span> <span class="vs">vs</span> <span class="team-name match1-teamB-name">?</span><div class="match-time">15h00</div><div class="match-duration">30 min</div><div id="score-match1" class="score-display"></div></div></div>
+                        <div class="match-group"><div class="match" id="match2"><span class="team-name match2-teamA-name">?</span> <span class="vs">vs</span> <span class="team-name match2-teamB-name">?</span><div class="match-time">15h00</div><div class="match-duration">30 min</div><div id="score-match2" class="score-display"></div></div></div>
+                        <div class="match-group"><div class="match" id="match3"><span class="team-name match3-teamA-name">?</span> <span class="vs">vs</span> <span class="team-name match3-teamB-name">?</span><div class="match-time">15h00</div><div class="match-duration">30 min</div><div id="score-match3" class="score-display"></div></div></div>
+                        <div class="match-group"><div class="match" id="match4"><span class="team-name match4-teamA-name">?</span> <span class="vs">vs</span> <span class="team-name match4-teamB-name">?</span><div class="match-time">15h00</div><div class="match-duration">30 min</div><div id="score-match4" class="score-display"></div></div></div>
                     </div>
                 </div>
-
-                <!-- Étape 2: Demi-finales -->
                 <div class="match-step" id="step2">
                     <div class="step-title">Étape 2: Demi-finales (15h30)</div>
                     <div class="bracket-row">
-                        <div class="match-group">
-                            <div class="match" id="demi-finale-principale1">
-                                 <span id="demi1-team1"></span> vs <span id="demi1-team2"></span>
-                                <div class="match-time">15h30</div>
-                                <div class="match-duration">30 min</div>
-                                <div id="score-demi-finale-principale1" class="score-display"></div>
-                            </div>
-                        </div>
-                        <div class="match-group">
-                            <div class="match" id="demi-finale-principale2">
-                                <span id="demi2-team1"></span> vs <span id="demi2-team2"></span>
-                                <div class="match-time">15h30</div>
-                                <div class="match-duration">30 min</div>
-                                <div id="score-demi-finale-principale2" class="score-display"></div>
-                            </div>
-                        </div>
+                        <div class="match-group"><div class="match" id="demi-finale-principale1"><span id="demi1-team1" class="team-name">?</span> <span class="vs">vs</span> <span id="demi1-team2" class="team-name">?</span><div class="match-time">15h30</div><div class="match-duration">30 min</div><div id="score-demi-finale-principale1" class="score-display"></div></div></div>
+                        <div class="match-group"><div class="match" id="demi-finale-principale2"><span id="demi2-team1" class="team-name">?</span> <span class="vs">vs</span> <span id="demi2-team2" class="team-name">?</span><div class="match-time">15h30</div><div class="match-duration">30 min</div><div id="score-demi-finale-principale2" class="score-display"></div></div></div>
                     </div>
-
-                    <div class="step-title">Étape 2: Demi-finales Consolantes(15h30)</div>
+                    <div class="step-title" style="margin-top:25px;">Demi-finales Consolantes (15h30)</div>
                     <div class="bracket-row">
-                        <div class="match-group">
-                            <div class="match" id="demi-finale-consolante1">
-                                 <span id="demiC1-team1"></span> vs <span id="demiC1-team2"></span>
-                                <div class="match-time">15h30</div>
-                                <div class="match-duration">30 min</div>
-                                <div id="score-demi-finale-consolante1" class="score-display"></div>
-                            </div>
-                        </div>
-                        <div class="match-group">
-                            <div class="match" id="demi-finale-consolante2">
-                                <span id="demiC2-team1"></span> vs <span id="demiC2-team2"></span>
-                                <div class="match-time">15h30</div>
-                                <div class="match-duration">30 min</div>
-                                <div id="score-demi-finale-consolante2" class="score-display"></div>
-                            </div>
-                        </div>
+                        <div class="match-group"><div class="match" id="demi-finale-consolante1"><span id="demiC1-team1" class="team-name">?</span> <span class="vs">vs</span> <span id="demiC1-team2" class="team-name">?</span><div class="match-time">15h30</div><div class="match-duration">30 min</div><div id="score-demi-finale-consolante1" class="score-display"></div></div></div>
+                        <div class="match-group"><div class="match" id="demi-finale-consolante2"><span id="demiC2-team1" class="team-name">?</span> <span class="vs">vs</span> <span id="demiC2-team2" class="team-name">?</span><div class="match-time">15h30</div><div class="match-duration">30 min</div><div id="score-demi-finale-consolante2" class="score-display"></div></div></div>
                     </div>
                 </div>
-
-                <!-- Étape 3: Finales -->
-        <div class="match-step" id="step3">
-            <div class="step-title">Étape 3: Finale 1 (16h00) - Places 1 & 2</div>
-                <div class="match-group">
-                    <div class="match" id="match-finale1">
-                         <span id="finale-team1"></span> vs <span id="finale-team2"></span>
-                        <div class="match-time">16h00</div>
-                        <div class="match-duration">30 min</div>
-                        <div id="score-finale" class="score-display"></div>
+                <div class="match-step" id="step3">
+                    <div class="step-title">Étape 3: Finales (16h00)</div>
+                    <div class="bracket-row">
+                        <div class="match-group"><div class="match" id="match-finale1"><small>(Places 1-2)</small><br><span id="finale-team1" class="team-name">?</span> <span class="vs">vs</span> <span id="finale-team2" class="team-name">?</span><div class="match-time">16h00</div><div class="match-duration">30 min</div><div id="score-finale" class="score-display"></div></div></div>
+                        <div class="match-group"><div class="match" id="match-finale2"><small>(Places 3-4)</small><br><span id="finale2-team1" class="team-name">?</span> <span class="vs">vs</span> <span id="finale2-team2" class="team-name">?</span><div class="match-time">16h00</div><div class="match-duration">30 min</div><div id="score-finale2" class="score-display"></div></div></div>
+                        <div class="match-group"><div class="match" id="match-finale3"><small>(Places 5-6)</small><br><span id="finaleC-team1" class="team-name">?</span> <span class="vs">vs</span> <span id="finaleC-team2" class="team-name">?</span><div class="match-time">16h00</div><div class="match-duration">30 min</div><div id="score-finale3" class="score-display"></div></div></div>
+                        <div class="match-group"><div class="match" id="match-finale4"><small>(Places 7-8)</small><br><span id="finaleC2-team1" class="team-name">?</span> <span class="vs">vs</span> <span id="finaleC2-team2" class="team-name">?</span><div class="match-time">16h00</div><div class="match-duration">30 min</div><div id="score-finale4" class="score-display"></div></div></div>
                     </div>
                 </div>
-
-            <div class="step-title">Étape 3: Finale 2 (16h00) - Places 3 & 4</div>
-                <div class="match-group">
-                    <div class="match" id="match-finale2">
-                         <span id="finale2-team1"></span> vs <span id="finale2-team2"></span>
-                        <div class="match-time">16h00</div>
-                        <div class="match-duration">30 min</div>
-                        <div id="score-finale2" class="score-display"></div>
-                    </div>
-                </div>
-
-            <div class="step-title">Étape 3: Finale 3 (16h00) - Places 5 & 6</div>
-                <div class="match-group">
-                    <div class="match" id="match-finale3">
-                         <span id="finaleC-team1"></span> vs <span id="finaleC-team2"></span>
-                        <div class="match-time">16h00</div>
-                        <div class="match-duration">30 min</div>
-                        <div id="score-finale3" class="score-display"></div>
-                    </div>
-                </div>
-
-            <div class="step-title">Étape 3: Finale 4 (16h00) - Places 7 & 8</div>
-                <div class="match-group">
-                    <div class="match" id="match-finale4">
-                         <span id="finaleC2-team1"></span> vs <span id="finaleC2-team2"></span>
-                        <div class="match-time">16h00</div>
-                        <div class="match-duration">30 min</div>
-                        <div id="score-finale4" class="score-display"></div>
-                    </div>
-                </div>
-        </div>
-
                 <div class="match-step" id="step4">
                     <div class="classement">
                         <h3>Classement final</h3>
-                        <ol id="final-ranking">
-                            <!-- Le classement sera mis à jour dynamiquement -->
-                        </ol>
+                        <ol id="final-ranking"><li>Classement en attente...</li></ol>
                     </div>
                 </div>
-
-                <button id="nextStep" class="cta-button" style="margin-top: 0px;">Étape suivante</button>
-                <button id="adminScoreBtn" class="cta-button" style="margin-top: 15px; background-color: #444;">Administration des scores</button>
-                 <button id="resetScoresBtn" class="cta-button" style="margin-top: 15px; background-color: #ff3c3c;">Réinitialiser les scores (Admin)</button>
+                <button id="nextStep" class="cta-button" style="margin-top: 20px;">Étape suivante</button>
+                <button id="adminScoreBtn" class="cta-button" style="margin-top: 15px; background-color: #444;">Scores (Admin)</button>
+                 <button id="resetScoresBtn" class="cta-button" style="margin-top: 15px; background-color: #ff3c3c;">Reset Scores (Admin)</button>
             </div>
         </section>
 
         <section id="inscription-section">
             <h2>Inscription (Capitaine)</h2>
             <div class="form-container">
-                <p>Prix total (par personne) : 8€ </p>
-                 <!-- Formulaire SANS Formspree -->
+                <p style="text-align: center; font-weight: bold; margin-bottom: 15px;">Prix: 8€ par personne</p>
                  <form id="inscriptionForm">
-                    <div class="form-group">
-                        <label for="nomEquipe">Nom de l'équipe :</label>
-                        <input type="text" id="nomEquipe" name="nomEquipe" required>
-                    </div>
-                     <div class="form-group">
-                            <label for="teamPassword">Mot de passe de l'équipe :</label>
-                            <input type="password" id="teamPassword" name="teamPassword" required>
-                        </div>
-                    <div class="form-group">
-                        <label for="nomCapitaine">Nom du Capitaine :</label>
-                        <input type="text" id="nomCapitaine" name="nomCapitaine" required autocomplete="family-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="prenomCapitaine">Prénom du Capitaine :</label>
-                        <input type="text" id="prenomCapitaine" name="prenomCapitaine" required autocomplete="given-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="emailCapitaine">Email du Capitaine :</label>
-                        <input type="email" id="emailCapitaine" name="emailCapitaine" required autocomplete="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="telephoneCapitaine">Téléphone du Capitaine :</label>
-                        <input type="tel" id="telephoneCapitaine" name="telephoneCapitaine" required pattern="[0-9]{10}" title="Veuillez entrer un numéro de téléphone à 10 chiffres" autocomplete="tel">
-                    </div>
-                    <div class="form-group">
-                        <label for="ageCapitaine">Âge du Capitaine :</label>
-                        <input type="number" id="ageCapitaine" name="ageCapitaine" required min="1" max="120">
-                    </div>
-                      <div class="form-group">
-                        <label for="equipe">Équipe:</label>
+                    <div class="form-group"><label for="nomEquipe">Nom de l'équipe :</label><input type="text" id="nomEquipe" name="nomEquipe" required></div>
+                    <div class="form-group"><label for="teamPassword">Mot de passe équipe (gestion joueurs) :</label><input type="password" id="teamPassword" name="teamPassword" required></div>
+                    <div class="form-group"><label for="nomCapitaine">Nom Capitaine :</label><input type="text" id="nomCapitaine" name="nomCapitaine" required autocomplete="family-name"></div>
+                    <div class="form-group"><label for="prenomCapitaine">Prénom Capitaine :</label><input type="text" id="prenomCapitaine" name="prenomCapitaine" required autocomplete="given-name"></div>
+                    <div class="form-group"><label for="emailCapitaine">Email Capitaine :</label><input type="email" id="emailCapitaine" name="emailCapitaine" required autocomplete="email"></div>
+                    <div class="form-group"><label for="telephoneCapitaine">Téléphone Capitaine :</label><input type="tel" id="telephoneCapitaine" name="telephoneCapitaine" required pattern="[0-9]{10}" title="10 chiffres" autocomplete="tel"></div>
+                    <div class="form-group"><label for="ageCapitaine">Âge Capitaine :</label><input type="number" id="ageCapitaine" name="ageCapitaine" required min="1" max="120"></div>
+                    <div class="form-group"><label for="equipe">Attribuer à l'emplacement (temporaire):</label>
                         <select id="equipe" name="equipe" required>
-                            <option value="">-- Sélectionnez une équipe --</option>
-                            <option value="equipe1">Équipe 1</option>
-                            <option value="equipe2">Équipe 2</option>
-                            <option value="equipe3">Équipe 3</option>
-                            <option value="equipe4">Équipe 4</option>
-                            <option value="equipe5">Équipe 5</option>
-                            <option value="equipe6">Équipe 6</option>
-                            <option value="equipe7">Équipe 7</option>
-                            <option value="equipe8">Équipe 8</option>
+                            <option value="">-- Sélectionnez emplacement --</option>
+                            <option value="equipe1">Emplacement 1</option><option value="equipe2">Emplacement 2</option><option value="equipe3">Emplacement 3</option><option value="equipe4">Emplacement 4</option>
+                            <option value="equipe5">Emplacement 5</option><option value="equipe6">Emplacement 6</option><option value="equipe7">Emplacement 7</option><option value="equipe8">Emplacement 8</option>
                         </select>
-                          <div class="equipe-info" id="equipe-info"></div>
+                        <div class="equipe-info" id="equipe-info"></div>
                     </div>
                     <button type="submit" class="cta-button">Inscrire l'équipe</button>
                     <div class="loader" id="formLoader"></div>
                 </form>
-                <div id="message" class="message"></div> <!-- Ajout de la classe message -->
+                <div id="message" class="message"></div>
+                <div id="draw-message" class="message info"></div>
             </div>
         </section>
 
         <section id="liste-inscrits">
            <h2>Liste des équipes</h2>
             <div class="inscription-container" id="equipes-container">
-                <!-- Les équipes et leurs joueurs seront ajoutés ici dynamiquement -->
+                <!-- Contenu dynamique -->
             </div>
         </section>
     </main>
 
     <footer>
-        <p>© 2024 Tournoi Five. Tous droits réservés.</p>
+        <p>© 2024-2025 Tournoi Five DITIB. Tous droits réservés.</p>
+        <!-- Boutons admin ajoutés par JS -->
     </footer>
 
     <script type="module">
@@ -513,1132 +217,49 @@
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
         import { getDatabase, ref, set, onValue, push, serverTimestamp, remove, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
-      const firebaseConfig = {
-            apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
-            authDomain: "tournoifoot-e233b.firebaseapp.com",
-            projectId: "tournoifoot-e233b",
-            storageBucket: "tournoifoot-e233b.firebasestorage.app",
-            messagingSenderId: "915558317701",
-            appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",
-            measurementId: "G-N5NWTN317Y"
-        };
-
+        const firebaseConfig = {apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",authDomain: "tournoifoot-e233b.firebaseapp.com",projectId: "tournoifoot-e233b",storageBucket: "tournoifoot-e233b.firebasestorage.app",messagingSenderId: "915558317701",appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec",measurementId: "G-N5NWTN317Y"};
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const database = getDatabase(app);
+        const ADMIN_PASSWORD = 'ditib25five';
 
+        let availableTeamsPool = []; let teamsInCurrentMatch = []; let currentMatchIndex = 0; let matchPairings = {}; let isDrawInProgress = false;
 
-function escapeICSValue(str) {
-     return str.replace(/\\/g, '\\\\')
-             .replace(/;/g, '\\;')
-             .replace(/,/g, '\\,')
-             .replace(/\n/g, '\\n');
- }
+        function escapeICSValue(str) { return str.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');}
+        function startCountdown() { const tournamentDate = new Date("April 6, 2025 15:00:00").getTime(); const countdownElement = document.getElementById('countdown'); if (!countdownElement) return; const countdownInterval = setInterval(() => { const now = new Date().getTime(); const distance = tournamentDate - now; const days = Math.floor(distance / (1000 * 60 * 60 * 24)); const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); const seconds = Math.floor((distance % (1000 * 60)) / 1000); let countdownText = "Début dans: "; if (days > 0) countdownText += `${days}j `; countdownText += `${hours}h ${minutes}m ${seconds}s`; countdownElement.innerHTML = countdownText; if (distance < 0) { clearInterval(countdownInterval); countdownElement.innerHTML = "Le tournoi a commencé!"; } }, 1000);}
+        function generateCalendarUrl(type) { const eventDetails = { title: "Tournoi Five - Convocation", start: "20250406T143000", end: "20250406T170000", details: "Convocation Tournoi Five (Arena 25, 14h30). Matchs à 15h00.\nAdresse: 2 rue Pierre Donzelot, Montbéliard", location: "Arena 25, 2 rue Pierre Donzelot, Montbéliard" }; let url = ""; switch (type) { case 'google': url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.start}/${eventDetails.end}&details=${encodeURIComponent(eventDetails.details)}&location=${encodeURIComponent(eventDetails.location)}`; window.open(url, '_blank'); break; case 'ics': const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//TournoiFive//FR','BEGIN:VEVENT',`UID:${Date.now()}@tournoi.five`,`DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,`DTSTART;TZID=Europe/Paris:${eventDetails.start}`,`DTEND;TZID=Europe/Paris:${eventDetails.end}`,`SUMMARY:${escapeICSValue(eventDetails.title)}`,`DESCRIPTION:${escapeICSValue(eventDetails.details)}`,`LOCATION:${escapeICSValue(eventDetails.location)}`,'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:Rappel: Tournoi Five','TRIGGER:-PT30M','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n'); const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' }); url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'tournoi_five.ics'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); break; default: console.error('Type calendrier non supporté.'); return; }}
 
+        function showAdminScoreForm() { if (!checkAdminPassword()) return; const existing = document.getElementById('adminScoreFormContainer'); if(existing) existing.remove(); const container = document.createElement('div'); container.id = 'adminScoreFormContainer'; container.className = 'admin-form-container'; container.innerHTML = `<h3>Administration des scores</h3><form id="scoreForm"> <div class="admin-form-group"><label>Match 1:</label><span class="team-name" id="admin-team1-name">?</span><input type="number" id="score-equipe1" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-equipe2" min="0" value="0"><span class="team-name" id="admin-team2-name">?</span></div> <div class="admin-form-group"><label>Match 2:</label><span class="team-name" id="admin-team3-name">?</span><input type="number" id="score-equipe3" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-equipe4" min="0" value="0"><span class="team-name" id="admin-team4-name">?</span></div> <div class="admin-form-group"><label>Match 3:</label><span class="team-name" id="admin-team5-name">?</span><input type="number" id="score-equipe5" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-equipe6" min="0" value="0"><span class="team-name" id="admin-team6-name">?</span></div> <div class="admin-form-group"><label>Match 4:</label><span class="team-name" id="admin-team7-name">?</span><input type="number" id="score-equipe7" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-equipe8" min="0" value="0"><span class="team-name" id="admin-team8-name">?</span></div> <hr style="border-color:#444; margin: 10px 0;"> <div class="admin-form-group"><label>Demi 1:</label><span class="team-name" id="admin-demi1-team1">?</span><input type="number" id="score-demi1-1" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-demi1-2" min="0" value="0"><span class="team-name" id="admin-demi1-team2">?</span></div> <div class="admin-form-group"><label>Demi 2:</label><span class="team-name" id="admin-demi2-team1">?</span><input type="number" id="score-demi2-1" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-demi2-2" min="0" value="0"><span class="team-name" id="admin-demi2-team2">?</span></div> <div class="admin-form-group"><label>Demi C1:</label><span class="team-name" id="admin-demiC1-team1">?</span><input type="number" id="score-demiC1-1" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-demiC1-2" min="0" value="0"><span class="team-name" id="admin-demiC1-team2">?</span></div> <div class="admin-form-group"><label>Demi C2:</label><span class="team-name" id="admin-demiC2-team1">?</span><input type="number" id="score-demiC2-1" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-demiC2-2" min="0" value="0"><span class="team-name" id="admin-demiC2-team2">?</span></div> <hr style="border-color:#444; margin: 10px 0;"> <div class="admin-form-group"><label>Finale 1-2:</label><span class="team-name" id="admin-finale-team1">?</span><input type="number" id="score-finale-1" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-finale-2" min="0" value="0"><span class="team-name" id="admin-finale-team2">?</span></div> <div class="admin-form-group"><label>Finale 3-4:</label><span class="team-name" id="admin-finale2-team1">?</span><input type="number" id="score-finale2-1" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-finale2-2" min="0" value="0"><span class="team-name" id="admin-finale2-team2">?</span></div> <div class="admin-form-group"><label>Finale 5-6:</label><span class="team-name" id="admin-finaleC-team1">?</span><input type="number" id="score-finaleC-1" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-finaleC-2" min="0" value="0"><span class="team-name" id="admin-finaleC-team2">?</span></div> <div class="admin-form-group"><label>Finale 7-8:</label><span class="team-name" id="admin-finaleC2-team1">?</span><input type="number" id="score-finaleC2-1" min="0" value="0"><span class="vs">vs</span><input type="number" id="score-finaleC2-2" min="0" value="0"><span class="team-name" id="admin-finaleC2-team2">?</span></div> <button type="submit" class="cta-button">Enregistrer</button> <button type="button" id="closeAdminScoreForm" class="cta-button" style="background-color: #666;">Fermer</button></form>`; document.getElementById('adminScoreBtn').parentNode.insertBefore(container, document.getElementById('adminScoreBtn').nextSibling); container.querySelector('#scoreForm').addEventListener('submit', e => { e.preventDefault(); saveScores(); }); container.querySelector('#closeAdminScoreForm').addEventListener('click', () => container.remove()); loadDataForAdminForm(); }
+        async function loadDataForAdminForm() { try { const [teamSnap, scoreSnap, drawSnap] = await Promise.all([ get(ref(database, 'equipes')), get(ref(database, 'scores')), get(ref(database, 'drawResults')) ]); const teams = teamSnap.val() || {}; const scores = scoreSnap.val() || {}; const drawResults = drawSnap.val() || {}; let teamNames = {}; let winners = {}; let losers = {}; for (let i = 1; i <= 4; i++) { const mId = `match${i}`; const drawM = drawResults[mId]; let tA_N = `Éq ${i*2-1}?`; let tB_N = `Éq ${i*2}?`; const tA_Id = `equipe${i*2-1}`; const tB_Id = `equipe${i*2}`; if(drawM) { tA_N = drawM.teamA_name || tA_N; tB_N = drawM.teamB_name || tB_N; teamNames[tA_Id] = tA_N; teamNames[tB_Id] = tB_N; } else { if(teams[tA_Id]) { tA_N = teams[tA_Id].nomEquipe; teamNames[tA_Id] = tA_N; } if(teams[tB_Id]) { tB_N = teams[tB_Id].nomEquipe; teamNames[tB_Id] = tB_N; } } const elA = document.getElementById(`admin-team${i*2-1}-name`); const elB = document.getElementById(`admin-team${i*2}-name`); if(elA) elA.textContent = tA_N; if(elB) elB.textContent = tB_N; const sc1In = document.getElementById(`score-${tA_Id}`); const sc2In = document.getElementById(`score-${tB_Id}`); const scData = scores[mId]; const cScore1 = scData && scData[tA_Id] !== undefined ? parseInt(scData[tA_Id]) : 0; const cScore2 = scData && scData[tB_Id] !== undefined ? parseInt(scData[tB_Id]) : 0; if (sc1In) sc1In.value = cScore1; if (sc2In) sc2In.value = cScore2; if (tA_N !== `Éq ${i*2-1}?` && tB_N !== `Éq ${i*2}?`) { winners[mId] = cScore1 > cScore2 ? tA_N : tB_N; losers[mId] = cScore1 > cScore2 ? tB_N : tA_N; if(cScore1 === cScore2) { winners[mId] = `${tA_N}?`; losers[mId] = `${tB_N}?`; } } else { winners[mId] = '?'; losers[mId] = '?'; } } let wD1='', lD1='', wD2='', lD2='', wDC1='', lDC1='', wDC2='', lDC2=''; function pds(dId, i1Id, i2Id, wT1, wT2) { const s1In = document.getElementById(i1Id); const s2In = document.getElementById(i2Id); const scD = scores[dId]; const cs1 = scD && scD.equipe1 !== undefined ? parseInt(scD.equipe1) : 0; const cs2 = scD && scD.equipe2 !== undefined ? parseInt(scD.equipe2) : 0; if (s1In) s1In.value = cs1; if (s2In) s2In.value = cs2; if (wT1 && wT2 && !wT1.includes('?') && !wT2.includes('?')) { const w = cs1 > cs2 ? wT1 : wT2; const l = cs1 > cs2 ? wT2 : wT1; if (cs1 === cs2) return [`${wT1}?`, `${wT2}?`]; return [w, l]; } return ['?', '?']; } document.getElementById('admin-demi1-team1').textContent = winners.match1 || '?'; document.getElementById('admin-demi1-team2').textContent = winners.match2 || '?'; [wD1, lD1] = pds('demiPrincipale1', 'score-demi1-1', 'score-demi1-2', winners.match1, winners.match2); document.getElementById('admin-demi2-team1').textContent = winners.match3 || '?'; document.getElementById('admin-demi2-team2').textContent = winners.match4 || '?'; [wD2, lD2] = pds('demiPrincipale2', 'score-demi2-1', 'score-demi2-2', winners.match3, winners.match4); document.getElementById('admin-demiC1-team1').textContent = losers.match1 || '?'; document.getElementById('admin-demiC1-team2').textContent = losers.match2 || '?'; [wDC1, lDC1] = pds('demiConsolante1', 'score-demiC1-1', 'score-demiC1-2', losers.match1, losers.match2); document.getElementById('admin-demiC2-team1').textContent = losers.match3 || '?'; document.getElementById('admin-demiC2-team2').textContent = losers.match4 || '?'; [wDC2, lDC2] = pds('demiConsolante2', 'score-demiC2-1', 'score-demiC2-2', losers.match3, losers.match4); function pfs(fId, i1Id, i2Id) { const s1In = document.getElementById(i1Id); const s2In = document.getElementById(i2Id); const scD = scores[fId]; const cs1 = scD && scD.equipe1 !== undefined ? parseInt(scD.equipe1) : 0; const cs2 = scD && scD.equipe2 !== undefined ? parseInt(scD.equipe2) : 0; if (s1In) s1In.value = cs1; if (s2In) s2In.value = cs2; } document.getElementById('admin-finale-team1').textContent = wD1 || '?'; document.getElementById('admin-finale-team2').textContent = wD2 || '?'; pfs('finale1', 'score-finale-1', 'score-finale-2'); document.getElementById('admin-finale2-team1').textContent = lD1 || '?'; document.getElementById('admin-finale2-team2').textContent = lD2 || '?'; pfs('finale2', 'score-finale2-1', 'score-finale2-2'); document.getElementById('admin-finaleC-team1').textContent = wDC1 || '?'; document.getElementById('admin-finaleC-team2').textContent = wDC2 || '?'; pfs('finale3', 'score-finaleC-1', 'score-finaleC-2'); document.getElementById('admin-finaleC2-team1').textContent = lDC1 || '?'; document.getElementById('admin-finaleC2-team2').textContent = lDC2 || '?'; pfs('finale4', 'score-finaleC2-1', 'score-finaleC2-2'); } catch (error) { console.error("Err load admin form data:", error); alert("Err load admin data."); } }
+        async function saveScores() { try { const updates = {}; for (let i = 1; i <= 4; i++) { const mId = `match${i}`; const t1Id = `equipe${i * 2 - 1}`; const t2Id = `equipe${i * 2}`; updates[`scores/${mId}/${t1Id}`] = parseInt(document.getElementById(`score-${t1Id}`).value) || 0; updates[`scores/${mId}/${t2Id}`] = parseInt(document.getElementById(`score-${t2Id}`).value) || 0; } updates['scores/demiPrincipale1/equipe1'] = parseInt(document.getElementById('score-demi1-1').value) || 0; updates['scores/demiPrincipale1/equipe2'] = parseInt(document.getElementById('score-demi1-2').value) || 0; updates['scores/demiPrincipale2/equipe1'] = parseInt(document.getElementById('score-demi2-1').value) || 0; updates['scores/demiPrincipale2/equipe2'] = parseInt(document.getElementById('score-demi2-2').value) || 0; updates['scores/demiConsolante1/equipe1'] = parseInt(document.getElementById('score-demiC1-1').value) || 0; updates['scores/demiConsolante1/equipe2'] = parseInt(document.getElementById('score-demiC1-2').value) || 0; updates['scores/demiConsolante2/equipe1'] = parseInt(document.getElementById('score-demiC2-1').value) || 0; updates['scores/demiConsolante2/equipe2'] = parseInt(document.getElementById('score-demiC2-2').value) || 0; updates['scores/finale1/equipe1'] = parseInt(document.getElementById('score-finale-1').value) || 0; updates['scores/finale1/equipe2'] = parseInt(document.getElementById('score-finale-2').value) || 0; updates['scores/finale2/equipe1'] = parseInt(document.getElementById('score-finale2-1').value) || 0; updates['scores/finale2/equipe2'] = parseInt(document.getElementById('score-finale2-2').value) || 0; updates['scores/finale3/equipe1'] = parseInt(document.getElementById('score-finaleC-1').value) || 0; updates['scores/finale3/equipe2'] = parseInt(document.getElementById('score-finaleC-2').value) || 0; updates['scores/finale4/equipe1'] = parseInt(document.getElementById('score-finaleC2-1').value) || 0; updates['scores/finale4/equipe2'] = parseInt(document.getElementById('score-finaleC2-2').value) || 0; await set(ref(database), updates); await updateMatchDisplayAndRanking(); showDrawMessage('Scores enregistrés.', 'success'); const formContainer = document.getElementById('adminScoreFormContainer'); if (formContainer) formContainer.remove(); } catch (error) { console.error("Err saving scores:", error); showDrawMessage("Erreur sauvegarde scores.", 'error'); } }
+        async function updateMatchDisplayAndRanking() { try { const [teamSnap, scoreSnap, drawSnap] = await Promise.all([ get(ref(database, 'equipes')), get(ref(database, 'scores')), get(ref(database, 'drawResults')) ]); const scoresData = scoreSnap.val() || {}; const drawResults = drawSnap.val() || {}; let namesFromDraw = {}; let defaultNames = {}; let winners = {}; let losers = {}; for (let i = 1; i <= 4; i++) { const mId = `match${i}`; const drawM = drawResults[mId]; let tA_N = `?`; let tB_N = `?`; if (drawM && drawM.teamA_name && drawM.teamB_name) { tA_N = drawM.teamA_name; tB_N = drawM.teamB_name; namesFromDraw[mId] = { A: tA_N, B: tB_N }; } else { defaultNames[mId] = { A: tA_N, B: tB_N }; } const spanA = document.querySelector(`.match#${mId} .${mId}-teamA-name`); const spanB = document.querySelector(`.match#${mId} .${mId}-teamB-name`); if (spanA) spanA.textContent = tA_N; if (spanB) spanB.textContent = tB_N; const scoreDisp = document.getElementById(`score-${mId}`); if (scoreDisp) { const t1IdScore = `equipe${i * 2 - 1}`; const t2IdScore = `equipe${i * 2}`; const scoreM = scoresData[mId] || {}; const s1 = scoreM[t1IdScore]; const s2 = scoreM[t2IdScore]; if (s1 !== undefined && s2 !== undefined) { scoreDisp.textContent = `Score: ${parseInt(s1)} - ${parseInt(s2)}`; scoreDisp.style.display = 'inline-block'; } else { scoreDisp.textContent = ''; scoreDisp.style.display = 'none'; } } const t1IdScore_ = `equipe${i * 2 - 1}`; const t2IdScore_ = `equipe${i * 2}`; const scoreMatch_ = scoresData[mId] || {}; const score1_ = parseInt(scoreMatch_[t1IdScore_] || 0); const score2_ = parseInt(scoreMatch_[t2IdScore_] || 0); const teamA_ = namesFromDraw[mId]?.A || defaultNames[mId]?.A || '?'; const teamB_ = namesFromDraw[mId]?.B || defaultNames[mId]?.B || '?'; if (teamA_ !== '?' && teamB_ !== '?') { winners[mId] = score1_ > score2_ ? teamA_ : (score1_ < score2_ ? teamB_ : `${teamA_}/${teamB_}`); losers[mId] = score1_ < score2_ ? teamA_ : (score1_ > score2_ ? teamB_ : `${teamA_}/${teamB_}`); } else { winners[mId] = '?'; losers[mId] = '?'; } } document.getElementById('demi1-team1').textContent = winners.match1 || '?'; document.getElementById('demi1-team2').textContent = winners.match2 || '?'; document.getElementById('demi2-team1').textContent = winners.match3 || '?'; document.getElementById('demi2-team2').textContent = winners.match4 || '?'; document.getElementById('demiC1-team1').textContent = losers.match1 || '?'; document.getElementById('demiC1-team2').textContent = losers.match2 || '?'; document.getElementById('demiC2-team1').textContent = losers.match3 || '?'; document.getElementById('demiC2-team2').textContent = losers.match4 || '?'; let finalTeams = { f1: [], f2: [], f3: [], f4: [] }; function procDemiRes(demiId, wT1, wT2, scoreDispId) { const scoreM = scoresData[demiId] || {}; const s1 = parseInt(scoreM.equipe1 || 0); const s2 = parseInt(scoreM.equipe2 || 0); const scoreDisp = document.getElementById(scoreDispId); if (scoreDisp) { if (scoreM.equipe1 !== undefined && scoreM.equipe2 !== undefined) { scoreDisp.textContent = `Score: ${s1}-${s2}`; scoreDisp.style.display = 'inline-block'; } else { scoreDisp.textContent = ''; scoreDisp.style.display = 'none'; } } if (wT1 && wT2 && wT1 !== '?' && wT2 !== '?' && !wT1.includes('/') && !wT2.includes('/')) { const w = s1 > s2 ? wT1 : (s1 < s2 ? wT2 : `${wT1}/${wT2}`); const l = s1 < s2 ? wT1 : (s1 > s2 ? wT2 : `${wT1}/${wT2}`); return [w, l]; } return ['?', '?']; } let [wD1, lD1] = procDemiRes('demiPrincipale1', winners.match1, winners.match2, 'score-demi-finale-principale1'); let [wD2, lD2] = procDemiRes('demiPrincipale2', winners.match3, winners.match4, 'score-demi-finale-principale2'); let [wDC1, lDC1] = procDemiRes('demiConsolante1', losers.match1, losers.match2, 'score-demi-finale-consolante1'); let [wDC2, lDC2] = procDemiRes('demiConsolante2', losers.match3, losers.match4, 'score-demi-finale-consolante2'); finalTeams.f1 = [wD1, wD2]; finalTeams.f2 = [lD1, lD2]; finalTeams.f3 = [wDC1, wDC2]; finalTeams.f4 = [lDC1, lDC2]; document.getElementById('finale-team1').textContent = finalTeams.f1[0] || '?'; document.getElementById('finale-team2').textContent = finalTeams.f1[1] || '?'; document.getElementById('finale2-team1').textContent = finalTeams.f2[0] || '?'; document.getElementById('finale2-team2').textContent = finalTeams.f2[1] || '?'; document.getElementById('finaleC-team1').textContent = finalTeams.f3[0] || '?'; document.getElementById('finaleC-team2').textContent = finalTeams.f3[1] || '?'; document.getElementById('finaleC2-team1').textContent = finalTeams.f4[0] || '?'; document.getElementById('finaleC2-team2').textContent = finalTeams.f4[1] || '?'; let ranking = []; function procFinRes(finId, tA, tB, scoreDispId) { const scoreM = scoresData[finId] || {}; const s1 = parseInt(scoreM.equipe1 || 0); const s2 = parseInt(scoreM.equipe2 || 0); const scoreDisp = document.getElementById(scoreDispId); if (scoreDisp) { if (scoreM.equipe1 !== undefined && scoreM.equipe2 !== undefined) { scoreDisp.textContent = `Score: ${s1}-${s2}`; scoreDisp.style.display = 'inline-block'; } else { scoreDisp.textContent = ''; scoreDisp.style.display = 'none'; } } if (tA && tB && tA !== '?' && tB !== '?' && !tA.includes('/') && !tB.includes('/')) { if (s1 > s2) ranking.push(tA, tB); else if (s2 > s1) ranking.push(tB, tA); else ranking.push(tA, tB); } else { ranking.push(tA || '?', tB || '?'); } } procFinRes('finale1', finalTeams.f1[0], finalTeams.f1[1], 'score-finale'); procFinRes('finale2', finalTeams.f2[0], finalTeams.f2[1], 'score-finale2'); procFinRes('finale3', finalTeams.f3[0], finalTeams.f3[1], 'score-finale3'); procFinRes('finale4', finalTeams.f4[0], finalTeams.f4[1], 'score-finale4'); const rankList = document.getElementById('final-ranking'); if(rankList) { rankList.innerHTML = ''; const finIds = ['finale1', 'finale2', 'finale3', 'finale4']; const allScored = finIds.every(id => scoresData[id] && scoresData[id].equipe1 !== undefined && scoresData[id].equipe2 !== undefined); const rankComplete = ranking.length === 8 && !ranking.some(t => t === '?' || t.includes('/')); if (allScored && rankComplete) { ranking.forEach((t, i) => { const li = document.createElement('li'); li.textContent = `${i + 1}. ${t}`; rankList.appendChild(li); }); } else { rankList.innerHTML = '<li>Classement en attente...</li>'; } } } catch (error) { console.error("Err update display:", error); } }
+        async function inscrireEquipe(event) { event.preventDefault(); const form=event.target, msgDiv=document.getElementById('message'), loader=document.getElementById('formLoader'), sel=document.getElementById('equipe'); const nomEq=document.getElementById('nomEquipe').value.trim(), pw=document.getElementById('teamPassword').value, nomC=document.getElementById('nomCapitaine').value.trim(), prenomC=document.getElementById('prenomCapitaine').value.trim(), mailC=document.getElementById('emailCapitaine').value.trim(), telC=document.getElementById('telephoneCapitaine').value.trim(), ageC=document.getElementById('ageCapitaine').value, eqId=sel.value; msgDiv.textContent=''; msgDiv.className='message'; loader.style.display='block'; if (!nomEq||!pw||!nomC||!prenomC||!mailC||!telC||!ageC||!eqId) { msgDiv.innerHTML='<p>Remplir tous les champs.</p>'; msgDiv.classList.add('error'); loader.style.display='none'; return; } if (!/^[0-9]{10}$/.test(telC)) { msgDiv.innerHTML='<p>Tel invalide (10 chiffres).</p>'; msgDiv.classList.add('error'); loader.style.display='none'; return; } if (isNaN(ageC)||ageC<1||ageC>120) { msgDiv.innerHTML='<p>Âge invalide.</p>'; msgDiv.classList.add('error'); loader.style.display='none'; return; } if (pw.length<6) { msgDiv.innerHTML='<p>MDP trop court (min 6).</p>'; msgDiv.classList.add('error'); loader.style.display='none'; return; } try { const snap = await get(ref(database, 'equipes')); const eqs = snap.val()||{}; for (const id in eqs) { if (eqs[id].nomEquipe.toLowerCase()===nomEq.toLowerCase()) { msgDiv.innerHTML='<p>Nom déjà pris.</p>'; msgDiv.classList.add('error'); loader.style.display='none'; return; } } if (eqs[eqId]) { msgDiv.innerHTML='<p>Emplacement déjà pris.</p>'; msgDiv.classList.add('error'); loader.style.display='none'; return; } const eqData = { nomEquipe: nomEq, motDePasse: pw, capitaine: { nom: nomC, prenom: prenomC, email: mailC, telephone: telC, age: parseInt(ageC), }, membres: {}, timestamp: serverTimestamp(), }; await set(ref(database, `equipes/${eqId}`), eqData); msgDiv.innerHTML=`<p>Équipe "${nomEq}" inscrite !</p>`; msgDiv.classList.add('success'); form.reset(); updateEquipeInfo(); await updateMatchDisplayAndRanking(); } catch (error) { console.error("Err inscr:", error); msgDiv.innerHTML=`<p>Erreur: ${error.message}</p>`; msgDiv.classList.add('error'); } finally { loader.style.display='none'; } }
+        function loadTeams() { const container = document.getElementById('equipes-container'); if (!container) return; const eqRef = ref(database, 'equipes'); onValue(eqRef, snap => { container.innerHTML = ''; if (snap.exists()) { const eqs = snap.val(); let hasTeams = false; for (const eqId in eqs) { hasTeams = true; const eqData = eqs[eqId]; const div = document.createElement('div'); div.className = 'equipe'; div.dataset.equipeId = eqId; div.innerHTML = `<p>${eqData.nomEquipe} <span style="font-size:0.8em; color:#aaa;">(ID: ${eqId})</span></p>`; const ul = document.createElement('ul'); ul.className = 'membres'; const liC = document.createElement('li'); liC.textContent = `Capitaine: ${eqData.capitaine.prenom} ${eqData.capitaine.nom}`; ul.appendChild(liC); if (eqData.membres) { for (const memId in eqData.membres) { const mem = eqData.membres[memId]; const liM = document.createElement('li'); liM.textContent = `${mem.prenom} ${mem.nom}`; const btnDel = document.createElement('button'); btnDel.innerHTML = '<i class="fas fa-times"></i>'; btnDel.className = 'delete-player-btn'; btnDel.title = 'Suppr.'; btnDel.onclick = ((id, mId, pw) => () => deletePlayer(id, mId, pw))(eqId, memId, eqData.motDePasse); liM.appendChild(btnDel); ul.appendChild(liM); } } else { ul.innerHTML += '<li style="font-style: italic; color: #999;">Aucun joueur</li>'; } div.appendChild(ul); const formAdd = document.createElement('form'); formAdd.className = 'team-management-form'; formAdd.style.marginTop = '10px'; formAdd.innerHTML = `<h6>Ajouter joueur</h6><input type="text" placeholder="Prénom" data-field="prenom" required><input type="text" placeholder="Nom" data-field="nom" required><input type="password" placeholder="Mot de passe équipe" data-field="password" required><button type="submit">Ajouter</button><div class="message" style="padding: 5px; font-size: 0.9em;"></div>`; formAdd.onsubmit = (id => e => addPlayer(e, id))(eqId); div.appendChild(formAdd); const btnDelTeam = document.createElement('button'); btnDelTeam.innerHTML = '<i class="fas fa-trash-alt"></i> Suppr. Équipe (Admin)'; btnDelTeam.className = 'delete-team-btn'; btnDelTeam.title = `Suppr. ${eqData.nomEquipe}`; btnDelTeam.onclick = ((id, name) => () => deleteTeam(id, name))(eqId, eqData.nomEquipe); div.appendChild(btnDelTeam); container.appendChild(div); } if (!hasTeams) { container.innerHTML = '<p>Aucune équipe inscrite.</p>'; } } else { container.innerHTML = '<p>Aucune équipe inscrite.</p>'; } }, error => { console.error("Err load teams:", error); container.innerHTML = '<p class="message error">Erreur chargement équipes.</p>'; }); }
+        async function deleteTeam(eqId, nomEq) { if (!checkAdminPassword()) return; if (confirm(`Supprimer l'équipe "${nomEq}" ? IRREVERSIBLE.`)) { try { await remove(ref(database, `equipes/${eqId}`)); showDrawMessage(`Équipe "${nomEq}" supprimée.`, 'success'); await updateMatchDisplayAndRanking(); updateEquipeInfo(); } catch (error) { console.error("Err del team:", error); showDrawMessage(`Erreur suppression équipe.`, 'error'); } } }
+        async function deletePlayer(eqId, memId, teamPw) { const enteredPw = prompt("Entrez le mot de passe équipe pour supprimer:"); if (enteredPw === teamPw) { try { await remove(ref(database, `equipes/${eqId}/membres/${memId}`)); } catch (error) { console.error("Err del player:", error); alert("Erreur suppression joueur."); } } else if (enteredPw !== null) { alert("Mot de passe incorrect."); } }
+        async function addPlayer(event, eqId) { event.preventDefault(); const form=event.target, msgDiv=form.querySelector('.message'); const prenom=form.querySelector('[data-field="prenom"]').value.trim(), nom=form.querySelector('[data-field="nom"]').value.trim(), pw=form.querySelector('[data-field="password"]').value; msgDiv.textContent=''; msgDiv.className='message'; if (!prenom||!nom||!pw) { msgDiv.innerHTML='<p>Champs requis.</p>'; msgDiv.classList.add('error'); return; } try { const snap = await get(ref(database, `equipes/${eqId}`)); if (!snap.exists()) { msgDiv.innerHTML='<p>Équipe non trouvée.</p>'; msgDiv.classList.add('error'); return; } const eqData = snap.val(); if (eqData.motDePasse !== pw) { msgDiv.innerHTML='<p>Mauvais mot de passe.</p>'; msgDiv.classList.add('error'); form.querySelector('[data-field="password"]').focus(); return; } const membres = eqData.membres||{}; if (Object.keys(membres).length >= 5) { msgDiv.innerHTML='<p>Max 5 joueurs.</p>'; msgDiv.classList.add('error'); return; } const exists = Object.values(membres).some(m => m.prenom.toLowerCase()===prenom.toLowerCase() && m.nom.toLowerCase()===nom.toLowerCase()); if (exists) { msgDiv.innerHTML='<p>Joueur déjà présent.</p>'; msgDiv.classList.add('error'); return; } const newPlayerRef = push(ref(database, `equipes/${eqId}/membres`)); await set(newPlayerRef, { prenom: prenom, nom: nom }); form.reset(); } catch (error) { console.error("Err add player:", error); msgDiv.innerHTML=`<p>Erreur: ${error.message}</p>`; msgDiv.classList.add('error'); } }
+        function resetScores() { if (!checkAdminPassword()) return; if (confirm('Réinitialiser TOUS les scores?')) { remove(ref(database, 'scores')).then(async () => { await updateMatchDisplayAndRanking(); showDrawMessage('Scores réinitialisés.', 'success'); }).catch(e => { console.error("Err reset scores:", e); showDrawMessage('Erreur reset scores.', 'error'); }); } }
+        function resetTournamentData() { if (!checkAdminPassword()) return; if (confirm('TOUT RÉINITIALISER (Équipes, Scores, Tirage)? IRREVERSIBLE !')) { Promise.all([ remove(ref(database, 'equipes')), remove(ref(database, 'scores')), remove(ref(database, 'drawResults')) ]).then(async () => { updateEquipeInfo(); await updateMatchDisplayAndRanking(); showDrawMessage('Tournoi entièrement réinitialisé.', 'success'); }).catch(e => { console.error("Err reset all:", e); showDrawMessage('Erreur reset complet.', 'error'); }); } }
+        function showCaptainPhoneNumbers() { if (!checkAdminPassword()) return; const eqRef = ref(database, 'equipes'); get(eqRef).then(snap => { const existing = document.getElementById('captainPhonesContainer'); if (existing) existing.remove(); const div = document.createElement('div'); div.id = 'captainPhonesContainer'; div.className = 'admin-form-container'; div.style.textAlign = 'left'; if (snap.exists()) { const eqs = snap.val(); let html = '<h3><i class="fas fa-phone"></i> Contacts Capitaines:</h3><ul>'; let count = 0; for (const eqId in eqs) { const d = eqs[eqId]; if(d.capitaine && d.capitaine.telephone) { html += `<li><strong>${d.nomEquipe||eqId}:</strong> ${d.capitaine.prenom} ${d.capitaine.nom} - ${d.capitaine.telephone}</li>`; count++; } } if (count === 0) html += '<li>Aucun numéro.</li>'; html += '</ul>'; html += '<button id="closePhoneNumbers" class="cta-button" style="background-color:#666; margin-top:10px;">Fermer</button>'; div.innerHTML = html; } else { div.innerHTML = '<p>Aucune équipe.</p><button id="closePhoneNumbers" class="cta-button" style="background-color:#666; margin-top:10px;">Fermer</button>'; } document.getElementById('showPhoneNumbersBtn').parentNode.insertBefore(div, document.getElementById('showPhoneNumbersBtn').nextSibling); document.getElementById('closePhoneNumbers').addEventListener('click', () => div.remove()); }).catch(e => { console.error("Err get phones:", e); alert("Erreur récupération numéros."); }); }
+        function setupNavigation() { const items = document.querySelectorAll('.bottom-nav a'); const sections = document.querySelectorAll('main > section'); let timeout; function updateActive() { let currentId = 'hero'; const navH = document.querySelector('.bottom-nav')?.offsetHeight || 60; const offset = navH + 20; sections.forEach(sec => { const rect = sec.getBoundingClientRect(); if (rect.top <= offset && rect.bottom >= offset) currentId = sec.id; }); if (window.scrollY === 0) currentId = 'hero'; else if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 20) currentId = sections[sections.length - 1].id; items.forEach(item => item.classList.toggle('active', item.getAttribute('href') === `#${currentId}`)); } window.addEventListener('scroll', () => { clearTimeout(timeout); timeout = setTimeout(updateActive, 100); }, { passive: true }); items.forEach(item => { item.addEventListener('click', function(e) { e.preventDefault(); const targetId = this.getAttribute('href'); const targetEl = document.querySelector(targetId); if (targetEl) { const navH_ = document.querySelector('.bottom-nav')?.offsetHeight || 60; const pos = targetEl.getBoundingClientRect().top + window.pageYOffset - navH_ + 1; window.scrollTo({ top: pos, behavior: 'smooth' }); items.forEach(i => i.classList.remove('active')); this.classList.add('active'); } }); }); updateActive(); }
+        function setupTournamentSteps() { const steps = document.querySelectorAll('.match-step'); const btn = document.getElementById('nextStep'); if (!steps.length || !btn) return; let current = 0; function showStep(index) { steps.forEach((step, i) => { step.style.display = (i === index) ? 'block' : 'none'; step.classList.toggle('active', i === index); }); if (index < steps.length - 2) btn.textContent = 'Étape suivante'; else if (index === steps.length - 2) btn.textContent = 'Voir Classement'; else btn.textContent = 'Retour Quarts'; } btn.addEventListener('click', function() { current = (current + 1) % steps.length; showStep(current); const roadmapSec = document.getElementById('roadmap'); if (roadmapSec) { const navH__ = document.querySelector('.bottom-nav')?.offsetHeight || 60; const pos_ = roadmapSec.getBoundingClientRect().top + window.pageYOffset - navH__ + 1; window.scrollTo({ top: pos_, behavior: 'smooth' }); } }); showStep(0); }
+        function updateEquipeInfo() { const sel = document.getElementById('equipe'), infoDiv = document.getElementById('equipe-info'); if (!sel || !infoDiv) return; get(ref(database, 'equipes')).then(snap => { const eqs = snap.val() || {}; let selVal = sel.value; let allTaken = true; let count = 0; for (let i = 1; i <= 8; i++) { const optVal = `equipe${i}`; const opt = sel.querySelector(`option[value="${optVal}"]`); if (opt) { const taken = !!eqs[optVal]; opt.disabled = taken; opt.style.color = taken ? '#888' : ''; if (taken) { opt.textContent = `Empl. ${i} (Pris - ${eqs[optVal].nomEquipe})`; count++; } else { opt.textContent = `Emplacement ${i}`; allTaken = false; } } } if (selVal && eqs[selVal]) { infoDiv.textContent = `Emplacement ${selVal.replace('equipe', '')} pris par "${eqs[selVal].nomEquipe}".`; infoDiv.style.color = '#ffcc00'; } else { infoDiv.textContent = ""; infoDiv.style.color = ''; } const form = document.getElementById('inscriptionForm'); const btn = form?.querySelector('button[type="submit"]'); if (count >= 8) { sel.disabled = true; if (btn) btn.disabled = true; if (!selVal || eqs[selVal]) { infoDiv.textContent = "Toutes places prises !"; infoDiv.style.color = '#ff3c3c'; } } else { sel.disabled = false; if (btn) btn.disabled = false; } }).catch(e => { console.error("Err maj eq info:", e); infoDiv.textContent = "Erreur vérif équipes."; infoDiv.style.color = '#ff3c3c'; }); }
+        function showDrawMessage(text, type = 'info') { const div = document.getElementById('draw-message'); if (div) { div.innerHTML = `<p>${text}</p>`; div.className = `message ${type}`; div.style.display = 'block'; } }
+        function checkAdminPassword() { const pw = prompt(`Mot de passe admin (${ADMIN_PASSWORD}) :`); if (pw === ADMIN_PASSWORD) return true; if (pw !== null) alert('Mot de passe incorrect.'); return false; }
+        async function startOrContinueDraw() { const btn = document.getElementById('startDrawBtn'); if (!btn) return; if (!isDrawInProgress) { if (!checkAdminPassword()) return; try { const snap = await get(ref(database, 'equipes')); const data = snap.val(); if (!data || Object.keys(data).length < 8) { showDrawMessage("Il faut 8 équipes inscrites.", "error"); return; } availableTeamsPool = Object.entries(data).map(([id, d]) => ({ id: id, name: d.nomEquipe })); teamsInCurrentMatch = []; currentMatchIndex = 0; matchPairings = {}; isDrawInProgress = true; btn.textContent = `Tirer A - Match ${currentMatchIndex + 1}`; btn.style.backgroundColor = '#e67e22'; showDrawMessage(`Prêt. Cliquez pour tirer Équipe A du Match ${currentMatchIndex + 1}.`, "info"); } catch (error) { console.error("Err init draw:", error); showDrawMessage("Erreur récupération équipes.", "error"); isDrawInProgress = false; } } else { performOneDrawStep(); } }
+        async function performOneDrawStep() { const btn = document.getElementById('startDrawBtn'); if (!btn || !isDrawInProgress) return; if (availableTeamsPool.length === 0) { showDrawMessage("Toutes équipes tirées.", "info"); isDrawInProgress = false; btn.textContent = 'Lancer Tirage (Admin)'; btn.style.backgroundColor = ''; return; } const randIdx = Math.floor(Math.random() * availableTeamsPool.length); const drawn = availableTeamsPool[randIdx]; availableTeamsPool.splice(randIdx, 1); teamsInCurrentMatch.push(drawn); const matchId = `match${currentMatchIndex + 1}`; let msg = `Tiré : <strong>${drawn.name}</strong>`; const spanA = document.querySelector(`.match#${matchId} .${matchId}-teamA-name`); const spanB = document.querySelector(`.match#${matchId} .${matchId}-teamB-name`); if (teamsInCurrentMatch.length === 1) { msg += ` (Match ${currentMatchIndex + 1} - A).<br>Cliquez pour Équipe B.`; btn.textContent = `Tirer B - Match ${currentMatchIndex + 1}`; if(spanA) spanA.textContent = drawn.name; } else if (teamsInCurrentMatch.length === 2) { const teamA = teamsInCurrentMatch[0]; const teamB = teamsInCurrentMatch[1]; msg += ` (Match ${currentMatchIndex + 1} - B).<br><strong>${matchId}: ${teamA.name} vs ${teamB.name}</strong>`; matchPairings[matchId] = { teamA_id: teamA.id, teamA_name: teamA.name, teamB_id: teamB.id, teamB_name: teamB.name }; if(spanB) spanB.textContent = teamB.name; teamsInCurrentMatch = []; currentMatchIndex++; if (currentMatchIndex < 4) { msg += `<br>Prêt pour Match ${currentMatchIndex + 1}. Cliquez pour tirer A.`; btn.textContent = `Tirer A - Match ${currentMatchIndex + 1}`; } else { msg += "<br><strong>Tirage terminé !</strong>"; isDrawInProgress = false; btn.textContent = 'Lancer Tirage (Admin)'; btn.style.backgroundColor = ''; try { await set(ref(database, 'drawResults'), matchPairings); msg += "<br>Résultats sauvegardés."; showDrawMessage(msg, "success"); await updateMatchDisplayAndRanking(); } catch (error) { console.error("Err save draw:", error); showDrawMessage(msg + "<br>Erreur sauvegarde.", "error"); } return; } } showDrawMessage(msg, "info"); }
+        async function resetDraw() { if (!checkAdminPassword()) return; if (confirm("Réinitialiser le tirage ?")) { try { await remove(ref(database, 'drawResults')); availableTeamsPool=[]; teamsInCurrentMatch=[]; currentMatchIndex=0; matchPairings={}; isDrawInProgress=false; const btn = document.getElementById('startDrawBtn'); if (btn) { btn.textContent = 'Lancer Tirage (Admin)'; btn.style.backgroundColor = ''; } await updateMatchDisplayAndRanking(); showDrawMessage("Tirage réinitialisé.", "success"); } catch (error) { console.error("Err reset draw:", error); showDrawMessage("Erreur reset tirage.", "error"); } } }
+        function addAdminButtons() { const footer = document.querySelector('footer'); if (!footer) return; footer.querySelectorAll('.admin-button').forEach(b => b.remove()); const btns = [ { id: 'startDrawBtn', text: 'Lancer Tirage (Admin)', color: '#2ecc71', action: startOrContinueDraw }, { id: 'resetDrawBtn', text: 'Reset Tirage (Admin)', color: '#f39c12', action: resetDraw }, { id: 'resetScoresBtn', text: 'Reset Scores (Admin)', color: '#ff3c3c', action: resetScores }, { id: 'showPhoneNumbersBtn', text: 'Contacts Capitaines', color: '#3498db', action: showCaptainPhoneNumbers }, { id: 'resetTournamentBtn', text: 'RESET TOURNOI COMPLET', color: '#e74c3c', action: resetTournamentData }, ]; btns.forEach(bInfo => { const b = document.createElement('button'); b.id = bInfo.id; b.textContent = bInfo.text; b.className = 'cta-button admin-button'; b.style.backgroundColor = bInfo.color; b.style.marginLeft = '5px'; b.style.marginTop = '10px'; b.style.padding = '0.6rem 1rem'; b.style.fontSize = '0.9rem'; b.addEventListener('click', bInfo.action); footer.appendChild(b); }); }
 
- function startCountdown() {
-    const tournamentDate = new Date("April 6, 2025 15:00:00").getTime();
-    const countdownElement = document.getElementById('countdown');
-    const countdownInterval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = tournamentDate - now;
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        let countdownText = "<div>Début du tournoi dans: ";
-        if (days > 0) {
-            countdownText += `${days}j `;
-        }
-        countdownText += `${hours}h ${minutes}m ${seconds}s</div>`;
-
-        countdownElement.innerHTML = countdownText;
-
-        if (distance < 0) {
-            clearInterval(countdownInterval);
-            countdownElement.innerHTML = "Le tournoi a commencé!";
-        }
-    }, 1000);
-}
-
-// MODIFICATION ICI : Ajout du choix du type de calendrier
-function generateCalendarUrl(type) {
-        const eventDetails = {
-            title: "Tournoi Five - Convocation",
-            start: "20250406T143000", // 14h30 (heure de convocation)
-            end: "20250406T170000",   // 17h00 (estimation de fin, ajustez si besoin)
-            details: "Convocation pour le Tournoi Five à l'Arena 25. Début des matchs à 15h00.\nAdresse: Arena 25, 2 rue Pierre Donzelot, Montbéliard",
-            location: "Arena 25, 2 rue Pierre Donzelot, Montbéliard"
-        };
-
-        let calendarUrl = "";
-
-        switch (type) {
-            case 'google':
-                calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.start}/${eventDetails.end}&details=${encodeURIComponent(eventDetails.details)}&location=${encodeURIComponent(eventDetails.location)}&add=popup-0`;
-                break;
-            case 'ics': // Format iCalendar (pour Apple Calendar, Outlook, etc.)
-                const icsData = [
-                    'BEGIN:VCALENDAR',
-                    'VERSION:2.0',
-                    'PRODID:-//YourAppName//NONSGML v1.0//EN', // Changez YourAppName
-                    'BEGIN:VEVENT',
-                    `UID:${Math.random().toString()}@yourdomain.com`, // Changez yourdomain.com, UID unique
-                    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`, // Timestamp actuel
-                    `DTSTART:${eventDetails.start}`,
-                    `DTEND:${eventDetails.end}`,
-                    `SUMMARY:${escapeICSValue(eventDetails.title)}`,  // <--- CORRECTION ICI
-                    `DESCRIPTION:${escapeICSValue(eventDetails.details)}`, // <--- CORRECTION ICI
-                    `LOCATION:${escapeICSValue(eventDetails.location)}`, // <--- CORRECTION ICI
-                    'BEGIN:VALARM',
-                    'ACTION:DISPLAY',
-                    'TRIGGER:PT0M', //  <--  C'est ici:  PT0M signifie 0 minutes avant/après = à l'heure
-                    'DESCRIPTION:Rappel: Tournoi Five',
-                    'END:VALARM',
-                    'END:VEVENT',
-                    'END:VCALENDAR'
-                ].join('\r\n');
-                const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
-                calendarUrl = URL.createObjectURL(blob);
-
-                const downloadLink = document.createElement('a');
-                downloadLink.href = calendarUrl;
-                downloadLink.download = 'tournoi_five.ics';
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
-                return; // Arrêt après téléchargement
-
-            default:
-                console.error('Type de calendrier non supporté.');
-                return;
-        }
-        window.open(calendarUrl, '_blank');
-    }
-
-// Fonction pour afficher le formulaire d'administration des scores
-function showAdminScoreForm() {
-    const password = prompt("Entrez le mot de passe admin:");
-    if (password === 'ditib25five') { // Mot de passe admin global
-        const adminForm = document.createElement('div');
-        adminForm.className = 'admin-form-container';
-        adminForm.innerHTML = `
-            <h3>Administration des scores</h3>
-            <form id="scoreForm">
-                <!-- Quarts de finale -->
-                <div class="admin-form-group">
-                    <label>Match 1:</label>
-                    <span class="team-name" id="team1-name"></span> <input type="number" id="score-equipe1" min="0" required>
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-equipe2" min="0" required> <span class="team-name" id="team2-name"></span>
-                </div>
-                <div class="admin-form-group">
-                    <label>Match 2:</label>
-                    <span class="team-name" id="team3-name"></span> <input type="number" id="score-equipe3" min="0" required>
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-equipe4" min="0" required> <span class="team-name" id="team4-name"></span>
-                </div>
-                <div class="admin-form-group">
-                    <label>Match 3:</label>
-                    <span class="team-name" id="team5-name"></span> <input type="number" id="score-equipe5" min="0" required>
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-equipe6" min="0" required> <span class="team-name" id="team6-name"></span>
-                </div>
-                <div class="admin-form-group">
-                    <label>Match 4:</label>
-                    <span class="team-name" id="team7-name"></span> <input type="number" id="score-equipe7" min="0" required>
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-equipe8" min="0" required> <span class="team-name" id="team8-name"></span>
-                </div>
-
-                <!-- Demi-finales principales (inputs initialement cachés) -->
-                <div class="admin-form-group" style="display:none;">
-                    <label>Demi-finale 1:</label>
-                    <span class="team-name" id="admin-demi1-team1"></span> <input type="number" id="score-demi1-1" min="0">
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-demi1-2" min="0"> <span class="team-name" id="admin-demi1-team2"></span>
-                </div>
-                <div class="admin-form-group" style="display:none;">
-                    <label>Demi-finale 2:</label>
-                    <span class="team-name" id="admin-demi2-team1"></span> <input type="number" id="score-demi2-1" min="0">
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-demi2-2" min="0"> <span class="team-name" id="admin-demi2-team2"></span>
-                </div>
-
-                 <!-- Demi-finales consolantes (inputs initialement cachés) -->
-                <div class="admin-form-group" style="display:none;">
-                    <label>Demi-finale Consolante 1:</label>
-                    <span class="team-name" id="admin-demiC1-team1"></span> <input type="number" id="score-demiC1-1" min="0">
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-demiC1-2" min="0"> <span class="team-name" id="admin-demiC1-team2"></span>
-                </div>
-                <div class="admin-form-group" style="display:none;">
-                    <label>Demi-finale Consolante 2:</label>
-                    <span class="team-name" id="admin-demiC2-team1"></span> <input type="number" id="score-demiC2-1" min="0">
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-demiC2-2" min="0"> <span class="team-name" id="admin-demiC2-team2"></span>
-                </div>
-
-                <!-- Finale et Finale Consolante (inputs initialement cachés) -->
-                <div class="admin-form-group" style="display:none;">
-                    <label>Finale 1:</label>
-                    <span class="team-name" id="admin-finale-team1"></span> <input type="number" id="score-finale-1" min="0">
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-finale-2" min="0"> <span class="team-name" id="admin-finale-team2"></span>
-                </div>
-                <div class="admin-form-group" style="display:none;">
-                    <label>Finale 2 :</label>
-                    <span class="team-name" id="admin-finale2-team1"></span> <input type="number" id="score-finale2-1" min="0">
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-finale2-2" min="0"> <span class="team-name" id="admin-finale2-team2"></span>
-                </div>
-                <div class="admin-form-group" style="display:none;">
-                    <label>Finale 3:</label>
-                    <span class="team-name" id="admin-finaleC-team1"></span> <input type="number" id="score-finaleC-1" min="0">
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-finaleC-2" min="0"> <span class="team-name" id="admin-finaleC-team2"></span>
-                </div>
-                <div class="admin-form-group" style="display:none;">
-                    <label>Finale 4:</label>
-                    <span class="team-name" id="admin-finaleC2-team1"></span> <input type="number" id="score-finaleC2-1" min="0">
-                    <span class="vs">vs</span>
-                    <input type="number" id="score-finaleC2-2" min="0"> <span class="team-name" id="admin-finaleC2-team2"></span>
-                </div>
-                <button type="submit" class="cta-button">Enregistrer les scores</button>
-            </form>
-        `;
-        document.getElementById('roadmap').appendChild(adminForm);
-        document.getElementById('scoreForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            saveScores();
+        document.addEventListener('DOMContentLoaded', async () => {
+            startCountdown(); setupNavigation(); setupTournamentSteps(); addAdminButtons();
+            loadTeams(); await updateMatchDisplayAndRanking(); updateEquipeInfo();
+            document.getElementById('inscriptionForm')?.addEventListener('submit', inscrireEquipe);
+            document.getElementById('adminScoreBtn')?.addEventListener('click', showAdminScoreForm);
+            document.getElementById('equipe')?.addEventListener('change', updateEquipeInfo);
+            document.getElementById('add-to-calendar-btn')?.addEventListener('click', function() { const old = document.querySelector('.calendar-dialog'); if (old) old.remove(); const diag = document.createElement('div'); diag.className = 'calendar-dialog'; diag.innerHTML = `<h3>Ajouter au calendrier</h3><p>Choisir:</p><button class="calendar-option" data-type="google"><i class="fab fa-google"></i> Google</button><button class="calendar-option" data-type="ics"><i class="fab fa-apple"></i> Apple/Outlook (.ics)</button><button class="calendar-cancel"><i class="fas fa-times"></i> Annuler</button>`; document.body.appendChild(diag); diag.querySelectorAll('.calendar-option').forEach(b => b.addEventListener('click', function() { generateCalendarUrl(this.dataset.type); document.body.removeChild(diag); })); diag.querySelector('.calendar-cancel').addEventListener('click', () => document.body.removeChild(diag)); });
+            const drawMsgDiv = document.getElementById('draw-message'); if (drawMsgDiv) drawMsgDiv.style.display = 'none';
         });
-
-        // Pré-remplir les noms d'équipe dans le formulaire admin
-        loadTeamNamesForAdmin();
-
-
-    } else {
-        alert('Mot de passe incorrect');
-    }
-}
-
-//Fonction pour préremplir les noms dans admin
-function loadTeamNamesForAdmin() {
-    const teamNames = {};
-
-    // Récupérer les noms des équipes depuis Firebase
-    const equipesRef = ref(database, 'equipes');
-    get(equipesRef).then((snapshot) => {
-        if (snapshot.exists()) {
-            const equipes = snapshot.val();
-            for (const equipeId in equipes) {
-                //Trouver dans quel match l'équipe est
-                const teamNumber = parseInt(equipeId.replace('equipe', ''));
-                teamNames[teamNumber] = equipes[equipeId].nomEquipe;
-            }
-          // Mettre à jour les noms dans le formulaire
-          for (let i = 1; i <= 8; i++) {
-            const teamNameElement = document.getElementById(`team${i}-name`);
-            if (teamNameElement && teamNames[i]) {
-                teamNameElement.textContent = teamNames[i];
-            }
-          }
-
-            // Préremplir les spans des demi-finales *après* avoir chargé les équipes initiales.
-            //Il faut s'assurer que les id des spans dans le form admin correspondent.
-            if (winners && losers){
-                document.getElementById('admin-demi1-team1').textContent = winners.match1 || "";
-                document.getElementById('admin-demi1-team2').textContent = winners.match2 || "";
-                document.getElementById('admin-demi2-team1').textContent = winners.match3 || "";
-                document.getElementById('admin-demi2-team2').textContent = winners.match4 || "";
-                document.getElementById('admin-demiC1-team1').textContent = losers.match1 || "";
-                document.getElementById('admin-demiC1-team2').textContent = losers.match2 || "";
-                document.getElementById('admin-demiC2-team1').textContent = losers.match3 || "";
-                document.getElementById('admin-demiC2-team2').textContent = losers.match4 || "";
-           }
-           if(winnerDemi1 && winnerDemi2 && loserDemi1 && loserDemi2 && winnerDemiC1 && winnerDemiC2 && loserDemiC1_ && loserDemiC2_){
-                document.getElementById('admin-finale-team1').textContent = winnerDemi1 || "";
-                document.getElementById('admin-finale-team2').textContent = winnerDemi2 || "";
-                document.getElementById('admin-finale2-team1').textContent = loserDemi1 || "";
-                document.getElementById('admin-finale2-team2').textContent = loserDemi2 || "";
-                document.getElementById('admin-finaleC-team1').textContent = winnerDemiC1 || "";
-                document.getElementById('admin-finaleC-team2').textContent = winnerDemiC2 || "";
-                document.getElementById('admin-finaleC2-team1').textContent = loserDemiC1_ || "";
-                document.getElementById('admin-finaleC2-team2').textContent = loserDemiC2_ || "";
-           }
-
-        }
-    });
-}
-
-
-// Variables globales pour stocker les gagnants/perdants (et les noms des équipes des demis/finales)
-let winners, losers;
-let winnerDemi1, winnerDemi2, loserDemi1, loserDemi2, winnerDemiC1, winnerDemiC2, loserDemiC1_, loserDemiC2_;
-
-// Fonction pour enregistrer les scores et mettre à jour le tournoi
-function saveScores() {
-    // 1. Récupérer et enregistrer les scores des QUARTS DE FINALE
-    const scoresQuarts = {
-        match1: { equipe1: document.getElementById('score-equipe1').value, equipe2: document.getElementById('score-equipe2').value },
-        match2: { equipe3: document.getElementById('score-equipe3').value, equipe4: document.getElementById('score-equipe4').value },
-        match3: { equipe5: document.getElementById('score-equipe5').value, equipe6: document.getElementById('score-equipe6').value },
-        match4: { equipe7: document.getElementById('score-equipe7').value, equipe8: document.getElementById('score-equipe8').value }
-    };
-
-    for (const matchId in scoresQuarts) {
-        set(ref(database, 'scores/' + matchId), scoresQuarts[matchId]);
-    }
-
-    // 2. Déterminer les gagnants/perdants des QUARTS et mettre à jour les DEMI-FINALES
-     winners = {};
-     losers = {};
-      for (let i = 1; i <= 4; i++) {
-        const team1Name = document.getElementById(`team${i * 2 - 1}-name`).textContent;
-        const team2Name = document.getElementById(`team${i * 2}-name`).textContent;
-        const score1 = parseInt(scoresQuarts[`match${i}`][`equipe${i * 2 - 1}`]);
-        const score2 = parseInt(scoresQuarts[`match${i}`][`equipe${i * 2}`]);
-
-        winners[`match${i}`] = score1 > score2 ? team1Name : team2Name;
-        losers[`match${i}`] = score1 > score2 ? team2Name : team1Name;
-    }
-
-    // Mettre à jour les *noms* des équipes dans les demi-finales (AVANT de récupérer les scores)
-    document.getElementById('demi1-team1').textContent = winners.match1;
-    document.getElementById('demi1-team2').textContent = winners.match2;
-    document.getElementById('demi2-team1').textContent = winners.match3;
-    document.getElementById('demi2-team2').textContent = winners.match4;
-    document.getElementById('demiC1-team1').textContent = losers.match1;
-    document.getElementById('demiC1-team2').textContent = losers.match2;
-    document.getElementById('demiC2-team1').textContent = losers.match3;
-    document.getElementById('demiC2-team2').textContent = losers.match4;
-
-      // Pré-remplir les spans des demi-finales dans le formulaire admin
-    document.getElementById('admin-demi1-team1').textContent = winners.match1;
-    document.getElementById('admin-demi1-team2').textContent = winners.match2;
-    document.getElementById('admin-demi2-team1').textContent = winners.match3;
-    document.getElementById('admin-demi2-team2').textContent = winners.match4;
-    document.getElementById('admin-demiC1-team1').textContent = losers.match1;
-    document.getElementById('admin-demiC1-team2').textContent = losers.match2;
-    document.getElementById('admin-demiC2-team1').textContent = losers.match3;
-    document.getElementById('admin-demiC2-team2').textContent = losers.match4;
-
-    // Afficher les inputs des demi-finales (maintenant qu'on a les noms)
-    const demiFinalesInputs = document.querySelectorAll('.admin-form-group[style="display:none;"]');
-    demiFinalesInputs.forEach(inputGroup => inputGroup.style.display = 'block');
-
-
-    // 3. Récupérer et enregistrer les scores des DEMI-FINALES
-    const scoresDemis = {
-        demiPrincipale1: { equipe1: document.getElementById('score-demi1-1').value, equipe2: document.getElementById('score-demi1-2').value },
-        demiPrincipale2: { equipe1: document.getElementById('score-demi2-1').value, equipe2: document.getElementById('score-demi2-2').value },
-        demiConsolante1: { equipe1: document.getElementById('score-demiC1-1').value, equipe2: document.getElementById('score-demiC1-2').value },
-        demiConsolante2: { equipe1: document.getElementById('score-demiC2-1').value, equipe2: document.getElementById('score-demiC2-2').value }
-    };
-
-    for (const demiId in scoresDemis) {
-        set(ref(database, 'scores/' + demiId), scoresDemis[demiId]);
-        // Pas de mise à jour de l'affichage ici, onValue s'en charge
-    }
-
-
-    // 4. Déterminer les équipes pour TOUTES les FINALES
-     winnerDemi1 = parseInt(scoresDemis.demiPrincipale1.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale1.equipe2 || 0) ? winners.match1 : winners.match2;
-     loserDemi1  = parseInt(scoresDemis.demiPrincipale1.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale1.equipe2 || 0) ? winners.match2 : winners.match1;
-     winnerDemi2 = parseInt(scoresDemis.demiPrincipale2.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale2.equipe2 || 0) ? winners.match3 : winners.match4;
-     loserDemi2  = parseInt(scoresDemis.demiPrincipale2.equipe1 || 0) > parseInt(scoresDemis.demiPrincipale2.equipe2 || 0) ? winners.match4 : winners.match3;
-     winnerDemiC1 = parseInt(scoresDemis.demiConsolante1.equipe1 || 0) > parseInt(scoresDemis.demiConsolante1.equipe2 || 0) ? losers.match1 : losers.match2;
-     loserDemiC1_ = parseInt(scoresDemis.demiConsolante1.equipe1 || 0) > parseInt(scoresDemis.demiConsolante1.equipe2 || 0) ? losers.match2 : losers.match1;
-     winnerDemiC2 = parseInt(scoresDemis.demiConsolante2.equipe1 || 0) > parseInt(scoresDemis.demiConsolante2.equipe2 || 0) ? losers.match3 : losers.match4;
-     loserDemiC2_ = parseInt(scoresDemis.demiConsolante2.equipe1 || 0) > parseInt(scoresDemis.demiConsolante2.equipe2 || 0) ? losers.match4 : losers.match3;
-
-
-    // 5. Mettre à jour les *noms* des équipes pour les FINALES (AVANT de récupérer les scores)
-    document.getElementById('finale-team1').textContent = winnerDemi1;
-    document.getElementById('finale-team2').textContent = winnerDemi2;
-    document.getElementById('finale2-team1').textContent = loserDemi1;
-    document.getElementById('finale2-team2').textContent = loserDemi2;
-    document.getElementById('finaleC-team1').textContent = winnerDemiC1;
-    document.getElementById('finaleC-team2').textContent = winnerDemiC2;
-    document.getElementById('finaleC2-team1').textContent = loserDemiC1_;
-    document.getElementById('finaleC2-team2').textContent = loserDemiC2_;
-
-     // Pré-remplir les spans des finales dans le formulaire
-    document.getElementById('admin-finale-team1').textContent = winnerDemi1;
-    document.getElementById('admin-finale-team2').textContent = winnerDemi2;
-    document.getElementById('admin-finale2-team1').textContent = loserDemi1;
-    document.getElementById('admin-finale2-team2').textContent = loserDemi2;
-    document.getElementById('admin-finaleC-team1').textContent = winnerDemiC1;
-    document.getElementById('admin-finaleC-team2').textContent = winnerDemiC2;
-    document.getElementById('admin-finaleC2-team1').textContent = loserDemiC1_;
-    document.getElementById('admin-finaleC2-team2').textContent = loserDemiC2_;
-
-
-    // Afficher les inputs des finales (maintenant qu'on a les noms)
-    const finaleInputs = document.querySelectorAll('.admin-form-group[style="display:none;"]');
-     finaleInputs.forEach(inputGroup => inputGroup.style.display = 'block');
-
-
-    // 6. Récupérer et enregistrer les scores des FINALES
-    const scoresFinales = {
-        finale1: { equipe1: document.getElementById('score-finale-1').value, equipe2: document.getElementById('score-finale-2').value },
-        finale2: { equipe1: document.getElementById('score-finale2-1').value, equipe2: document.getElementById('score-finale2-2').value },
-        finale3: { equipe1: document.getElementById('score-finaleC-1').value, equipe2: document.getElementById('score-finaleC-2').value },
-        finale4: { equipe1: document.getElementById('score-finaleC2-1').value, equipe2: document.getElementById('score-finaleC2-2').value }
-    };
-
-    for (const finaleId in scoresFinales) {
-        set(ref(database, 'scores/' + finaleId), scoresFinales[finaleId]);
-        // Pas de mise à jour de l'affichage ici, onValue s'en charge
-    }
-
-
-    // 7. Calculer et afficher le CLASSEMENT FINAL (1 à 8, avec gestion des égalités)
-    let ranking = [];
-
-    function addTeamsToRanking(team1, score1, team2, score2) {
-        score1 = parseInt(score1 || 0);
-        score2 = parseInt(score2 || 0);
-        if (score1 > score2) {
-            ranking.push(team1);
-            ranking.push(team2);
-        } else if (score2 > score1) {
-            ranking.push(team2);
-            ranking.push(team1);
-        } else {
-            ranking.push(team1, team2); // Égalité
-        }
-    }
-
-    addTeamsToRanking(winnerDemi1, scoresFinales.finale1.equipe1, winnerDemi2, scoresFinales.finale1.equipe2);
-    addTeamsToRanking(loserDemi1, scoresFinales.finale2.equipe1, loserDemi2, scoresFinales.finale2.equipe2);
-    addTeamsToRanking(winnerDemiC1, scoresFinales.finale3.equipe1, winnerDemiC2, scoresFinales.finale3.equipe2);
-    addTeamsToRanking(loserDemiC1_, scoresFinales.finale4.equipe1, loserDemiC2_, scoresFinales.finale4.equipe2);
-
-    const finalRankingList = document.getElementById('final-ranking');
-    finalRankingList.innerHTML = '';
-    ranking.forEach((team, index) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${index + 1}. ${team}`;
-        finalRankingList.appendChild(listItem);
-    });
-
-    alert('Scores enregistrés avec succès'); // Message de confirmation
-}
-
-// -------------------------------------------------------------
-//  GESTION DES INSCRIPTIONS (Capitaine + Joueurs)
-// -------------------------------------------------------------
-
-// Fonction pour inscrire une équipe (par le capitaine)
-async function inscrireEquipe(event) {
-    event.preventDefault();
-    const form = document.getElementById('inscriptionForm');
-    const messageDiv = document.getElementById('message');
-    const loader = document.getElementById('formLoader');
-    const equipeSelect = document.getElementById('equipe');
-
-    const nomEquipe = document.getElementById('nomEquipe').value.trim();
-    const teamPassword = document.getElementById('teamPassword').value;
-    const nomCapitaine = document.getElementById('nomCapitaine').value.trim();
-    const prenomCapitaine = document.getElementById('prenomCapitaine').value.trim();
-    const emailCapitaine = document.getElementById('emailCapitaine').value.trim();
-    const telephoneCapitaine = document.getElementById('telephoneCapitaine').value.trim();
-    const ageCapitaine = document.getElementById('ageCapitaine').value;
-    const equipe = equipeSelect.value; // On garde ça pour le menu déroulant, mais on ne l'utilise pas comme clé.
-
-
-    // --- Validation (Gardez votre validation existante) ---
-    if (!nomEquipe || !teamPassword || !nomCapitaine || !prenomCapitaine || !emailCapitaine || !telephoneCapitaine || !ageCapitaine || !equipe) {
-        messageDiv.innerHTML = '<p class="message error">Veuillez remplir tous les champs.</p>';
-        return;
-    }
-    if (!/^[0-9]{10}$/.test(telephoneCapitaine)) {
-        messageDiv.innerHTML = '<p class="message error">Veuillez rentrer un numéro de téléphone valide (10 chiffres).</p>';
-        return;
-    }
-    if (isNaN(ageCapitaine) || ageCapitaine < 1 || ageCapitaine > 120) {
-        messageDiv.innerHTML = '<p class="message error">L\'âge doit être un nombre compris entre 1 et 120.</p>';
-        formLoader.style.display = 'none';
-        return;
-    }
-
-    loader.style.display = 'block';
-
-    try {
-        // --- Vérification des noms d'équipe en double ET de l'équipe selectionnée ---
-        const equipesRef = ref(database, 'equipes');
-        const snapshot = await get(equipesRef);
-
-        if (snapshot.exists()) {
-            const equipes = snapshot.val();
-
-            // Vérifier si le nom de l'équipe est déjà pris
-            for (const equipeId in equipes) {
-                if (equipes[equipeId].nomEquipe === nomEquipe) {
-                    messageDiv.innerHTML = '<p class="message error">Ce nom d\'équipe est déjà pris.</p>';
-                    loader.style.display = 'none';
-                    return;
-                }
-            }
-
-            //Vérifier si une équipe avec cette valeur est déjà enregistrée
-            for (const key in equipes) {
-                if (key === equipe) {
-                    messageDiv.innerHTML = '<p class="message error">Cette équipe est déjà inscrite.</p>';
-                    loader.style.display = 'none';
-                    return;
-                }
-            }
-        }
-         // Préparation des données de l'équipe
-        const equipeData = {
-          nomEquipe: nomEquipe,
-          motDePasse: teamPassword,  //Camel case pour cohérence
-          capitaine: {
-                nom: nomCapitaine,
-                prenom: prenomCapitaine,
-                email: emailCapitaine,
-                telephone: telephoneCapitaine,
-                age: parseInt(ageCapitaine), //Convertir en nombre
-          },
-          membres: {}, //Initialiser à vide, on ajoutera les membres après
-          timestamp: serverTimestamp(), //Optionnel, mais utile.
-        };
-
-        // ---  ENREGISTREMENT avec push() pour une clé UNIQUE ---
-        //On utilise la valeur de l'equipe selectionné.
-        const newEquipeRef = ref(database, 'equipes/' + equipe); // Crée une nouvelle référence avec une clé unique
-        await set(newEquipeRef, equipeData); // Enregistre les données sous cette clé unique
-
-        messageDiv.innerHTML = `<p class="message success">Équipe "${nomEquipe}" inscrite avec succès!</p>`;
-        loadTeams(); // Recharger la liste des équipes (très important!)
-        form.reset();
-        // --- Mettre à jour la valeur de l'équipe dans l'affichage des matchs ---
-        // On va chercher l'ID de la nouvelle équipe créée.
-        const newEquipeId = newEquipeRef.key; // Récupère la clé générée par push()
-        updateTeamNameInMatchDisplay(newEquipeId, nomEquipe);
-        updateEquipeInfo();// Mettre à jour le formulaire (très important pour refléter l'état de la base de données).
-
-
-    } catch (error) {
-        console.error("Erreur lors de l'inscription de l'équipe:", error);
-        messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
-    } finally {
-        loader.style.display = 'none';
-    }
-}
-
-//Fonction pour mettre à jour le nom de l'équipe dans déroulement des matchs
-function updateTeamNameInMatchDisplay(equipeId, newTeamName) {
-// teamNumber n'est plus un entier, c'est 'equipe1', 'equipe2', etc.
-const teamSpan = document.querySelector(`.match .${equipeId}-name`);
-if (teamSpan) {
-teamSpan.textContent = newTeamName;
-}
-}
-
-// Fonction pour charger et afficher les équipes (et leurs membres)
-function loadTeams() {
-    const equipesContainer = document.getElementById('equipes-container');
-    equipesContainer.innerHTML = ''; // Efface le contenu précédent
-
-    const equipesRef = ref(database, 'equipes');
-    onValue(equipesRef, (snapshot) => {
-        if (snapshot.exists()) {
-            const equipes = snapshot.val();
-            for (const equipeId in equipes) {
-                const equipeData = equipes[equipeId];
-                const equipeDiv = document.createElement('div');
-                equipeDiv.className = 'equipe';
-                equipeDiv.innerHTML = `<p>${equipeData.nomEquipe}</p>`;
-
-                const membresList = document.createElement('ul');
-                membresList.className = 'membres';
-
-                // Affiche le capitaine
-                const capitaineItem = document.createElement('li');
-                capitaineItem.textContent = `Capitaine: ${equipeData.capitaine.prenom} ${equipeData.capitaine.nom}`;
-                membresList.appendChild(capitaineItem);
-
-                // Affiche les membres (s'il y en a)
-                if (equipeData.membres) {
-                    for (const membreId in equipeData.membres) {
-                        const membre = equipeData.membres[membreId];
-                        const membreItem = document.createElement('li');
-                        membreItem.textContent = `${membre.prenom} ${membre.nom}`;
-                         // Ajoute un bouton de suppression pour le capitaine
-                        const deleteBtn = document.createElement('button');
-                        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-                        deleteBtn.className = 'delete-player-btn';
-                        deleteBtn.onclick = () => deletePlayer(equipeId, membreId, equipeData.motDePasse);
-                        membreItem.appendChild(deleteBtn);
-                        membresList.appendChild(membreItem);
-                    }
-                } else {
-                    membresList.innerHTML += '<li style="font-style: italic; color: #999;">Aucun joueur ajouté</li>';
-                }
-                equipeDiv.appendChild(membresList);
-
-                // Formulaire pour ajouter un joueur (pour le capitaine)
-                const addPlayerForm = document.createElement('form');
-                addPlayerForm.className = 'team-management-form';
-                addPlayerForm.innerHTML = `
-                    <h3>Ajouter un joueur</h3>
-                    <input type="text" placeholder="Prénom" data-field="prenom" required>
-                    <input type="text" placeholder="Nom" data-field="nom" required>
-                    <input type="password" placeholder="Mot de passe équipe" data-field="password" required>
-                    <button type="submit">Ajouter</button>
-                    <div class="message"></div>
-                `;
-                addPlayerForm.onsubmit = (event) => addPlayer(event, equipeId);
-                equipeDiv.appendChild(addPlayerForm);
-
-                equipesContainer.appendChild(equipeDiv);
-            }
-        } else {
-            equipesContainer.innerHTML = '<p>Aucune équipe inscrite pour le moment.</p>';
-        }
-    });
-}
-
-// Fonction pour supprimer un joueur (par le capitaine)
-async function deletePlayer(equipeId, membreId, teamPassword) {
-    const enteredPassword = prompt("Entrez le mot de passe de l'équipe pour confirmer la suppression:");
-    if (enteredPassword === teamPassword) {
-        try {
-            await remove(ref(database, `equipes/${equipeId}/membres/${membreId}`));
-            alert('Joueur supprimé avec succès.');
-            // Pas besoin de recharger, onValue s'en charge
-        } catch (error) {
-            console.error("Erreur lors de la suppression du joueur:", error);
-            alert("Erreur lors de la suppression du joueur.");
-        }
-    } else {
-        alert("Mot de passe incorrect.");
-    }
-}
-
-async function addPlayer(event, equipeId) {
-    event.preventDefault();
-    const form = event.target;
-    const messageDiv = form.querySelector('.message');
-    const prenom = form.querySelector('[data-field="prenom"]').value.trim();
-    const nom = form.querySelector('[data-field="nom"]').value.trim();
-    const password = form.querySelector('[data-field="password"]').value;
-
-    if (!prenom || !nom || !password) {
-        messageDiv.innerHTML = '<p class="message error">Tous les champs sont obligatoires.</p>';
-        return;
-    }
-    messageDiv.innerHTML = ''; // Efface les messages précédents
-
-    try {
-        // 1. Vérifier le mot de passe
-        const equipeRef = ref(database, 'equipes/' + equipeId);
-        const snapshot = await get(equipeRef);
-        if (!snapshot.exists() || snapshot.val().motDePasse !== password) {
-            messageDiv.innerHTML = '<p class="message error">Mot de passe incorrect.</p>';
-            return;
-        }
-
-        // 2. Vérifier la limite de joueurs (5 membres + 1 capitaine = 6)
-        const membres = snapshot.val().membres || {};
-        if (Object.keys(membres).length >= 5) {
-            messageDiv.innerHTML = '<p class="message error">Limite de joueurs atteinte (5 + capitaine).</p>';
-            return;
-        }
-
-        // 3. Vérifier si le joueur existe déjà (dans n'importe quelle équipe!)
-        const allTeamsRef = ref(database, 'equipes');
-        const allTeamsSnapshot = await get(allTeamsRef);
-        const allTeams = allTeamsSnapshot.val() || {};
-
-        for (const teamId in allTeams) {
-            const teamPlayers = allTeams[teamId].membres;
-            if (teamPlayers) { // Vérifie si 'membres' existe
-                for (const playerId in teamPlayers) {
-                    const existingPlayer = teamPlayers[playerId];
-                    if (existingPlayer.nom.toLowerCase() === nom.toLowerCase() &&
-                        existingPlayer.prenom.toLowerCase() === prenom.toLowerCase()) {
-                        messageDiv.innerHTML = '<p class="message error">Un joueur avec ce nom et prénom est déjà inscrit.</p>';
-                        return; // Important : arrêter la fonction ici
-                    }
-                }
-            }
-        }
-
-        // 4. Ajouter le joueur
-        const newPlayerRef = push(ref(database, 'equipes/' + equipeId + '/membres'));
-        await set(newPlayerRef, { prenom: prenom, nom: nom });
-        messageDiv.innerHTML = '<p class="message success">Joueur ajouté!</p>';
-        form.reset();
-
-    } catch (error) {
-        console.error("Erreur lors de l'ajout du joueur:", error);
-        messageDiv.innerHTML = `<p class="message error">Erreur: ${error.message}</p>`;
-    }
-}
-
-// Fonction pour réinitialiser les scores (ADMIN)
-function resetScores() {
-    const password = prompt("Entrez le mot de passe admin pour réinitialiser les scores:");
-    if (password === 'ditib25five') {
-        if (confirm('Êtes-vous sûr de vouloir réinitialiser TOUS les scores? Cette action est irréversible.')) {
-            try {
-                // Supprime TOUS les scores de Firebase
-                remove(ref(database, 'scores'));
-
-                // Réinitialise l'affichage des scores et des équipes dans le déroulement des matchs
-                const scoreDisplays = document.querySelectorAll('.score-display');
-                scoreDisplays.forEach(display => display.textContent = '');
-
-                // Remet les noms d'équipe par défaut (Équipe 1, Équipe 2, etc.) dans les QUARTS DE FINALE
-                for (let i = 1; i <= 8; i++) {
-                    document.getElementById(`team${i}-name`).textContent = `Équipe ${i}`;
-                }
-
-                // Efface les noms d'équipe dans les DEMI-FINALES et FINALES
-                const teamSpans = document.querySelectorAll('.match span[id^="demi"], .match span[id^="finale"]');
-                teamSpans.forEach(span => span.textContent = '');
-
-                //Efface le classement
-                const finalRankingList = document.getElementById('final-ranking');
-                finalRankingList.innerHTML = '';
-
-                alert('Scores réinitialisés avec succès!');
-
-            } catch (error) {
-                console.error("Erreur lors de la réinitialisation des scores:", error);
-                alert("Erreur lors de la réinitialisation des scores.");
-            }
-        }
-    } else {
-        alert("Mot de passe incorrect.");
-    }
-}
-
-// Fonction pour afficher les numéros de téléphone des capitaines (mode admin)
-function showCaptainPhoneNumbers() {
-    const password = prompt("Entrez le mot de passe admin pour voir les numéros de téléphone:");
-
-    if (password === 'ditib25five') {
-        const equipesRef = ref(database, 'equipes');
-        get(equipesRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                const equipes = snapshot.val();
-                let phoneNumbersHTML = '<h3>Numéros de téléphone des capitaines:</h3><ul>';
-
-                for (const equipeId in equipes) {
-                    const equipeData = equipes[equipeId];
-                    phoneNumbersHTML += `<li>${equipeData.nomEquipe}: ${equipeData.capitaine.telephone}</li>`;
-                }
-                phoneNumbersHTML += '</ul>';
-
-                // Afficher les numéros dans une div (vous pouvez améliorer le style/placement)
-                const phoneNumbersDiv = document.createElement('div');
-                phoneNumbersDiv.className = 'admin-form-container'; // Utilisez la même classe que pour le formulaire de scores
-                phoneNumbersDiv.innerHTML = phoneNumbersHTML;
-                document.getElementById('roadmap').appendChild(phoneNumbersDiv); // Ou un autre endroit approprié
-
-
-            } else {
-                alert('Aucune équipe inscrite.');
-            }
-        }).catch((error) => {
-            console.error("Erreur lors de la récupération des numéros:", error);
-            alert("Erreur lors de la récupération des numéros.");
-        });
-    } else {
-        alert('Mot de passe incorrect.');
-    }
-}
-
-// Gestion de la navigation et du défilement (inchangé)
-const navItems = document.querySelectorAll('.bottom-nav a');
-const sections = document.querySelectorAll('main > section');
-
-function updateActiveNavItem() {
-    let currentSectionId = '';
-    let minDistance = Infinity;
-
-    sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        const distance = Math.abs(rect.top);
-
-        if (distance < minDistance) {
-            minDistance = distance;
-            currentSectionId = section.id;
-        }
-    });
-
-    navItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('href') === `#${currentSectionId}`) {
-            item.classList.add('active');
-        }
-    });
-}
-
-updateActiveNavItem();
-window.addEventListener('scroll', updateActiveNavItem);
-
-navItems.forEach(item => {
-    item.addEventListener('click', function(event) {
-        event.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-
-        if (targetElement) {
-            const navHeight = document.querySelector('.bottom-nav').offsetHeight;
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight + 10;
-            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-        }
-    });
-});
-
-
-
-
-// Bouton de réinitialisation des ÉQUIPES (Admin)
-const footer = document.querySelector('footer');
-const resetButton = document.createElement('button');
-resetButton.textContent = 'Réinitialiser les équipes (Admin)';
-resetButton.className = 'cta-button';
-resetButton.style.marginTop = '20px';
-resetButton.style.backgroundColor = '#ff3c3c';
-
-if (footer) {
-    resetButton.addEventListener('click', function() {
-        const password = prompt("Entrez le mot de passe pour réinitialiser les équipes :");
-        if (password === 'ditib25five') { //  mot de passe
-            if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les équipes ? Cette action est irréversible.')) {
-                remove(ref(database, 'equipes'))
-                    .then(() => {
-                        // Réinitialise aussi les scores (appel de la fonction)
-                        resetScores(); // Réinitialisation des scores *après* les équipes
-                         // Réinitialiser l'état du sélecteur d'équipe
-                        const equipeSelect = document.getElementById('equipe');
-                        equipeSelect.classList.remove('equipe-select-disabled'); // Réactiver
-                        equipeSelect.value = ''; // Effacer la sélection
-                        updateEquipeInfo();
-                        alert('Toutes les équipes et les scores ont été réinitialisés.');
-
-                    })
-                    .catch((error) => {
-                        console.error("Erreur lors de la réinitialisation:", error);
-                        alert('Une erreur est survenue lors de la réinitialisation.');
-                    });
-            }
-        } else if (password !== null) {
-            alert('Mot de passe incorrect.');
-        }
-    });
-    footer.appendChild(resetButton);
-}
-
-
-// Fonctionnalité de suppression de membre individuel (Admin)
-function enableAdminMode() {
-    const password = prompt("Entrez le mot de passe admin :");
-    if (password === 'ditib25five') { //  mot de passe
-        // Activer le mode admin
-        const allPlayerItems = document.querySelectorAll('.membres li');
-        allPlayerItems.forEach(item => {
-            // Vérifie si l'élément li contient déjà un bouton de suppression
-            if (!item.querySelector('.delete-player-btn')) {
-                // Ajouter un bouton de suppression à chaque joueur
-                const deleteBtn = document.createElement('button');
-                deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-                deleteBtn.className = 'delete-player-btn';
-
-                deleteBtn.addEventListener('click', function () {
-                    const playerName = item.textContent.trim();
-                    const equipeId = item.parentElement.parentElement.querySelector('p').textContent.trim();  //On récupère correctement le nom de l'équipe.
-                    const playerEmail = item.dataset.email;
-
-                    if (confirm(`Êtes-vous sûr de vouloir supprimer ${playerName} ?`)) {
-                        // Trouver et supprimer le joueur dans Firebase
-                        const equipesRef = ref(database, 'equipes');
-                        get(equipesRef).then((snapshot) => {
-                            const equipes = snapshot.val() || {};
-                            for (const key in equipes) {
-                                 //On compare avec le nom de l'équipe récupéré
-                                if (equipes[key].nomEquipe === equipeId) {
-                                    const teamPlayers = equipes[key].membres;
-                                    if (teamPlayers) {
-                                        for (const playerId in teamPlayers) {
-                                            const player = teamPlayers[playerId];
-                                            //Comparaison correcte du nom *et* du prénom
-                                            if (player.nom + " " + player.prenom === playerName) {
-                                                remove(ref(database, 'equipes/' + key + '/membres/' + playerId))
-                                                    .then(() => {
-                                                        alert(`${playerName} a été supprimé avec succès.`);
-                                                    })
-                                                    .catch((error) => {
-                                                        console.error("Erreur lors de la suppression:", error);
-                                                        alert('Une erreur est survenue lors de la suppression.');
-                                                    });
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    }
-                });
-
-                item.appendChild(deleteBtn);
-            }
-        });
-
-        alert('Mode admin activé. Vous pouvez maintenant supprimer des membres individuellement.');
-    } else if (password !== null) {
-        alert('Mot de passe incorrect.');
-    }
-}
-// Ajouter un bouton pour activer le mode admin (dans le footer)
-const adminButton = document.createElement('button');
-adminButton.textContent = 'Mode Admin (Supprimer des membres)';
-adminButton.className = 'cta-button';
-adminButton.style.marginTop = '20px';
-adminButton.style.backgroundColor = '#444';
-adminButton.style.marginLeft = '10px';
-
-adminButton.addEventListener('click', enableAdminMode);
-footer.appendChild(adminButton);
-
-// Gestion des étapes du tournoi (affichage)
-const steps = document.querySelectorAll('.match-step');
-const nextButton = document.getElementById('nextStep');
-let currentStep = 0;
-
-function showStep(stepIndex) {
-    steps.forEach((step, index) => {
-        if (index === stepIndex) {
-            step.style.display = 'block';
-            step.classList.add('active');
-        } else {
-            step.style.display = 'none';
-            step.classList.remove('active');
-        }
-    });
-
-    if (stepIndex === steps.length - 1) {
-        nextButton.textContent = 'Recommencer';
-    } else {
-        nextButton.textContent = 'Étape suivante';
-    }
-}
-
-if (nextButton) {
-    nextButton.addEventListener('click', function() {
-        currentStep = (currentStep + 1) % steps.length;
-        showStep(currentStep);
-    });
-    showStep(0); // Afficher la première étape au chargement
-}
-
-// Fonction pour mettre à jour l'état du sélecteur d'équipe et afficher des infos
-function updateEquipeInfo() {
-    const equipeSelect = document.getElementById('equipe');
-    const equipeInfoDiv = document.getElementById('equipe-info');
-
-    const equipesRef = ref(database, 'equipes');
-     // Utilisation de 'get' au lieu de 'onValue' pour une seule lecture
-    get(equipesRef).then((snapshot) => {
-        const equipes = snapshot.val() || {};
-        let selectedTeam = equipeSelect.value;
-
-        // Vérifier si l'équipe sélectionnée existe et est déjà inscrite.
-        if (selectedTeam && equipes[selectedTeam])
-        {
-          equipeSelect.classList.add('equipe-select-disabled'); // La désactiver si elle existe
-          equipeInfoDiv.textContent = "Cette équipe est déjà inscrite.";
-        }
-        else{
-          equipeInfoDiv.textContent = "";
-           equipeSelect.classList.remove('equipe-select-disabled');
-        }
-
-
-        // Mettre à jour l'état de *toutes* les options
-        for (let i = 1; i <= 8; i++) {
-            const option = equipeSelect.querySelector(`option[value="equipe${i}"]`);
-            if (option) { // Vérification importante
-                if (equipes[`equipe${i}`]) {
-                    option.disabled = true; // Désactiver l'option
-                    option.style.color = '#999'; // Griser (facultatif, mais recommandé)
-                } else {
-                    option.disabled = false;
-                    option.style.color = '';  // Couleur par défaut
-                }
-            }
-        }
-    });
-}
-
-// Chargement initial des données et démarrage
-document.addEventListener('DOMContentLoaded', function() {
-    startCountdown();
-    loadTeams(); // Charger les équipes (et leurs joueurs)
-    updateEquipeInfo(); //Très important à appeler au chargement *ET* après des changements
-
-      // Ajout de l'écouteur d'événements pour le formulaire d'inscription
-    const inscriptionForm = document.getElementById('inscriptionForm');
-    if (inscriptionForm) {
-        inscriptionForm.addEventListener('submit', inscrireEquipe);
-    }
-
-    const adminScoreBtn = document.getElementById('adminScoreBtn');
-    if (adminScoreBtn) {
-        adminScoreBtn.addEventListener('click', showAdminScoreForm);
-    }
-
-    //Bouton reset
-    const resetScoresBtn = document.getElementById('resetScoresBtn');
-    if (resetScoresBtn) {
-        resetScoresBtn.addEventListener('click', resetScores);
-    }
-        // Écouteur pour le changement de sélection d'équipe
-    const equipeSelect = document.getElementById('equipe');
-      if (equipeSelect){
-        equipeSelect.addEventListener('change', updateEquipeInfo);
-      }
-
-      // Bouton pour afficher les numéros de téléphone (ADMIN)
-    const showPhoneNumbersBtn = document.createElement('button');
-    showPhoneNumbersBtn.textContent = 'Voir les numéros de téléphone (Admin)';
-    showPhoneNumbersBtn.className = 'cta-button';
-    showPhoneNumbersBtn.style.marginTop = '20px';
-    showPhoneNumbersBtn.style.backgroundColor = '#444'; // Style distinctif
-    showPhoneNumbersBtn.addEventListener('click', showCaptainPhoneNumbers);
-    footer.appendChild(showPhoneNumbersBtn); // Ajoutez-le au footer, par exemple
-
-    // Initialisation des écouteurs pour les scores des quarts de finale
-    for (let i = 1; i <= 4; i++) {
-        const matchRef = ref(database, `scores/match${i}`);
-        onValue(matchRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                    document.getElementById(`score-match${i}`).innerHTML = `Score: ${data.equipe1} - ${data.equipe2}`;
-            }
-        });
-    }
-    // Écouteurs pour les demi-finales PRINCIPALES
-    const demiPrincipale1Ref = ref(database, 'scores/demiPrincipale1');
-    onValue(demiPrincipale1Ref, (snapshot) => {
-        const data = snapshot.val();
-            if (data) {
-                document.getElementById('score-demi-finale-principale1').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
-            }
-    });
-
-    const demiPrincipale2Ref = ref(database, 'scores/demiPrincipale2');
-    onValue(demiPrincipale2Ref, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            document.getElementById('score-demi-finale-principale2').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
-        }
-    });
-
-    // Écouteurs pour les demi-finales CONSOLANTES
-    const demiConsolante1Ref = ref(database, 'scores/demiConsolante1');
-    onValue(demiConsolante1Ref, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            document.getElementById('score-demi-finale-consolante1').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
-        }
-    });
-
-    const demiConsolante2Ref = ref(database, 'scores/demiConsolante2');
-    onValue(demiConsolante2Ref, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-                document.getElementById('score-demi-finale-consolante2').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
-        }
-    });
-        // Écouteur pour la FINALE 1
-    const finaleRef = ref(database, 'scores/finale1');
-    onValue(finaleRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-                document.getElementById('score-finale').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
-            }
-    });
-
-    // Écouteur pour la FINALE 2
-const finale2Ref = ref(database, 'scores/finale2');
-    onValue(finale2Ref, (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-        document.getElementById('score-finale2').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
-    }
-});
-// Écouteur pour la FINALE 3
-const finale3Ref = ref(database, 'scores/finale3');
-    onValue(finale3Ref, (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-        document.getElementById('score-finale3').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
-    }
-});
-// Écouteur pour la FINALE 4
-const finale4Ref = ref(database, 'scores/finale4');
-    onValue(finale4Ref, (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-        document.getElementById('score-finale4').innerHTML = `Score: ${data.equipe1 || 0} - ${data.equipe2 || 0}`;
-    }
-});
-
-   // Gestion de l'ajout au calendrier
-   const addToCalendarBtn = document.getElementById('add-to-calendar-btn');
-        if (addToCalendarBtn) {
-            addToCalendarBtn.addEventListener('click', function() {
-                // Création d'une boîte de dialogue modale (plus conviviale)
-                const dialog = document.createElement('div');
-                dialog.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background-color: #222;
-                    padding: 20px;
-                    border: 1px solid #444;
-                    border-radius: 8px;
-                    z-index: 1000;
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-                `;
-
-                dialog.innerHTML = `
-                    <h3 style="margin-bottom: 15px; color: #00aaff;">Ajouter au calendrier</h3>
-                    <p style="margin-bottom: 10px;">Choisissez votre type de calendrier :</p>
-                    <button class="calendar-option" data-type="google">Google Calendar</button><br>
-                    <button class="calendar-option" data-type="ics">Calendrier Apple / Outlook (.ics)</button><br>
-                    <button class="calendar-cancel" style="margin-top: 15px; background-color: #ff3c3c;">Annuler</button>
-                `;
-
-                document.body.appendChild(dialog);
-
-                // Gestion des clics sur les options
-                dialog.querySelectorAll('.calendar-option').forEach(button => {
-                    button.addEventListener('click', function() {
-                        generateCalendarUrl(this.dataset.type);
-                        document.body.removeChild(dialog); // Fermer la boîte de dialogue
-                    });
-                });
-
-                // Gestion de l'annulation
-                dialog.querySelector('.calendar-cancel').addEventListener('click', function() {
-                    document.body.removeChild(dialog);
-                });
-            });
-        }
-    });
-
-</script>
+    </script>
 </body>
 </html>
