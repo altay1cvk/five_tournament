@@ -515,186 +515,6 @@
       display: block;
     }
 
-    /* ============ PRAYER CARD ============ */
-    .prayer-card {
-      background: linear-gradient(145deg, rgba(255, 215, 0, 0.12), rgba(0, 242, 234, 0.08));
-      border: 2px solid rgba(255, 215, 0, 0.5);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow:
-        0 10px 40px rgba(255, 215, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      margin: 25px 0;
-      position: relative;
-    }
-
-    .prayer-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent), var(--primary), var(--accent));
-      background-size: 200% 100%;
-      animation: gradientFlow 3s ease infinite;
-    }
-
-    @keyframes gradientFlow {
-
-      0%,
-      100% {
-        background-position: 0% 50%;
-      }
-
-      50% {
-        background-position: 100% 50%;
-      }
-    }
-
-    .prayer-header {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(0, 242, 234, 0.15));
-      padding: 25px 20px;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .prayer-icon-wrapper {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #ffed4e);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
-      animation: prayerIconPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes prayerIconPulse {
-
-      0%,
-      100% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.1);
-        box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
-      }
-    }
-
-    .prayer-icon-wrapper i {
-      font-size: 1.8rem;
-      color: #000;
-    }
-
-    .prayer-title-group {
-      flex: 1;
-    }
-
-    .prayer-badge {
-      background: rgba(255, 215, 0, 0.2);
-      color: var(--accent);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      display: inline-block;
-      margin-bottom: 6px;
-    }
-
-    .prayer-title {
-      font-size: clamp(1.4rem, 4.5vw, 1.8rem);
-      color: #fff;
-      font-family: 'Oswald';
-      letter-spacing: 1px;
-    }
-
-    .prayer-body {
-      padding: 25px 20px;
-    }
-
-    .prayer-time-display {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 18px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      font-size: clamp(1.1rem, 3vw, 1.3rem);
-      font-weight: 600;
-    }
-
-    .prayer-time-display i {
-      color: var(--accent);
-      font-size: 1.4em;
-    }
-
-    .time-value {
-      color: var(--primary);
-      font-family: 'Oswald';
-      font-size: 1.3em;
-    }
-
-    .time-separator {
-      color: var(--text-muted);
-    }
-
-    .duration {
-      color: var(--accent);
-    }
-
-    .prayer-description {
-      display: flex;
-      gap: 12px;
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 12px;
-      border-left: 4px solid var(--accent);
-      margin-bottom: 15px;
-    }
-
-    .prayer-description i {
-      color: var(--primary);
-      font-size: 1.2rem;
-      margin-top: 2px;
-    }
-
-    .prayer-description p {
-      margin: 0;
-      line-height: 1.6;
-      color: #ddd;
-      font-size: clamp(0.95rem, 2.5vw, 1.05rem);
-    }
-
-    .prayer-features {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .prayer-feature {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px;
-      background: rgba(0, 242, 234, 0.08);
-      border-radius: 10px;
-      border: 1px solid rgba(0, 242, 234, 0.2);
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
-      font-weight: 500;
-    }
-
-    .prayer-feature i {
-      color: var(--primary);
-      font-size: 1.2em;
-    }
-
     /* ============ TIMELINE ============ */
     .timeline {
       position: relative;
@@ -1152,7 +972,7 @@
         <div class="prize-icon">🏆</div>
         <div class="prize-title">RÉCOMPENSE</div>
         <div class="prize-description">
-          Le vainqueur réservera sa place pour le <span class="prize-highlight">GRAND TOURNOI INTER-MOSQUÉE</span> !
+          Une opportunité unique de représenter <span class="prize-highlight">Valentigney DITIB</span> !
         </div>
       </div>
 
@@ -1181,15 +1001,15 @@
       <div class="meta-info">
         <div class="meta-tag">
           <i class="fas fa-calendar-day"></i>
-          <span>Sam. 3 Janvier</span>
+          <span>Dim. 28 Décembre</span>
         </div>
         <div class="meta-tag">
           <i class="fas fa-clock"></i>
-          <span>12h - 13h30</span>
+          <span>13h - 14h30</span>
         </div>
         <div class="meta-tag">
           <i class="fas fa-futbol"></i>
-          <span>Street Soccer</span>
+          <span>2 Matchs 40 min</span>
         </div>
         <div class="meta-tag">
           <i class="fas fa-euro-sign"></i>
@@ -1208,76 +1028,40 @@
 
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-time"><i class="fas fa-play-circle"></i> 12h00</div>
+          <div class="timeline-time"><i class="fas fa-play-circle"></i> 13h00 - 13h40</div>
           <div class="timeline-content">
-            <strong>Coup d'envoi - Premiers Matchs</strong><br>
-            <strong>Match A :</strong> Équipe 1 vs Équipe 2<br>
-            <strong>Match B :</strong> Équipe 3 vs Équipe 4<br>
-            Durée : <strong>40 minutes</strong> chacun
+            <strong>Premier Match</strong><br>
+            <strong>Demi-finale 1 :</strong> Équipe 1 vs Équipe 2<br>
+            Durée : <strong>40 minutes</strong>
           </div>
         </div>
 
         <div class="timeline-item">
-          <div class="timeline-time"><i class="fas fa-mosque"></i> 12h42</div>
+          <div class="timeline-time"><i class="fas fa-coffee"></i> 13h40 - 13h50</div>
           <div class="timeline-content">
-            <div class="prayer-card">
-              <div class="prayer-header">
-                <div class="prayer-icon-wrapper">
-                  <i class="fas fa-mosque"></i>
-                </div>
-                <div class="prayer-title-group">
-                  <div class="prayer-badge">PAUSE SPIRITUELLE</div>
-                  <h3 class="prayer-title">Prière du Dhuhr</h3>
-                </div>
-              </div>
-
-              <div class="prayer-body">
-                <div class="prayer-time-display">
-                  <i class="far fa-clock"></i>
-                  <span class="time-value">12h42</span>
-                  <span class="time-separator">—</span>
-                  <span class="duration">10 minutes</span>
-                </div>
-
-                <div class="prayer-description">
-                  <i class="fas fa-info-circle"></i>
-                  <p>Moment de recueillement collectif pour accomplir la prière du Dhuhr. Un espace de paix sera aménagé
-                    pour tous les participants.</p>
-                </div>
-
-                <div class="prayer-features">
-                  <div class="prayer-feature">
-                    <i class="fas fa-hands-praying"></i>
-                    <span>Espace dédié</span>
-                  </div>
-                  <div class="prayer-feature">
-                    <i class="fas fa-heart"></i>
-                    <span>Collectif</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <strong>Pause</strong><br>
+            Courte pause de <strong>10 minutes</strong> entre les deux matchs
           </div>
         </div>
 
         <div class="timeline-item">
-          <div class="timeline-time"><i class="fas fa-trophy"></i> 12h52</div>
+          <div class="timeline-time"><i class="fas fa-trophy"></i> 13h50 - 14h30</div>
           <div class="timeline-content">
-            <strong>Matchs de Classement</strong><br>
-            • <strong>Match Perdants :</strong> 3ème place (40 min)<br>
-            • <strong>Grande Finale :</strong> Gagnants pour le titre (40 min)
+            <strong>Second Match</strong><br>
+            <strong>Demi-finale 2 :</strong> Équipe 3 vs Équipe 4<br>
+            Durée : <strong>40 minutes</strong>
           </div>
         </div>
 
         <div class="timeline-item special">
-          <div class="timeline-time"><i class="fas fa-medal"></i> 13h30</div>
+          <div class="timeline-time"><i class="fas fa-medal"></i> 14h30</div>
           <div class="timeline-content">
             <strong>Remise de la récompense</strong>
             <div class="reward-box">
               <i class="fas fa-trophy"></i>
               <div class="reward-text">
                 <strong>QUALIFICATION GAGNÉE !</strong>
-                L'équipe championne obtient sa place pour le prestigieux tournoi inter-mosquée.
+                Une opportunité unique de représenter Valentigney DITIB au tournoi inter-mosquée.
               </div>
             </div>
           </div>
@@ -1298,12 +1082,12 @@
         <div class="card-content">
           <ul>
             <li><strong>4 Équipes</strong> - Places limitées !</li>
-            <li><strong>Matchs de 40 minutes</strong> chacun</li>
-            <li><strong>Phase 1 :</strong> 2 matchs simultanés</li>
-            <li><strong>Pause :</strong> 10 min (Prière Dhuhr à 12h42)</li>
-            <li><strong>Phase 2 :</strong> Finale + Match 3ème place</li>
+            <li><strong>2 Matchs de 40 minutes</strong> (demi-finales)</li>
+            <li><strong>Pause :</strong> 10 minutes entre les matchs</li>
             <li><strong>Composition :</strong> 5 joueurs + 2 remplaçants max</li>
             <li><strong>Prix :</strong> 6€/joueur (sur place)</li>
+            <li><strong>Date :</strong> Dimanche 28 Décembre 2025</li>
+            <li><strong>Horaire :</strong> 13h - 14h30</li>
             <li><strong>Lieu :</strong> Street Soccer, Arbouans</li>
           </ul>
         </div>
@@ -1324,9 +1108,7 @@
       <div class="glass-card" style="border-left-color: var(--accent);">
         <div class="card-title"><i class="fas fa-star"></i> RÉCOMPENSE</div>
         <div class="card-content">
-          <p><strong>Le vainqueur obtient une place garantie pour le tournoi inter-mosquée !</strong></p>
-          <p style="margin-top: 10px; color: var(--text-muted);">Une opportunité
-            unique de représenter Valentigney.</p>
+          <p><strong>Une opportunité unique de représenter Valentigney DITIB !</strong></p>
         </div>
       </div>
     </div>
@@ -1536,7 +1318,7 @@
 
     // ============ COUNTDOWN ============
     function updateCountdown() {
-      const targetDate = new Date('2026-01-03T12:00:00').getTime();
+      const targetDate = new Date('2025-12-28T13:00:00').getTime();
       const now = new Date().getTime();
       const distance = targetDate - now;
 
