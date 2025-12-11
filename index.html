@@ -922,10 +922,16 @@
       filter: drop-shadow(0 0 5px var(--accent));
     }
 
+    .team-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: #333;
+    }
+
+    .btn-edit,
     .btn-delete {
       width: 100%;
-      background: linear-gradient(135deg, #2a0000, #1a0000);
-      color: #ff4444;
       border: none;
       padding: 16px;
       font-weight: 700;
@@ -933,9 +939,25 @@
       font-family: 'Rajdhani';
       text-transform: uppercase;
       letter-spacing: 2px;
-      font-size: clamp(0.95rem, 2.6vw, 1.05rem);
+      font-size: clamp(0.9rem, 2.6vw, 1rem);
       min-height: 54px;
-      border-top: 1px solid #333;
+      transition: all 0.3s;
+    }
+
+    .btn-edit {
+      background: linear-gradient(135deg, rgba(0, 242, 234, 0.2), rgba(0, 136, 255, 0.2));
+      color: var(--primary);
+    }
+
+    .btn-edit:active {
+      background: linear-gradient(135deg, var(--primary), #00d4cc);
+      color: #000;
+      transform: scale(0.98);
+    }
+
+    .btn-delete {
+      background: linear-gradient(135deg, #2a0000, #1a0000);
+      color: #ff4444;
     }
 
     .btn-delete:active {
@@ -1009,6 +1031,28 @@
       opacity: 0.6;
     }
 
+    .btn-cancel {
+      width: 100%;
+      padding: 16px;
+      background: rgba(255, 68, 68, 0.2);
+      border: 2px solid #ff4444;
+      color: #ff4444;
+      font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 14px;
+      margin-top: 10px;
+      min-height: 58px;
+      font-family: 'Oswald';
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .btn-cancel:active {
+      background: rgba(255, 68, 68, 0.4);
+      transform: scale(0.98);
+    }
+
     .checkbox-container {
       margin-top: 20px;
       display: flex;
@@ -1067,6 +1111,18 @@
       padding: 8px 16px;
       border-radius: 10px;
       border: 2px solid var(--primary);
+    }
+
+    .form-mode-indicator {
+      background: linear-gradient(135deg, rgba(0, 242, 234, 0.15), rgba(0, 136, 255, 0.15));
+      border: 2px solid var(--primary);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary);
+      font-size: clamp(1rem, 2.8vw, 1.15rem);
     }
   </style>
 </head>
@@ -1301,6 +1357,10 @@
         <span><i class="fas fa-edit"></i> INSCRIPTION</span>
       </div>
 
+      <div id="editModeIndicator" style="display: none;" class="form-mode-indicator">
+        <i class="fas fa-edit"></i> MODE MODIFICATION
+      </div>
+
       <p style="color:#aaa; margin-bottom: 20px; line-height:1.6; font-size: clamp(0.95rem, 2.5vw, 1.05rem);">
         Le capitaine remplit ce formulaire. Conservez votre mot de passe pour toute modification.
       </p>
@@ -1324,14 +1384,14 @@
         <div style="margin-top: 20px;">
           <label><i class="fas fa-users"></i> COMPOSITION (5 à 7 Joueurs)</label>
           <div style="display: grid; gap: 12px;">
-            <input type="text" class="player-field" placeholder="1. Capitaine" required
+            <input type="text" class="player-field" id="player1" placeholder="1. Capitaine" required
               style="border-left: 4px solid var(--accent);">
-            <input type="text" class="player-field" placeholder="2. Joueur" required>
-            <input type="text" class="player-field" placeholder="3. Joueur" required>
-            <input type="text" class="player-field" placeholder="4. Joueur" required>
-            <input type="text" class="player-field" placeholder="5. Joueur" required>
-            <input type="text" class="player-field" placeholder="6. Remplaçant (Optionnel)">
-            <input type="text" class="player-field" placeholder="7. Remplaçant (Optionnel)">
+            <input type="text" class="player-field" id="player2" placeholder="2. Joueur" required>
+            <input type="text" class="player-field" id="player3" placeholder="3. Joueur" required>
+            <input type="text" class="player-field" id="player4" placeholder="4. Joueur" required>
+            <input type="text" class="player-field" id="player5" placeholder="5. Joueur" required>
+            <input type="text" class="player-field" id="player6" placeholder="6. Remplaçant (Optionnel)">
+            <input type="text" class="player-field" id="player7" placeholder="7. Remplaçant (Optionnel)">
           </div>
         </div>
 
@@ -1342,8 +1402,12 @@
           </label>
         </div>
 
-        <button type="submit" class="btn-submit">
+        <button type="submit" class="btn-submit" id="submitBtn">
           <i class="fas fa-check-circle"></i> VALIDER
+        </button>
+
+        <button type="button" class="btn-cancel" id="cancelBtn" style="display: none;" onclick="cancelEdit()">
+          <i class="fas fa-times"></i> ANNULER
         </button>
       </form>
     </div>
@@ -1375,6 +1439,7 @@
 
   <script>
     let isAdminMode = false;
+    let editingTeamKey = null;
 
     // ============ NAVIGATION ============
     function showSection(sectionId) {
@@ -1411,6 +1476,62 @@
         document.getElementById('adminBtn').innerHTML = '<i class="fas fa-lock"></i> Admin';
         document.querySelectorAll('.phone-number').forEach(el => el.classList.remove('show'));
       }
+    }
+
+    // ============ EDIT FUNCTIONS ============
+    function editTeam(key, teamPassword) {
+      const userPass = prompt("🔐 Mot de passe de l'équipe :");
+
+      if (userPass !== teamPassword && userPass !== "admin90") {
+        if (userPass) alert("❌ Mot de passe incorrect !");
+        return;
+      }
+
+      // Récupérer les données de l'équipe
+      db.ref('equipes/' + key).once('value', (snapshot) => {
+        const team = snapshot.val();
+        if (!team) return;
+
+        // Remplir le formulaire
+        document.getElementById('teamName').value = team.nom;
+        document.getElementById('captainPhone').value = team.phone || '';
+        document.getElementById('teamPass').value = team.password;
+
+        // Remplir les joueurs
+        team.joueurs.forEach((joueur, index) => {
+          const input = document.getElementById('player' + (index + 1));
+          if (input) input.value = joueur;
+        });
+
+        // Vider les champs vides
+        for (let i = team.joueurs.length + 1; i <= 7; i++) {
+          const input = document.getElementById('player' + i);
+          if (input) input.value = '';
+        }
+
+        // Mode édition
+        editingTeamKey = key;
+        document.getElementById('editModeIndicator').style.display = 'block';
+        document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> SAUVEGARDER';
+        document.getElementById('cancelBtn').style.display = 'block';
+        document.getElementById('reglementCheck').checked = true;
+
+        // Aller à la section inscription
+        showSection('inscription');
+
+        // Scroll vers le formulaire
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+      });
+    }
+
+    function cancelEdit() {
+      editingTeamKey = null;
+      document.getElementById('editModeIndicator').style.display = 'none';
+      document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check-circle"></i> VALIDER';
+      document.getElementById('cancelBtn').style.display = 'none';
+      document.getElementById('addTeamForm').reset();
     }
 
     // ============ COUNTDOWN ============
@@ -1485,10 +1606,10 @@
         countDisplay.innerText = `${keys.length}/4`;
 
         const submitBtn = document.querySelector('.btn-submit');
-        if (keys.length >= 4) {
+        if (keys.length >= 4 && !editingTeamKey) {
           submitBtn.innerHTML = "<i class='fas fa-lock'></i> COMPLET";
           submitBtn.disabled = true;
-        } else {
+        } else if (!editingTeamKey) {
           submitBtn.disabled = false;
           submitBtn.innerHTML = "<i class='fas fa-check-circle'></i> VALIDER";
         }
@@ -1524,9 +1645,14 @@
             <div class="team-body">
               ${playersHtml}
             </div>
-            <button class="btn-delete" onclick="deleteTeam('${key}', '${team.password}')">
-              <i class="fas fa-trash-alt"></i> Retirer
-            </button>
+            <div class="team-actions">
+              <button class="btn-edit" onclick="editTeam('${key}', '${team.password}')">
+                <i class="fas fa-edit"></i> Modifier
+              </button>
+              <button class="btn-delete" onclick="deleteTeam('${key}', '${team.password}')">
+                <i class="fas fa-trash-alt"></i> Retirer
+              </button>
+            </div>
           `;
           container.appendChild(card);
         });
@@ -1536,59 +1662,90 @@
     document.getElementById('addTeamForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
-      db.ref('equipes').once('value', (snap) => {
-        if (snap.numChildren() >= 4) {
-          alert("❌ Tournoi complet !");
-          return;
+      const nom = document.getElementById('teamName').value.trim();
+      const phone = document.getElementById('captainPhone').value.trim();
+      const pass = document.getElementById('teamPass').value.trim();
+
+      let joueurs = [];
+      for (let i = 1; i <= 7; i++) {
+        const input = document.getElementById('player' + i);
+        if (input && input.value.trim() !== "") {
+          joueurs.push(input.value.trim());
         }
+      }
 
-        const nom = document.getElementById('teamName').value.trim();
-        const phone = document.getElementById('captainPhone').value.trim();
-        const pass = document.getElementById('teamPass').value.trim();
-        const inputs = document.querySelectorAll('.player-field');
-        let joueurs = [];
-        inputs.forEach(input => {
-          if (input.value.trim() !== "") joueurs.push(input.value.trim());
-        });
+      if (joueurs.length < 5) {
+        alert("⚠️ Minimum 5 joueurs requis.");
+        return;
+      }
 
-        if (joueurs.length < 5) {
-          alert("⚠️ Minimum 5 joueurs requis.");
-          return;
-        }
+      const btn = document.querySelector('.btn-submit');
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> ENVOI...";
+      btn.disabled = true;
 
-        const btn = document.querySelector('.btn-submit');
-        const originalHTML = btn.innerHTML;
-        btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> ENVOI...";
-        btn.disabled = true;
+      const teamData = {
+        nom: nom,
+        phone: phone,
+        password: pass,
+        joueurs: joueurs,
+        timestamp: Date.now()
+      };
 
-        db.ref('equipes').push({
-          nom: nom,
-          phone: phone,
-          password: pass,
-          joueurs: joueurs,
-          timestamp: Date.now()
-        }, (error) => {
+      if (editingTeamKey) {
+        // MODE MODIFICATION
+        db.ref('equipes/' + editingTeamKey).update(teamData, (error) => {
           if (error) {
             alert("❌ Erreur : " + error.message);
             btn.innerHTML = originalHTML;
             btn.disabled = false;
           } else {
-            alert("✅ Équipe validée !\n\n📌 Rappel : 6€/joueur sur place au Street Soccer d'Arbouans.");
+            alert("✅ Équipe modifiée avec succès !");
             document.getElementById('addTeamForm').reset();
+            cancelEdit();
             btn.innerHTML = originalHTML;
             btn.disabled = false;
             showSection('equipes');
           }
         });
-      });
+      } else {
+        // MODE CRÉATION
+        db.ref('equipes').once('value', (snap) => {
+          if (snap.numChildren() >= 4) {
+            alert("❌ Tournoi complet !");
+            btn.innerHTML = originalHTML;
+            btn.disabled = false;
+            return;
+          }
+
+          db.ref('equipes').push(teamData, (error) => {
+            if (error) {
+              alert("❌ Erreur : " + error.message);
+              btn.innerHTML = originalHTML;
+              btn.disabled = false;
+            } else {
+              alert("✅ Équipe validée !\n\n📌 Rappel : 6€/joueur sur place au Street Soccer d'Arbouans.");
+              document.getElementById('addTeamForm').reset();
+              btn.innerHTML = originalHTML;
+              btn.disabled = false;
+              showSection('equipes');
+            }
+          });
+        });
+      }
     });
 
     window.deleteTeam = function (key, realPassword) {
       const userPass = prompt("🔐 Mot de passe :");
       if (userPass === realPassword || userPass === "admin90") {
-        if (confirm("⚠️ Confirmer ?")) {
+        if (confirm("⚠️ Confirmer la suppression ?")) {
           db.ref('equipes/' + key).remove()
-            .then(() => alert("✅ Supprimée"))
+            .then(() => {
+              alert("✅ Équipe supprimée");
+              if (editingTeamKey === key) {
+                cancelEdit();
+              }
+            })
             .catch(err => alert("❌ Erreur : " + err.message));
         }
       } else if (userPass) {
