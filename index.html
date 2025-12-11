@@ -63,7 +63,7 @@
       margin: 0;
     }
 
-    /* ============ BOTTOM NAVIGATION (iOS Style) ============ */
+    /* ============ BOTTOM NAVIGATION ============ */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -226,6 +226,129 @@
       }
     }
 
+    /* ============ LOCATION BANNER ============ */
+    .location-banner {
+      margin: 20px 0;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(0, 242, 234, 0.15), rgba(0, 136, 255, 0.15));
+      border: 2px solid rgba(0, 242, 234, 0.5);
+      border-radius: 16px;
+      box-shadow:
+        0 8px 32px rgba(0, 242, 234, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .location-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: var(--primary);
+      filter: drop-shadow(0 0 15px rgba(0, 242, 234, 0.6));
+    }
+
+    .location-title {
+      font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .location-address {
+      font-size: clamp(0.95rem, 2.5vw, 1.08rem);
+      color: #fff;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .location-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--primary), #00d4cc);
+      color: #000;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 242, 234, 0.3);
+    }
+
+    .location-link:active {
+      transform: scale(0.95);
+      box-shadow: 0 6px 20px rgba(0, 242, 234, 0.5);
+    }
+
+    /* ============ PRIZE BANNER ============ */
+    .prize-banner {
+      margin: 20px 0;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 255, 136, 0.15));
+      border: 2px solid rgba(255, 215, 0, 0.5);
+      border-radius: 16px;
+      box-shadow:
+        0 8px 32px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .prize-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+      animation: prizeSweep 3s infinite;
+    }
+
+    @keyframes prizeSweep {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    .prize-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+    }
+
+    .prize-title {
+      font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .prize-description {
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+      color: #fff;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .prize-highlight {
+      color: var(--primary);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(0, 242, 234, 0.5);
+    }
+
     /* ============ COUNTDOWN ============ */
     .countdown-wrapper {
       margin: 25px 0;
@@ -334,7 +457,7 @@
       font-size: 1.2em;
     }
 
-    /* ============ CONTENT CONTAINER ============ */
+    /* ============ CONTAINER ============ */
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -347,12 +470,52 @@
       color: var(--primary);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       padding-bottom: 15px;
       border-bottom: 3px solid var(--primary);
+      flex-wrap: wrap;
     }
 
-    /* ============ PRAYER SPECIAL (IMPROVED) ============ */
+    /* ============ ADMIN BUTTON ============ */
+    .admin-btn {
+      padding: 8px 16px;
+      background: rgba(255, 68, 68, 0.2);
+      border: 2px solid #ff4444;
+      color: #ff4444;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .admin-btn:active {
+      background: rgba(255, 68, 68, 0.4);
+      transform: scale(0.95);
+    }
+
+    .admin-btn.active {
+      background: rgba(0, 255, 136, 0.2);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .phone-number {
+      display: none;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 5px;
+      font-size: 0.95rem;
+    }
+
+    .phone-number.show {
+      display: block;
+    }
+
+    /* ============ PRAYER CARD ============ */
     .prayer-card {
       background: linear-gradient(145deg, rgba(255, 215, 0, 0.12), rgba(0, 242, 234, 0.08));
       border: 2px solid rgba(255, 215, 0, 0.5);
@@ -569,6 +732,27 @@
       z-index: 1;
     }
 
+    .timeline-item.special::before {
+      background: linear-gradient(135deg, var(--accent), #ffed4e);
+      width: 22px;
+      height: 22px;
+      left: -48px;
+      box-shadow: 0 0 20px var(--accent);
+      animation: specialPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes specialPulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
     .timeline-time {
       font-size: clamp(1.2rem, 3.5vw, 1.5rem);
       color: var(--accent);
@@ -587,6 +771,34 @@
     .timeline-content strong {
       color: #fff;
       font-weight: 600;
+    }
+
+    .reward-box {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 255, 136, 0.15));
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .reward-box i {
+      font-size: 2.5rem;
+      color: var(--accent);
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+    }
+
+    .reward-text {
+      flex: 1;
+    }
+
+    .reward-text strong {
+      display: block;
+      color: var(--accent);
+      font-size: 1.15em;
+      margin-bottom: 5px;
     }
 
     /* ============ GLASS CARD ============ */
@@ -738,7 +950,8 @@
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"],
+    input[type="tel"] {
       width: 100%;
       background: #0f0f0f;
       border: 2px solid #333;
@@ -866,6 +1079,27 @@
       <div class="hero-badge">⚡ OFFICIAL LEAGUE</div>
       <h1>DITIB <span>CUP</span></h1>
 
+      <div class="location-banner">
+        <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="location-title">Street Soccer Arbouans</div>
+        <div class="location-address">
+          8 Rue des Sablières<br>
+          25400 Arbouans
+        </div>
+        <a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x4792172e1c3924f3:0xf71711100dea4889?sa=X&ved=1t:8290&ictx=111"
+          target="_blank" class="location-link">
+          <i class="fas fa-map"></i> Ouvrir dans Maps
+        </a>
+      </div>
+
+      <div class="prize-banner">
+        <div class="prize-icon">🏆</div>
+        <div class="prize-title">RÉCOMPENSE</div>
+        <div class="prize-description">
+          Le vainqueur réservera sa place pour le <span class="prize-highlight">GRAND TOURNOI INTER-MOSQUÉE</span> !
+        </div>
+      </div>
+
       <div class="countdown-wrapper">
         <div class="countdown-title"><i class="fas fa-hourglass-half"></i> COMPTE À REBOURS</div>
         <div class="countdown-display">
@@ -898,8 +1132,8 @@
           <span>12h - 13h30</span>
         </div>
         <div class="meta-tag">
-          <i class="fas fa-map-marker-alt"></i>
-          <span>Arbouans</span>
+          <i class="fas fa-futbol"></i>
+          <span>Street Soccer</span>
         </div>
         <div class="meta-tag">
           <i class="fas fa-euro-sign"></i>
@@ -913,7 +1147,7 @@
   <div id="deroulement" class="section">
     <div class="container">
       <div class="section-header">
-        <i class="fas fa-calendar-check"></i> DÉROULEMENT
+        <span><i class="fas fa-calendar-check"></i> DÉROULEMENT</span>
       </div>
 
       <div class="timeline">
@@ -957,7 +1191,7 @@
 
                 <div class="prayer-features">
                   <div class="prayer-feature">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-hands-praying"></i>
                     <span>Espace dédié</span>
                   </div>
                   <div class="prayer-feature">
@@ -979,11 +1213,17 @@
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item special">
           <div class="timeline-time"><i class="fas fa-medal"></i> 13h30</div>
           <div class="timeline-content">
-            <strong>Remise des récompenses</strong><br>
-            Célébration et proclamation du champion ! 🏆
+            <strong>Remise de la récompense</strong>
+            <div class="reward-box">
+              <i class="fas fa-trophy"></i>
+              <div class="reward-text">
+                <strong>QUALIFICATION GAGNÉE !</strong>
+                L'équipe championne obtient sa place pour le prestigieux tournoi inter-mosquée.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -994,7 +1234,7 @@
   <div id="reglement" class="section">
     <div class="container">
       <div class="section-header">
-        <i class="fas fa-info-circle"></i> RÈGLEMENT
+        <span><i class="fas fa-info-circle"></i> RÈGLEMENT</span>
       </div>
 
       <div class="glass-card">
@@ -1008,6 +1248,7 @@
             <li><strong>Phase 2 :</strong> Finale + Match 3ème place</li>
             <li><strong>Composition :</strong> 5 joueurs + 2 remplaçants max</li>
             <li><strong>Prix :</strong> 6€/joueur (sur place)</li>
+            <li><strong>Lieu :</strong> Street Soccer, Arbouans</li>
           </ul>
         </div>
       </div>
@@ -1023,15 +1264,29 @@
           </div>
         </div>
       </div>
+
+      <div class="glass-card" style="border-left-color: var(--accent);">
+        <div class="card-title"><i class="fas fa-star"></i> RÉCOMPENSE</div>
+        <div class="card-content">
+          <p><strong>Le vainqueur obtient une place garantie pour le tournoi inter-mosquée !</strong></p>
+          <p style="margin-top: 10px; color: var(--text-muted);">C'est la seule récompense du tournoi. Une opportunité
+            unique de représenter la DITIB au niveau régional.</p>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- ============ ÉQUIPES SECTION ============ -->
   <div id="equipes" class="section">
     <div class="container">
-      <div class="section-header" style="justify-content: space-between;">
+      <div class="section-header">
         <span><i class="fas fa-users"></i> ÉQUIPES</span>
-        <span class="count-badge" id="count-display">0/4</span>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <button class="admin-btn" id="adminBtn" onclick="toggleAdmin()">
+            <i class="fas fa-lock"></i> Admin
+          </button>
+          <span class="count-badge" id="count-display">0/4</span>
+        </div>
       </div>
 
       <div id="loading"><i class="fas fa-circle-notch fa-spin"></i> Chargement...</div>
@@ -1043,7 +1298,7 @@
   <div id="inscription" class="section">
     <div class="container">
       <div class="section-header">
-        <i class="fas fa-edit"></i> INSCRIPTION
+        <span><i class="fas fa-edit"></i> INSCRIPTION</span>
       </div>
 
       <p style="color:#aaa; margin-bottom: 20px; line-height:1.6; font-size: clamp(0.95rem, 2.5vw, 1.05rem);">
@@ -1054,6 +1309,11 @@
         <div class="input-group">
           <label><i class="fas fa-shield-alt"></i> Nom de l'équipe</label>
           <input type="text" id="teamName" placeholder="Ex: FC Valentigney" required>
+        </div>
+
+        <div class="input-group">
+          <label><i class="fas fa-phone"></i> Numéro du capitaine</label>
+          <input type="tel" id="captainPhone" placeholder="Ex: 06 12 34 56 78" required>
         </div>
 
         <div class="input-group">
@@ -1089,7 +1349,7 @@
     </div>
   </div>
 
-  <!-- ============ BOTTOM NAVIGATION (iOS Style) ============ -->
+  <!-- ============ BOTTOM NAVIGATION ============ -->
   <nav class="bottom-nav">
     <a class="nav-item active" onclick="showSection('home')">
       <i class="fas fa-home"></i>
@@ -1114,24 +1374,43 @@
   </nav>
 
   <script>
+    let isAdminMode = false;
+
     // ============ NAVIGATION ============
     function showSection(sectionId) {
-      // Hide all sections
       document.querySelectorAll('.section').forEach(section => {
         section.classList.remove('active');
       });
 
-      // Show target section
       document.getElementById(sectionId).classList.add('active');
 
-      // Update nav active state
       document.querySelectorAll('.nav-item').forEach((item, index) => {
         item.classList.remove('active');
       });
       event.currentTarget.classList.add('active');
 
-      // Scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ============ ADMIN MODE ============
+    function toggleAdmin() {
+      if (!isAdminMode) {
+        const code = prompt("🔐 Code admin :");
+        if (code === "fiveditib25") {
+          isAdminMode = true;
+          document.getElementById('adminBtn').classList.add('active');
+          document.getElementById('adminBtn').innerHTML = '<i class="fas fa-unlock"></i> Admin';
+          document.querySelectorAll('.phone-number').forEach(el => el.classList.add('show'));
+          alert("✅ Mode admin activé !");
+        } else if (code) {
+          alert("❌ Code incorrect !");
+        }
+      } else {
+        isAdminMode = false;
+        document.getElementById('adminBtn').classList.remove('active');
+        document.getElementById('adminBtn').innerHTML = '<i class="fas fa-lock"></i> Admin';
+        document.querySelectorAll('.phone-number').forEach(el => el.classList.remove('show'));
+      }
     }
 
     // ============ COUNTDOWN ============
@@ -1229,9 +1508,17 @@
             ).join('');
           }
 
+          const phoneDisplay = team.phone ?
+            `<div class="phone-number ${isAdminMode ? 'show' : ''}">
+              <i class="fas fa-phone"></i> ${team.phone}
+            </div>` : '';
+
           card.innerHTML = `
             <div class="team-header">
-              <div class="team-name">${team.nom}</div>
+              <div>
+                <div class="team-name">${team.nom}</div>
+                ${phoneDisplay}
+              </div>
               <div style="color:#888; font-size:1.05rem"><i class="fas fa-users"></i> ${team.joueurs.length}</div>
             </div>
             <div class="team-body">
@@ -1256,6 +1543,7 @@
         }
 
         const nom = document.getElementById('teamName').value.trim();
+        const phone = document.getElementById('captainPhone').value.trim();
         const pass = document.getElementById('teamPass').value.trim();
         const inputs = document.querySelectorAll('.player-field');
         let joueurs = [];
@@ -1275,6 +1563,7 @@
 
         db.ref('equipes').push({
           nom: nom,
+          phone: phone,
           password: pass,
           joueurs: joueurs,
           timestamp: Date.now()
@@ -1284,7 +1573,7 @@
             btn.innerHTML = originalHTML;
             btn.disabled = false;
           } else {
-            alert("✅ Équipe validée !\n\n📌 Rappel : 6€/joueur sur place.");
+            alert("✅ Équipe validée !\n\n📌 Rappel : 6€/joueur sur place au Street Soccer d'Arbouans.");
             document.getElementById('addTeamForm').reset();
             btn.innerHTML = originalHTML;
             btn.disabled = false;
