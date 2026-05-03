@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Tournoi Inter-Mosquées</title>
+<title>Tournoi Five 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -23,6 +22,9 @@
   --safe-bot:env(safe-area-inset-bottom,0px);
   --tab-h:calc(58px + var(--safe-bot));
 }
+@media(prefers-color-scheme:dark){
+  :root{--bg:#1c1c1e;--surface:#2c2c2e;--s2:#3a3a3c;--border:rgba(255,255,255,.15);--b2:rgba(255,255,255,.08);--text:#f2f2f7;--t2:#aeaeb2;--t3:#636366;--gl:rgba(29,111,66,.3);}
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;overflow:hidden;background:var(--bg);}
 body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-webkit-font-smoothing:antialiased;}
@@ -30,10 +32,14 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 .screens{flex:1;overflow:hidden;position:relative;}
 .screen{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:var(--tab-h);opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .2s,transform .2s;}
 .screen.active{opacity:1;pointer-events:auto;transform:translateY(0);}
-.topbar{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--b2);padding-top:calc(var(--safe-top) + 12px);padding-bottom:12px;text-align:center;position:sticky;top:0;z-index:10;}
+.topbar{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--b2);padding-top:calc(var(--safe-top)+12px);padding-bottom:12px;text-align:center;position:sticky;top:0;z-index:10;}
+@media(prefers-color-scheme:dark){.topbar{background:rgba(28,28,30,.9);}}
 .topbar h1{font-size:17px;font-weight:700;}
 .topbar p{font-size:12px;color:var(--t2);margin-top:1px;}
+.topbar-right{position:absolute;right:14px;top:calc(var(--safe-top)+10px);}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:20px;padding:4px;line-height:1;}
 .tabbar{display:flex;background:rgba(255,255,255,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--b2);padding-bottom:var(--safe-bot);z-index:20;flex-shrink:0;}
+@media(prefers-color-scheme:dark){.tabbar{background:rgba(28,28,30,.9);}}
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 4px;gap:3px;cursor:pointer;}
 .tab:active{opacity:.6;}
 .tab-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:background .2s;}
@@ -54,6 +60,9 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 .hero p{font-size:13px;opacity:.8;}
 .hero-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
 .chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:var(--rfull);padding:4px 10px;font-size:11px;}
+.hero-actions{display:flex;gap:8px;margin-top:14px;}
+.hero-btn{flex:1;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--rsm);padding:10px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;}
+.hero-btn:active{opacity:.7;}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 16px 0;}
 .stat{background:var(--surface);border-radius:var(--rsm);box-shadow:0 2px 12px rgba(0,0,0,.07);padding:14px;text-align:center;}
 .stat-n{font-size:28px;font-weight:800;color:var(--green);}
@@ -64,6 +73,10 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 .warn-txt{font-size:13px;color:#856404;line-height:1.5;}
 .rule-row{display:flex;justify-content:space-between;align-items:center;font-size:14px;padding:9px 0;border-bottom:1px solid var(--b2);}
 .rule-row:last-child{border-bottom:none;}
+/* Search */
+.search-wrap{padding:12px 16px 0;}
+.search-inp{width:100%;padding:11px 14px 11px 38px;border-radius:var(--rsm);border:1.5px solid var(--border);background:var(--surface);font:inherit;font-size:14px;color:var(--text);outline:none;transition:border-color .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23aeaeb2' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
+.search-inp:focus{border-color:var(--green);}
 /* Form */
 .form-sec{margin-bottom:18px;}
 .form-lbl{font-size:12px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;padding:0 4px;margin-bottom:6px;display:block;}
@@ -75,7 +88,6 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 .inp-group .inp-wrap{border-radius:0;border-top:none;}
 .inp-group .inp-wrap:first-child{border-radius:var(--rsm) var(--rsm) 0 0;border-top:1.5px solid var(--border);}
 .inp-group .inp-wrap:last-child{border-radius:0 0 var(--rsm) var(--rsm);}
-.inp-group .inp-wrap:only-child{border-radius:var(--rsm);}
 .jcard{background:var(--surface);border-radius:var(--rsm);border:1.5px solid var(--border);overflow:hidden;margin-bottom:8px;}
 .jcard-hd{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--b2);}
 .jcard-hd span{font-size:13px;font-weight:600;color:var(--t2);}
@@ -89,13 +101,15 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 .btn-p{background:var(--green);color:#fff;}
 .btn-s{background:var(--gl);color:var(--green);}
 .btn-gold{background:var(--gol);color:#856404;border:1.5px solid #ffc107;}
+.btn-danger{background:var(--rl);color:var(--red);}
+.btn-blue{background:var(--bl);color:var(--blue);}
 .btn-add{background:transparent;border:1.5px dashed var(--border);color:var(--t2);padding:11px;border-radius:var(--rsm);width:100%;font:inherit;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
 .btn-add:active{opacity:.6;}
 .btn:disabled{opacity:.4;cursor:not-allowed;}
-.alert{padding:12px 14px;border-radius:var(--rsm);font-size:13px;font-weight:600;margin-top:10px;display:none;}
-.alert.err{background:var(--rl);color:var(--red);display:block;}
-.alert.ok{background:var(--gl);color:var(--green);display:block;}
-/* Teams list */
+.alert{padding:12px 14px;border-radius:var(--rsm);font-size:13px;font-weight:600;margin-top:10px;}
+.alert.err{background:var(--rl);color:var(--red);}
+.alert.ok{background:var(--gl);color:var(--green);}
+/* Teams */
 .team-card{background:var(--surface);border-radius:var(--r);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;margin:0 16px 10px;}
 .team-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--gl);}
 .team-name{font-size:15px;font-weight:700;color:var(--green);}
@@ -105,23 +119,19 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 .p-row{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--b2);}
 .p-nm{font-size:14px;font-weight:500;}
 .p-ag{font-size:11px;color:var(--t3);}
-.pay-tag{padding:4px 10px;border-radius:var(--rfull);border:none;font:inherit;font-size:11px;font-weight:700;cursor:pointer;}
-.pay-tag.paid{background:#d4edda;color:#155724;}
-.pay-tag.nope{background:#ffeeba;color:#856404;}
-.del-btn{display:flex;align-items:center;gap:6px;padding:10px 14px;color:var(--red);font-size:13px;font-weight:600;cursor:pointer;border:none;background:none;font:inherit;width:100%;}
-.mosq-lbl{font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.6px;padding:0 16px;margin:16px 0 8px;}
-.empty{padding:50px 20px;text-align:center;color:var(--t2);}
-.empty-ico{font-size:44px;margin-bottom:12px;}
-.empty h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
-.empty p{font-size:13px;}
+.team-actions{display:flex;gap:0;border-top:1px solid var(--b2);}
+.team-act-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;background:none;}
+.team-act-btn:first-child{border-right:1px solid var(--b2);color:var(--blue);}
+.team-act-btn:last-child{color:var(--red);}
+.team-act-btn:active{opacity:.6;}
 /* Admin */
 .admin-lock{padding:40px 24px;text-align:center;}
-.pin-in{width:100%;padding:14px;text-align:center;letter-spacing:8px;font-size:24px;font-weight:700;border:2px solid var(--border);border-radius:var(--rsm);background:var(--s2);outline:none;font-family:monospace;margin:16px 0;transition:border-color .2s;}
+.pin-in{width:100%;padding:14px;text-align:center;letter-spacing:8px;font-size:24px;font-weight:700;border:2px solid var(--border);border-radius:var(--rsm);background:var(--s2);outline:none;font-family:monospace;margin:16px 0;transition:border-color .2s;color:var(--text);}
 .pin-in:focus{border-color:var(--green);}
 .sum-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--b2);font-size:14px;}
 .sum-row:last-child{border-bottom:none;}
 .sum-v{font-weight:700;color:var(--green);}
-/* Match card */
+/* Match */
 .round-block{margin-bottom:8px;}
 .round-hd{display:flex;align-items:center;justify-content:space-between;margin:0 16px 8px;}
 .round-title{font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;}
@@ -134,13 +144,12 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 .score-sep{font-size:14px;font-weight:700;color:var(--t3);}
 .score-win{background:var(--gl);color:var(--green);}
 .score-lose{background:var(--rl);color:var(--red);}
-/* Score input in admin */
 .score-input{width:44px;height:44px;text-align:center;font-size:20px;font-weight:800;border:2px solid var(--border);border-radius:10px;background:var(--s2);outline:none;font:inherit;color:var(--text);transition:border-color .2s;}
 .score-input:focus{border-color:var(--green);}
 .admin-match{background:var(--surface);border-radius:var(--rsm);border:1.5px solid var(--border);padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
 .admin-team{flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .admin-team.right{text-align:right;}
-/* Standings table */
+/* Standings */
 .standings-table{width:100%;border-collapse:collapse;}
 .standings-table th{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.4px;padding:8px 6px;text-align:center;border-bottom:2px solid var(--b2);}
 .standings-table th:first-child{text-align:left;padding-left:12px;}
@@ -153,11 +162,34 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 .standings-table tr:nth-child(1) td:first-child{color:var(--gold);}
 .standings-table tr:nth-child(2) td:first-child{color:var(--t2);}
 .standings-table tr:nth-child(3) td:first-child{color:#cd7f32;}
-.badge-pos{width:22px;height:22px;border-radius:var(--rfull);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;}
+/* Timer */
+.timer-card{background:linear-gradient(135deg,#006494,#004a6e);color:#fff;border-radius:var(--r);margin:0 0 12px;padding:16px;}
+.timer-label{font-size:11px;font-weight:600;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.timer-display{font-size:36px;font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums;}
+.timer-btns{display:flex;gap:8px;margin-top:12px;}
+.timer-btn{flex:1;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:8px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;}
+/* Empty */
+.empty{padding:50px 20px;text-align:center;color:var(--t2);}
+.empty-ico{font-size:44px;margin-bottom:12px;}
+.empty h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.empty p{font-size:13px;}
 /* Toast */
-#toast{position:fixed;top:calc(var(--safe-top) + 64px);left:50%;transform:translateX(-50%) translateY(-16px);background:rgba(28,28,30,.92);color:#fff;padding:10px 18px;border-radius:var(--rfull);font-size:13px;font-weight:600;white-space:nowrap;z-index:9999;opacity:0;pointer-events:none;transition:all .28s cubic-bezier(.34,1.56,.64,1);}
+#toast{position:fixed;top:calc(var(--safe-top)+64px);left:50%;transform:translateX(-50%) translateY(-16px);background:rgba(28,28,30,.92);color:#fff;padding:10px 18px;border-radius:var(--rfull);font-size:13px;font-weight:600;white-space:nowrap;z-index:9999;opacity:0;pointer-events:none;transition:all .28s cubic-bezier(.34,1.56,.64,1);}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal-overlay.open{opacity:1;pointer-events:auto;}
+.modal{background:var(--surface);border-radius:20px 20px 0 0;padding:24px 20px;width:100%;max-width:480px;transform:translateY(30px);transition:transform .25s;max-height:85vh;overflow-y:auto;}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-title{font-size:17px;font-weight:800;margin-bottom:16px;text-align:center;}
+.modal-sep{height:1px;background:var(--b2);margin:12px 0;}
+.full-slot{background:var(--rl);border:1.5px solid var(--red);border-radius:12px;padding:14px 16px;margin:12px 16px 0;text-align:center;font-size:14px;font-weight:700;color:var(--red);}
 ::-webkit-scrollbar{display:none;}
+
+/* ── Terrain badges ──────────────────────────────────────────────────────── */
+.terrain-badge{font-size:10px;font-weight:700;color:var(--green);background:var(--gl);border-radius:var(--rfull);padding:2px 10px;display:block;text-align:center;width:100%;letter-spacing:.3px;margin-bottom:4px;}
+.terrain-badge-sm{font-size:10px;font-weight:700;color:var(--t2);background:var(--s2);border-radius:var(--rfull);padding:2px 7px;white-space:nowrap;flex-shrink:0;}
+.match-card{flex-wrap:wrap;}
 </style>
 </head>
 <body>
@@ -166,19 +198,39 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 
     <!-- HOME -->
     <div class="screen active" id="sc-home">
-      <div class="topbar"><h1>⚽ Tournoi Inter-Mosquées</h1><p>DiTiB Selimiye Camii – Valentigney</p></div>
+      <div class="topbar">
+        <h1>⚽ Tournoi Five 2026</h1>
+        <p>Arena 25 Montbéliard — 17 Mai</p>
+        <div class="topbar-right">
+          <button class="icon-btn" onclick="shareApp()" title="Partager">📤</button>
+        </div>
+      </div>
+
       <div class="hero">
         <div class="hero-badge">🏆 Édition 2026</div>
-        <h2>Tournoi de Football</h2>
-        <p>Organisé par <strong>gb_valentigney</strong></p>
+        <h2>Tournoi de Five</h2>
+        <p>Ouvert à tous — Max 8 équipes</p>
         <div class="hero-chips">
           <div class="chip">📅 17 Mai 2026</div>
           <div class="chip">⏰ RDV 12h30</div>
           <div class="chip">🚀 Début 13h00</div>
           <div class="chip">🏁 Fin 14h30</div>
-          <div class="chip">📍 Arena 25 Montbéliard </div>
+          <div class="chip">📍 Arena 25</div>
           <div class="chip">💶 7€/joueur</div>
         </div>
+        <div class="hero-actions">
+          <button class="hero-btn" onclick="goTo('form')">✍️ S'inscrire</button>
+          <button class="hero-btn" onclick="shareWhatsApp()">📲 WhatsApp</button>
+        </div>
+      </div>
+
+      <div id="full-banner"></div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n" id="h-eq">0</div><div class="stat-l">⚽ Équipes</div></div>
+        <div class="stat"><div class="stat-n" id="h-jo">0</div><div class="stat-l">👤 Joueurs</div></div>
+        <div class="stat"><div class="stat-n" id="h-pl">0</div><div class="stat-l">🆓 Places libres</div></div>
+        <div class="stat"><div class="stat-n" id="h-to">0€</div><div class="stat-l">💶 Total</div></div>
       </div>
 
       <div class="warn">
@@ -186,54 +238,37 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
         <div>
           <div class="warn-title">PONCTUALITÉ OBLIGATOIRE</div>
           <div class="warn-txt">
-            🕧 Rendez-vous à <strong>12h30 pile</strong> à l'Arena 25.<br/>
+            🕧 RDV à <strong>12h30 pile</strong> à l'Arena 25.<br/>
             🚀 Coup d'envoi à <strong>13h00 pile</strong> — sans attendre les retardataires.<br/>
             🏁 Dernier match terminé à <strong>14h30 pile</strong> — aucun prolongement.
           </div>
         </div>
       </div>
 
-      <div class="stats">
-        <div class="stat"><div class="stat-n" id="h-mo">0</div><div class="stat-l">🕌 Mosquées</div></div>
-        <div class="stat"><div class="stat-n" id="h-eq">0</div><div class="stat-l">⚽ Équipes</div></div>
-        <div class="stat"><div class="stat-n" id="h-jo">0</div><div class="stat-l">👤 Joueurs</div></div>
-        <div class="stat"><div class="stat-n" id="h-to">0€</div><div class="stat-l">💶 Total</div></div>
-      </div>
-
       <div class="container" style="margin-top:4px;">
-
-        <!-- Programme -->
         <div class="card">
           <div class="card-hd"><h2>📅 Programme des matchs</h2></div>
           <div class="card-bd">
             <div class="rule-row"><span style="color:var(--t2)">🟢 Match 1</span><strong>13h00 – 13h25</strong></div>
-            <div class="rule-row"><span style="color:var(--t2)">⏸ Pause (switch terrain)</span><strong style="color:var(--t2)">13h25 – 13h30</strong></div>
+            <div class="rule-row"><span style="color:var(--t2)">⏸ Pause</span><strong style="color:var(--t2)">13h25 – 13h30</strong></div>
             <div class="rule-row"><span style="color:var(--t2)">🟡 Match 2</span><strong>13h30 – 13h55</strong></div>
-            <div class="rule-row"><span style="color:var(--t2)">⏸ Pause (switch terrain)</span><strong style="color:var(--t2)">13h55 – 14h00</strong></div>
+            <div class="rule-row"><span style="color:var(--t2)">⏸ Pause</span><strong style="color:var(--t2)">13h55 – 14h00</strong></div>
             <div class="rule-row"><span style="color:var(--t2)">🔴 Match 3 (classement)</span><strong>14h00 – 14h25</strong></div>
             <div class="rule-row"><span style="color:var(--t2)">🏆 Remise des prix</span><strong>14h25 – 14h30</strong></div>
           </div>
         </div>
-
-        <!-- Tirage / Matchs -->
         <div id="tirage-section"></div>
-
-        <!-- Classement -->
         <div id="classement-section"></div>
-
-        <!-- Règlement -->
         <div class="card">
           <div class="card-hd"><h2>📋 Règlement</h2></div>
           <div class="card-bd">
-            <div class="rule-row"><span style="color:var(--t2)">Équipes max / mosquée</span><strong style="color:var(--green)">2 équipes</strong></div>
-            <div class="rule-row"><span style="color:var(--t2)">Joueurs max / équipe</span><strong style="color:var(--green)">5 joueurs</strong></div>
+            <div class="rule-row"><span style="color:var(--t2)">Équipes max</span><strong style="color:var(--green)">8 équipes</strong></div>
+            <div class="rule-row"><span style="color:var(--t2)">Joueurs / équipe</span><strong style="color:var(--green)">5 joueurs max</strong></div>
             <div class="rule-row"><span style="color:var(--t2)">Tranche d'âge</span><strong>17 – 35 ans</strong></div>
             <div class="rule-row"><span style="color:var(--t2)">Tarif</span><strong style="color:var(--gold)">7 € / joueur</strong></div>
-            <div class="rule-row"><span style="color:var(--t2)">Paiement</span><strong>Sur place · Espèces ou CB</strong></div>
-            <div class="rule-row"><span style="color:var(--t2)">Où payer ?</span><strong>Comptoir Arena 25</strong></div>
+            <div class="rule-row"><span style="color:var(--t2)">Paiement</span><strong>Sur place au comptoir Arena 25</strong></div>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -241,39 +276,53 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
     <div class="screen" id="sc-form">
       <div class="topbar"><h1>✍️ Inscription</h1><p>Enregistrer une équipe</p></div>
       <div class="container">
-        <div class="form-sec">
-          <label class="form-lbl">🕌 Mosquée</label>
-          <div class="inp-wrap"><div class="inp-row"><span class="ico">🕌</span>
-            <input type="text" id="f-mosque" placeholder="Nom de la mosquée"/>
-          </div></div>
-        </div>
-        <div class="form-sec">
-          <label class="form-lbl">⚽ Équipe &amp; Contact</label>
-          <div class="inp-group">
-            <div class="inp-wrap"><div class="inp-row"><span class="ico">🏷</span>
-              <input type="text" id="f-team" placeholder="Nom de l'équipe"/>
-            </div></div>
-            <div class="inp-wrap"><div class="inp-row"><span class="ico">📱</span>
-              <input type="tel" id="f-phone" placeholder="N° WhatsApp responsable"/>
-            </div></div>
+        <div id="form-full-msg" style="display:none;" class="card">
+          <div class="card-bd" style="text-align:center;padding:24px;">
+            <div style="font-size:40px;margin-bottom:12px">🚫</div>
+            <div style="font-size:16px;font-weight:800;margin-bottom:6px">Tournoi complet !</div>
+            <div style="font-size:13px;color:var(--t2)">Les 8 équipes sont déjà inscrites.</div>
           </div>
         </div>
-        <div class="form-sec">
-          <label class="form-lbl">👤 Joueurs <span id="jcount" style="color:var(--t3);font-weight:400">(0/5)</span></label>
-          <div id="jlist"></div>
-          <button class="btn-add" id="btn-aj" onclick="addJoueur()">+ Ajouter un joueur</button>
+        <div id="form-body">
+          <div class="form-sec">
+            <label class="form-lbl">⚽ Nom de l'équipe</label>
+            <div class="inp-wrap"><div class="inp-row"><span class="ico">🏷</span>
+              <input type="text" id="f-team" placeholder="Nom de l'équipe" maxlength="30"/>
+            </div></div>
+          </div>
+          <div class="form-sec">
+            <label class="form-lbl">📱 Contact (WhatsApp responsable)</label>
+            <div class="inp-wrap"><div class="inp-row"><span class="ico">📱</span>
+              <input type="tel" id="f-phone" placeholder="Numéro WhatsApp"/>
+            </div></div>
+          </div>
+          <div class="form-sec">
+            <label class="form-lbl">🔑 Code équipe <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--t3)">(pour modifier / supprimer)</span></label>
+            <div class="inp-wrap"><div class="inp-row"><span class="ico">🔑</span>
+              <input type="text" id="f-code" placeholder="Choisissez un code secret (ex: foot2026)" maxlength="20" autocomplete="off"/>
+            </div></div>
+            <div style="font-size:11px;color:var(--t3);padding:6px 4px 0">⚠️ Notez bien ce code — il sera nécessaire pour modifier ou supprimer votre équipe.</div>
+          </div>
+          <div class="form-sec">
+            <label class="form-lbl">👤 Joueurs <span id="jcount" style="color:var(--t3);font-weight:400">(0/5)</span></label>
+            <div id="jlist"></div>
+            <button class="btn-add" id="btn-aj" onclick="addJoueur()">+ Ajouter un joueur</button>
+          </div>
+          <div id="f-alert" class="alert" style="display:none;"></div>
+          <div style="height:10px"></div>
+          <button class="btn btn-p" onclick="submitForm()">✅ Inscrire l'équipe</button>
+          <div style="height:8px"></div>
+          <button class="btn btn-s" onclick="resetForm()">🔄 Réinitialiser</button>
         </div>
-        <div id="f-alert" class="alert"></div>
-        <div style="height:10px"></div>
-        <button class="btn btn-p" onclick="submitForm()">✅ Inscrire l'équipe</button>
-        <div style="height:8px"></div>
-        <button class="btn btn-s" onclick="resetForm()">🔄 Réinitialiser</button>
       </div>
     </div>
 
     <!-- ÉQUIPES -->
     <div class="screen" id="sc-teams">
-      <div class="topbar"><h1>📋 Équipes</h1><p>Inscriptions en temps réel</p></div>
+      <div class="topbar"><h1>📋 Équipes</h1><p id="teams-count">Inscriptions en temps réel</p></div>
+      <div class="search-wrap">
+        <input class="search-inp" id="search-inp" type="text" placeholder="Rechercher une équipe..." oninput="renderTeams()"/>
+      </div>
       <div id="teams-cont" style="padding-top:8px;">
         <div class="empty"><div class="empty-ico">⏳</div><h3>Chargement...</h3></div>
       </div>
@@ -285,22 +334,32 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
       <div class="admin-lock" id="adm-lock">
         <div style="font-size:52px;margin-bottom:16px">🔒</div>
         <p style="font-size:15px;font-weight:700;margin-bottom:6px">Accès administrateur</p>
-        <p style="font-size:13px;color:var(--t2)">Entrez le code PIN</p>
-        <input type="password" inputmode="numeric" maxlength="4" class="pin-in" id="pin-in" placeholder="••••"/>
+        <p style="font-size:13px;color:var(--t2)">Entrez le code PIN admin</p>
+        <input type="password" inputmode="numeric" maxlength="4" class="pin-in" id="pin-in" placeholder="••••" onkeydown="if(event.key==='Enter')checkPin()"/>
         <button class="btn btn-p" onclick="checkPin()">🔓 Accéder</button>
-        <p style="font-size:11px;color:var(--t3);margin-top:10px"></p>
+        <p style="font-size:11px;color:var(--t3);margin-top:12px">Code PIN réservé à l'organisateur</p>
       </div>
       <div id="adm-panel" style="display:none;" class="container">
-        <!-- Stats -->
-        <div class="card"><div class="card-hd"><h2>📊 Bilan financier</h2></div><div class="card-bd" id="adm-sum"></div></div>
-        <!-- Tirage -->
+        <div class="card"><div class="card-hd"><h2>📊 Bilan</h2></div><div class="card-bd" id="adm-sum"></div></div>
+        <div id="adm-timer" class="timer-card" style="display:none">
+          <div class="timer-label">⏱ Chronomètre match</div>
+          <div class="timer-display" id="timer-disp">25:00</div>
+          <div id="timer-match-lbl" style="font-size:12px;opacity:.75;margin-top:4px">Match en cours...</div>
+          <div class="timer-btns">
+            <button class="timer-btn" onclick="timerStart()">▶ Start</button>
+            <button class="timer-btn" onclick="timerPause()">⏸ Pause</button>
+            <button class="timer-btn" onclick="timerReset()">🔄 Reset</button>
+          </div>
+        </div>
         <div id="adm-tirage"></div>
-        <!-- Scores -->
         <div id="adm-scores"></div>
-        <!-- Classement admin -->
         <div id="adm-classement"></div>
         <div style="height:8px"></div>
-        <button class="btn" style="background:var(--rl);color:var(--red)" onclick="adminOut()">⬅️ Déconnexion</button>
+        <button class="btn btn-blue" onclick="exportCSV()">📥 Exporter CSV</button>
+        <div style="height:8px"></div>
+        <button class="btn btn-danger" onclick="resetTournoi()">⚠️ Réinitialiser tout</button>
+        <div style="height:8px"></div>
+        <button class="btn" style="background:var(--s2);color:var(--t2)" onclick="adminOut()">⬅️ Déconnexion</button>
       </div>
     </div>
 
@@ -316,7 +375,7 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
       <span class="tab-label">Inscription</span>
     </div>
     <div class="tab" id="tab-teams" onclick="goTo('teams')">
-      <div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
       <span class="tab-label">Équipes</span>
     </div>
     <div class="tab" id="tab-admin" onclick="goTo('admin')">
@@ -325,10 +384,40 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
     </div>
   </nav>
 </div>
+
+<!-- Modal: Code équipe pour modifier/supprimer -->
+<div class="modal-overlay" id="team-modal">
+  <div class="modal">
+    <div class="modal-title" id="tmodal-title">🔑 Accès équipe</div>
+    <div class="form-sec">
+      <label class="form-lbl">Code secret de l'équipe</label>
+      <div class="inp-wrap"><div class="inp-row"><span class="ico">🔑</span>
+        <input type="text" id="tmodal-code" placeholder="Entrez votre code" autocomplete="off" onkeydown="if(event.key==='Enter')tmodalVerify()"/>
+      </div></div>
+    </div>
+    <div id="tmodal-alert" class="alert" style="display:none;margin-bottom:10px;"></div>
+    <button class="btn btn-p" onclick="tmodalVerify()" style="margin-bottom:8px">🔓 Accéder</button>
+    <button class="btn btn-s" onclick="closeModal('team-modal')">Annuler</button>
+    <!-- Edition panel, shown after unlock -->
+    <div id="tmodal-edit" style="display:none;">
+      <div class="modal-sep"></div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px" id="tmodal-eq-name"></div>
+      <div id="tmodal-jlist" style="margin-bottom:12px;"></div>
+      <button class="btn-add" onclick="tmodalAddJ()">+ Ajouter un joueur</button>
+      <div style="height:12px"></div>
+      <button class="btn btn-p" onclick="tmodalSave()" style="margin-bottom:8px">💾 Enregistrer les modifications</button>
+      <div class="modal-sep"></div>
+      <button class="btn btn-danger" onclick="tmodalDelete()">🗑 Supprimer l'équipe</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
-// ── SCHEDULE: [round][match] = [posA, posB] ──────────────────────────────────
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+var ADMIN_PIN = '2807';
+var MAX_EQUIPES = 8;
 var SCHED = [
   [[0,1],[2,3],[4,5],[6,7]],
   [[0,2],[1,3],[4,6],[5,7]],
@@ -339,400 +428,469 @@ var ROUND_INFO = [
   { label:'Match 2', start:'13h30', end:'13h55', color:'#f59e0b' },
   { label:'Match 3 · Classement', start:'14h00', end:'14h25', color:'#ef4444' }
 ];
+var TERRAINS = ['🟢 Terrain 1','🔵 Terrain 2','🟡 Terrain 3','🔴 Terrain 4'];
 
-// ── STATE ────────────────────────────────────────────────────────────────────
-window._data = { equipes: {}, tirage: null };
+window._data = { equipes:{}, tirage:null };
 window._adminOpen = false;
-window._fbReady = false;
 
-// ── NAV ──────────────────────────────────────────────────────────────────────
+// ── NAV ───────────────────────────────────────────────────────────────────────
 function goTo(id) {
-  ['home','form','teams','admin'].forEach(function(s) {
+  ['home','form','teams','admin'].forEach(function(s){
     document.getElementById('sc-'+s).classList.remove('active');
     document.getElementById('tab-'+s).classList.remove('active');
   });
   document.getElementById('sc-'+id).classList.add('active');
   document.getElementById('tab-'+id).classList.add('active');
+  if (id==='form') checkFormFull();
 }
 
-// ── TOAST ────────────────────────────────────────────────────────────────────
+// ── TOAST ─────────────────────────────────────────────────────────────────────
 function toast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 2600);
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); },2600);
 }
 
-// ── ALERT ────────────────────────────────────────────────────────────────────
-function showAlert(msg, type) {
-  var el = document.getElementById('f-alert');
-  el.textContent = (type==='err'?'⚠️ ':'✅ ') + msg;
-  el.className = 'alert ' + (type||'err');
-  el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+// ── ALERT ─────────────────────────────────────────────────────────────────────
+function showAlert(msg,type,elId){
+  elId = elId||'f-alert';
+  var el=document.getElementById(elId);
+  el.textContent=(type==='err'?'⚠️ ':'✅ ')+msg;
+  el.className='alert '+(type||'err');
+  el.style.display='block';
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function hideAlert(elId){ elId=elId||'f-alert'; var el=document.getElementById(elId); el.style.display='none'; }
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.getElementById('team-modal').addEventListener('click',function(e){ if(e.target===this) closeModal('team-modal'); });
+
+// ── FULL CHECK ────────────────────────────────────────────────────────────────
+function isFull(){ return Object.keys(window._data.equipes).length >= MAX_EQUIPES; }
+function checkFormFull(){
+  var full=isFull();
+  document.getElementById('form-full-msg').style.display=full?'block':'none';
+  document.getElementById('form-body').style.display=full?'none':'block';
+  var banner=document.getElementById('full-banner');
+  if(full){ banner.innerHTML='<div class="full-slot">🚫 Tournoi complet — 8/8 équipes inscrites</div>'; }
+  else { banner.innerHTML=''; }
 }
 
-// ── STANDINGS ────────────────────────────────────────────────────────────────
-function computeStandings() {
-  var equipes = window._data.equipes || {};
-  var tirage  = window._data.tirage;
-  if (!tirage || !tirage.fait) return [];
+// ── SHARE ─────────────────────────────────────────────────────────────────────
+function shareApp(){
+  var url=window.location.href;
+  if(navigator.share){ navigator.share({title:'Tournoi Five 2026',text:'Rejoins le tournoi de five !',url:url}); }
+  else { navigator.clipboard.writeText(url).then(function(){ toast('🔗 Lien copié !'); }); }
+}
+function shareWhatsApp(){
+  var txt=encodeURIComponent('⚽ Tournoi Five 2026 — Arena 25 Montbéliard\n📅 17 Mai | 13h00 | 7€/joueur\n\nInscris ton équipe : '+window.location.href);
+  window.open('https://wa.me/?text='+txt,'_blank');
+}
 
-  var pos = tirage.positions || {};
-  var scores = tirage.scores || {};
-  var stats = {};
+// ── EXPORT CSV ────────────────────────────────────────────────────────────────
+function exportCSV(){
+  var equipes=window._data.equipes||{};
+  var rows=['Équipe,Téléphone,Joueur,Âge'];
+  Object.values(equipes).forEach(function(eq){
+    Object.values(eq.joueurs||{}).forEach(function(j){
+      rows.push(['"'+(eq.nom||'')+'"',eq.telephone||'','"'+(j.nom||'')+'"',j.age||''].join(','));
+    });
+  });
+  var blob=new Blob([rows.join('\n')],{type:'text/csv;charset=utf-8;'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='tournoi-five-2026.csv'; a.click();
+  toast('📥 CSV exporté !');
+}
 
-  for (var p = 0; p < 8; p++) {
-    var tid = pos[String(p)];
-    if (!tid || !equipes[tid]) continue;
-    stats[tid] = { id:tid, nom:equipes[tid].nom, mosque:equipes[tid].mosquee, pt:0, j:0, v:0, n:0, d:0, bp:0, bc:0 };
+// ── STANDINGS ─────────────────────────────────────────────────────────────────
+function computeStandings(){
+  var equipes=window._data.equipes||{};
+  var tirage=window._data.tirage;
+  if(!tirage||!tirage.fait) return [];
+  var pos=tirage.positions||{}, scores=tirage.scores||{}, stats={};
+  for(var p=0;p<8;p++){
+    var tid=pos[String(p)];
+    if(!tid||!equipes[tid]) continue;
+    stats[tid]={id:tid,nom:equipes[tid].nom,pt:0,j:0,v:0,n:0,d:0,bp:0,bc:0};
   }
-
-  for (var r = 0; r < 3; r++) {
-    for (var m = 0; m < 4; m++) {
-      var key = 'r'+r+'m'+m;
-      var sc = scores[key];
-      if (!sc || sc.s1 === null || sc.s1 === undefined || sc.s2 === null || sc.s2 === undefined) continue;
-      var pp = SCHED[r][m];
-      var t1 = pos[String(pp[0])], t2 = pos[String(pp[1])];
-      if (!stats[t1] || !stats[t2]) continue;
-      var g1 = parseInt(sc.s1,10), g2 = parseInt(sc.s2,10);
-      if (isNaN(g1)||isNaN(g2)) continue;
+  for(var r=0;r<3;r++){
+    for(var m=0;m<4;m++){
+      var sc=scores['r'+r+'m'+m];
+      if(!sc||sc.s1==null||sc.s2==null) continue;
+      var pp=SCHED[r][m];
+      var t1=pos[String(pp[0])],t2=pos[String(pp[1])];
+      if(!stats[t1]||!stats[t2]) continue;
+      var g1=parseInt(sc.s1,10),g2=parseInt(sc.s2,10);
+      if(isNaN(g1)||isNaN(g2)) continue;
       stats[t1].j++; stats[t2].j++;
-      stats[t1].bp += g1; stats[t1].bc += g2;
-      stats[t2].bp += g2; stats[t2].bc += g1;
-      if (g1 > g2)      { stats[t1].v++; stats[t1].pt+=3; stats[t2].d++; }
-      else if (g2 > g1) { stats[t2].v++; stats[t2].pt+=3; stats[t1].d++; }
-      else              { stats[t1].n++; stats[t1].pt++;  stats[t2].n++; stats[t2].pt++; }
+      stats[t1].bp+=g1; stats[t1].bc+=g2;
+      stats[t2].bp+=g2; stats[t2].bc+=g1;
+      if(g1>g2){stats[t1].v++;stats[t1].pt+=3;stats[t2].d++;}
+      else if(g2>g1){stats[t2].v++;stats[t2].pt+=3;stats[t1].d++;}
+      else{stats[t1].n++;stats[t1].pt++;stats[t2].n++;stats[t2].pt++;}
     }
   }
-
   return Object.values(stats).sort(function(a,b){
-    if (b.pt !== a.pt) return b.pt - a.pt;
-    var da = a.bp-a.bc, db = b.bp-b.bc;
-    if (db !== da) return db - da;
-    return b.bp - a.bp;
+    if(b.pt!==a.pt) return b.pt-a.pt;
+    var da=a.bp-a.bc,db=b.bp-b.bc;
+    if(db!==da) return db-da;
+    return b.bp-a.bp;
   });
 }
 
-// ── RENDER HOME TIRAGE ───────────────────────────────────────────────────────
-function renderTirageHome() {
-  var el = document.getElementById('tirage-section');
-  var equipes = window._data.equipes || {};
-  var tirage  = window._data.tirage;
-  var nb = Object.keys(equipes).length;
+// ── RENDER HOME ───────────────────────────────────────────────────────────────
+function renderHomeStats(){
+  var equipes=window._data.equipes||{};
+  var keys=Object.keys(equipes),joueurs=0;
+  keys.forEach(function(k){ joueurs+=Object.keys(equipes[k].joueurs||{}).length; });
+  document.getElementById('h-eq').textContent=keys.length;
+  document.getElementById('h-jo').textContent=joueurs;
+  document.getElementById('h-pl').textContent=MAX_EQUIPES-keys.length;
+  document.getElementById('h-to').textContent=(joueurs*7)+'€';
+  checkFormFull();
+}
 
-  if (!tirage || !tirage.fait) {
-    if (nb < 8) {
-      el.innerHTML = '<div class="card"><div class="card-hd"><h2>🎲 Tirage au sort</h2></div><div class="card-bd"><div style="text-align:center;padding:12px 0;color:var(--t2);font-size:13px;">En attente des inscriptions<br/><strong style="color:var(--green);font-size:20px">' + nb + '/8</strong> équipes inscrites</div></div></div>';
-    } else {
-      el.innerHTML = '<div class="card"><div class="card-hd"><h2>🎲 Tirage au sort</h2></div><div class="card-bd"><div style="text-align:center;padding:12px 0;color:var(--t2);font-size:13px;">8 équipes inscrites ✅<br/>Le tirage sera effectué par l\'administrateur.</div></div></div>';
-    }
+function renderTirageHome(){
+  var el=document.getElementById('tirage-section');
+  var equipes=window._data.equipes||{};
+  var tirage=window._data.tirage;
+  var nb=Object.keys(equipes).length;
+  if(!tirage||!tirage.fait){
+    el.innerHTML='<div class="card"><div class="card-hd"><h2>🎲 Tirage au sort</h2></div><div class="card-bd"><div style="text-align:center;padding:12px 0;color:var(--t2);font-size:13px;">En attente du tirage<br/><strong style="color:var(--green);font-size:20px">'+nb+'/'+MAX_EQUIPES+'</strong> équipes inscrites</div></div></div>';
     return;
   }
-
-  var pos = tirage.positions || {};
-  var scores = tirage.scores || {};
-
-  var div = document.createElement('div');
-
-  for (var r = 0; r < 3; r++) {
-    var info = ROUND_INFO[r];
-    var block = document.createElement('div');
-    block.className = 'round-block';
-
-    var hd = document.createElement('div');
-    hd.className = 'round-hd';
-    hd.innerHTML = '<span class="round-title" style="color:' + info.color + '">' + info.label + '</span><span class="round-time">' + info.start + ' – ' + info.end + '</span>';
+  var pos=tirage.positions||{}, scores=tirage.scores||{};
+  var div=document.createElement('div');
+  for(var r=0;r<3;r++){
+    var info=ROUND_INFO[r];
+    var block=document.createElement('div'); block.className='round-block';
+    var hd=document.createElement('div'); hd.className='round-hd';
+    hd.innerHTML='<span class="round-title" style="color:'+info.color+'">'+info.label+'</span><span class="round-time">'+info.start+' – '+info.end+'</span>';
     block.appendChild(hd);
-
-    for (var m = 0; m < 4; m++) {
-      var pp = SCHED[r][m];
-      var t1id = pos[String(pp[0])], t2id = pos[String(pp[1])];
-      var t1 = (equipes[t1id] || {}).nom || '?';
-      var t2 = (equipes[t2id] || {}).nom || '?';
-      var sc = scores['r'+r+'m'+m];
-      var s1 = (sc && sc.s1 !== null && sc.s1 !== undefined) ? sc.s1 : '–';
-      var s2 = (sc && sc.s2 !== null && sc.s2 !== undefined) ? sc.s2 : '–';
-
-      var mc = document.createElement('div');
-      mc.className = 'match-card';
-
-      var cl1 = 'score-box', cl2 = 'score-box';
-      if (s1 !== '–' && s2 !== '–') {
-        cl1 = s1 > s2 ? 'score-box score-win' : (s1 < s2 ? 'score-box score-lose' : 'score-box');
-        cl2 = s2 > s1 ? 'score-box score-win' : (s2 < s1 ? 'score-box score-lose' : 'score-box');
+    for(var m=0;m<4;m++){
+      var pp=SCHED[r][m];
+      var t1id=pos[String(pp[0])],t2id=pos[String(pp[1])];
+      var t1=(equipes[t1id]||{}).nom||'?';
+      var t2=(equipes[t2id]||{}).nom||'?';
+      var sc=scores['r'+r+'m'+m];
+      var s1=(sc&&sc.s1!=null)?sc.s1:'–',s2=(sc&&sc.s2!=null)?sc.s2:'–';
+      var mc=document.createElement('div'); mc.className='match-card';
+      var cl1='score-box',cl2='score-box';
+      if(s1!=='–'&&s2!=='–'){
+        cl1=s1>s2?'score-box score-win':(s1<s2?'score-box score-lose':'score-box');
+        cl2=s2>s1?'score-box score-win':(s2<s1?'score-box score-lose':'score-box');
       }
-
-      mc.innerHTML = '<span class="match-team">' + t1 + '</span>'
-        + '<div class="match-score"><div class="' + cl1 + '">' + s1 + '</div>'
-        + '<span class="score-sep">-</span>'
-        + '<div class="' + cl2 + '">' + s2 + '</div></div>'
-        + '<span class="match-team right">' + t2 + '</span>';
+      mc.innerHTML='<div class="terrain-badge">'+TERRAINS[m]+'</div>'
+        +'<span class="match-team">'+t1+'</span>'
+        +'<div class="match-score"><div class="'+cl1+'">'+s1+'</div>'
+        +'<span class="score-sep">-</span>'
+        +'<div class="'+cl2+'">'+s2+'</div></div>'
+        +'<span class="match-team right">'+t2+'</span>';
       block.appendChild(mc);
     }
     div.appendChild(block);
   }
-
-  el.innerHTML = '<div style="padding:0 16px 4px;font-size:13px;font-weight:700;color:var(--green);margin-top:8px">🎲 Tirage au sort</div>';
+  el.innerHTML='<div style="padding:0 16px 4px;font-size:13px;font-weight:700;color:var(--green);margin-top:8px">🎲 Matchs — 4 terrains simultanés</div>';
   el.appendChild(div);
 }
 
-// ── RENDER CLASSEMENT HOME ───────────────────────────────────────────────────
-function renderClassementHome() {
-  var el = document.getElementById('classement-section');
-  var tirage = window._data.tirage;
-  if (!tirage || !tirage.fait) { el.innerHTML = ''; return; }
-
-  var standings = computeStandings();
-  if (!standings.length) { el.innerHTML = ''; return; }
-
-  var medals = ['🥇','🥈','🥉'];
-
-  var card = document.createElement('div');
-  card.className = 'card';
-  var hd = document.createElement('div');
-  hd.className = 'card-hd';
-  hd.innerHTML = '<h2>🏆 Classement</h2><span style="font-size:11px;color:var(--t2)">Pts · V · N · D · Diff</span>';
-  card.appendChild(hd);
-
-  var wrap = document.createElement('div');
-  wrap.style.overflowX = 'auto';
-  var table = document.createElement('table');
-  table.className = 'standings-table';
-  table.innerHTML = '<thead><tr><th>#</th><th>Équipe</th><th>Pts</th><th>J</th><th>V</th><th>N</th><th>D</th><th>Diff</th><th>BP</th></tr></thead>';
-  var tbody = document.createElement('tbody');
-
-  standings.forEach(function(s, i) {
-    var tr = document.createElement('tr');
-    var diff = s.bp - s.bc;
-    var diffStr = diff > 0 ? '+'+diff : String(diff);
-    tr.innerHTML = '<td>' + (medals[i] || (i+1)) + '</td>'
-      + '<td><div style="font-size:12px">' + s.nom + '</div><div style="font-size:10px;color:var(--t2)">' + s.mosque + '</div></td>'
-      + '<td class="pts">' + s.pt + '</td>'
-      + '<td>' + s.j + '</td>'
-      + '<td style="color:var(--green)">' + s.v + '</td>'
-      + '<td>' + s.n + '</td>'
-      + '<td style="color:var(--red)">' + s.d + '</td>'
-      + '<td>' + diffStr + '</td>'
-      + '<td>' + s.bp + '</td>';
+function renderClassementHome(){
+  var el=document.getElementById('classement-section');
+  var tirage=window._data.tirage;
+  if(!tirage||!tirage.fait){el.innerHTML='';return;}
+  var standings=computeStandings();
+  if(!standings.length){el.innerHTML='';return;}
+  var medals=['🥇','🥈','🥉'];
+  var card=document.createElement('div'); card.className='card';
+  card.innerHTML='<div class="card-hd"><h2>🏆 Classement</h2><span style="font-size:11px;color:var(--t2)">Pts · V · N · D · Diff</span></div>';
+  var wrap=document.createElement('div'); wrap.style.overflowX='auto';
+  var table=document.createElement('table'); table.className='standings-table';
+  table.innerHTML='<thead><tr><th>#</th><th>Équipe</th><th>Pts</th><th>J</th><th>V</th><th>N</th><th>D</th><th>Diff</th><th>BP</th></tr></thead>';
+  var tbody=document.createElement('tbody');
+  standings.forEach(function(s,i){
+    var tr=document.createElement('tr');
+    var diff=s.bp-s.bc;
+    tr.innerHTML='<td>'+(medals[i]||(i+1))+'</td>'
+      +'<td><div style="font-size:12px">'+s.nom+'</div></td>'
+      +'<td class="pts">'+s.pt+'</td>'
+      +'<td>'+s.j+'</td>'
+      +'<td style="color:var(--green)">'+s.v+'</td>'
+      +'<td>'+s.n+'</td>'
+      +'<td style="color:var(--red)">'+s.d+'</td>'
+      +'<td>'+(diff>0?'+'+diff:diff)+'</td>'
+      +'<td>'+s.bp+'</td>';
     tbody.appendChild(tr);
   });
-
-  table.appendChild(tbody);
-  wrap.appendChild(table);
-  card.appendChild(wrap);
-  el.innerHTML = '';
-  el.appendChild(card);
+  table.appendChild(tbody); wrap.appendChild(table); card.appendChild(wrap);
+  el.innerHTML=''; el.appendChild(card);
 }
 
-// ── RENDER HOME STATS ────────────────────────────────────────────────────────
-function renderHomeStats() {
-  var equipes = window._data.equipes || {};
-  var keys = Object.keys(equipes);
-  var mosqs = {}, joueurs = 0;
-  keys.forEach(function(k) {
-    mosqs[equipes[k].mosquee] = true;
-    joueurs += Object.keys(equipes[k].joueurs||{}).length;
+// ── RENDER TEAMS ──────────────────────────────────────────────────────────────
+function renderTeams(){
+  var equipes=window._data.equipes||{};
+  var cont=document.getElementById('teams-cont');
+  var query=(document.getElementById('search-inp').value||'').toLowerCase();
+  var keys=Object.keys(equipes).filter(function(k){
+    return !query||equipes[k].nom.toLowerCase().includes(query);
   });
-  document.getElementById('h-mo').textContent = Object.keys(mosqs).length;
-  document.getElementById('h-eq').textContent = keys.length;
-  document.getElementById('h-jo').textContent = joueurs;
-  document.getElementById('h-to').textContent = (joueurs*7)+'€';
-}
-
-// ── RENDER TEAMS ─────────────────────────────────────────────────────────────
-function renderTeams() {
-  var equipes = window._data.equipes || {};
-  var cont = document.getElementById('teams-cont');
-  var keys = Object.keys(equipes);
-  if (!keys.length) {
-    cont.innerHTML = '<div class="empty"><div class="empty-ico">⚽</div><h3>Aucune équipe inscrite</h3><p>Utilise l\'onglet Inscription.</p></div>';
+  document.getElementById('teams-count').textContent=keys.length+' équipe'+(keys.length!==1?'s':'')+' inscrite'+(keys.length!==1?'s':'');
+  if(!keys.length){
+    cont.innerHTML='<div class="empty"><div class="empty-ico">⚽</div><h3>'+(query?'Aucun résultat':'Aucune équipe inscrite')+'</h3><p>'+(query?'Essaie un autre terme.':'Utilise l\'onglet Inscription.')+'</p></div>';
     return;
   }
-  var byMosq = {};
-  keys.forEach(function(k) {
-    var m = equipes[k].mosquee;
-    if (!byMosq[m]) byMosq[m] = [];
-    byMosq[m].push({ id:k, eq:equipes[k] });
-  });
-  var frag = document.createDocumentFragment();
-  Object.keys(byMosq).forEach(function(mosqName) {
-    var lbl = document.createElement('div');
-    lbl.className = 'mosq-lbl';
-    lbl.textContent = '🕌 ' + mosqName;
-    frag.appendChild(lbl);
-    byMosq[mosqName].forEach(function(item) {
-      var eq = item.eq, eqId = item.id;
-      var jkeys = Object.keys(eq.joueurs||{});
-      var card = document.createElement('div');
-      card.className = 'team-card';
-      var hd = document.createElement('div');
-      hd.className = 'team-hd';
-      hd.innerHTML = '<div><div class="team-name">⚽ '+eq.nom+'</div><div class="team-meta">'+jkeys.length+' joueur(s)</div></div><div style="font-size:20px">🟢</div>';
-      card.appendChild(hd);
-      if (eq.telephone) {
-        var ph = document.createElement('div');
-        ph.className = 't-phone';
-        ph.innerHTML = '📱 <a href="tel:'+eq.telephone+'">'+eq.telephone+'</a>';
-        card.appendChild(ph);
-      }
-      jkeys.forEach(function(jId) {
-        var j = eq.joueurs[jId];
-        var row = document.createElement('div');
-        row.className = 'p-row';
-        row.innerHTML = '<div><div class="p-nm">👤 '+j.nom+'</div><div class="p-ag">'+j.age+' ans</div></div>';
-        card.appendChild(row);
-      });
-      var del = document.createElement('button');
-      del.className = 'del-btn';
-      del.innerHTML = '🗑 Supprimer l\'équipe';
-      del.setAttribute('data-id', eqId);
-      del.addEventListener('click', function(){ deleteTeam(this.getAttribute('data-id')); });
-      card.appendChild(del);
-      frag.appendChild(card);
+  var frag=document.createDocumentFragment();
+  keys.forEach(function(eqId){
+    var eq=equipes[eqId];
+    var jkeys=Object.keys(eq.joueurs||{});
+    var card=document.createElement('div'); card.className='team-card';
+    var hd=document.createElement('div'); hd.className='team-hd';
+    hd.innerHTML='<div><div class="team-name">⚽ '+eq.nom+'</div><div class="team-meta">'+jkeys.length+' joueur(s)</div></div><div style="font-size:20px">🟢</div>';
+    card.appendChild(hd);
+    if(eq.telephone){
+      var ph=document.createElement('div'); ph.className='t-phone';
+      ph.innerHTML='📱 <a href="tel:'+eq.telephone+'">'+eq.telephone+'</a>';
+      card.appendChild(ph);
+    }
+    jkeys.forEach(function(jId){
+      var j=eq.joueurs[jId];
+      var row=document.createElement('div'); row.className='p-row';
+      row.innerHTML='<div><div class="p-nm">👤 '+j.nom+'</div><div class="p-ag">'+j.age+' ans</div></div>';
+      card.appendChild(row);
     });
+    var acts=document.createElement('div'); acts.className='team-actions';
+    var editBtn=document.createElement('button'); editBtn.className='team-act-btn';
+    editBtn.innerHTML='✏️ Modifier';
+    editBtn.setAttribute('data-id',eqId);
+    editBtn.addEventListener('click',function(){ openTeamModal(this.getAttribute('data-id'),'edit'); });
+    var delBtn=document.createElement('button'); delBtn.className='team-act-btn';
+    delBtn.innerHTML='🗑 Supprimer';
+    delBtn.setAttribute('data-id',eqId);
+    delBtn.addEventListener('click',function(){ openTeamModal(this.getAttribute('data-id'),'delete'); });
+    acts.appendChild(editBtn); acts.appendChild(delBtn);
+    card.appendChild(acts);
+    frag.appendChild(card);
   });
-  cont.innerHTML = '';
-  cont.appendChild(frag);
+  cont.innerHTML=''; cont.appendChild(frag);
 }
 
-// ── RENDER ADMIN ─────────────────────────────────────────────────────────────
-function renderAdmin() {
-  if (!window._adminOpen) return;
-  var equipes = window._data.equipes || {};
-  var tirage  = window._data.tirage;
-  var eqKeys  = Object.keys(equipes);
-  var joueurs = 0, total = 0;
-  eqKeys.forEach(function(k){ joueurs += Object.keys(equipes[k].joueurs||{}).length; total += Object.keys(equipes[k].joueurs||{}).length * 7; });
+// ── TEAM MODAL (modifier/supprimer) ───────────────────────────────────────────
+var _tmodalId=null, _tmodalMode=null, _tmodalJIdx=0, _tmodalJCount=0;
 
-  document.getElementById('adm-sum').innerHTML =
-    '<div class="sum-row"><span>Équipes inscrites</span><span class="sum-v">'+eqKeys.length+'/8</span></div>'+
-    '<div class="sum-row"><span>Joueurs total</span><span class="sum-v">'+joueurs+'</span></div>'+
-    '<div class="sum-row"><span>Total à encaisser</span><span class="sum-v">'+total+' €</span></div>';
+function openTeamModal(eqId,mode){
+  _tmodalId=eqId; _tmodalMode=mode;
+  var eq=window._data.equipes[eqId];
+  document.getElementById('tmodal-title').textContent=mode==='edit'?'✏️ Modifier l\'équipe':'🗑 Supprimer l\'équipe';
+  document.getElementById('tmodal-code').value='';
+  document.getElementById('tmodal-edit').style.display='none';
+  hideAlert('tmodal-alert');
+  openModal('team-modal');
+}
 
-  // Tirage button
-  var tirageEl = document.getElementById('adm-tirage');
-  if (!tirage || !tirage.fait) {
-    var nb = eqKeys.length;
-    var canDraw = nb >= 8; // allow from 8 exactly (or adapt to whatever exists, multiple of 2)
-    tirageEl.innerHTML = '';
-    var card = document.createElement('div');
-    card.className = 'card';
-    var hd = document.createElement('div');
-    hd.className = 'card-hd';
-    hd.innerHTML = '<h2>🎲 Tirage au sort</h2>';
-    card.appendChild(hd);
-    var bd = document.createElement('div');
-    bd.className = 'card-bd';
-    if (!canDraw) {
-      bd.innerHTML = '<div style="text-align:center;padding:10px 0;font-size:14px;color:var(--t2)">En attente des 8 équipes<br/><strong style="color:var(--green);font-size:24px">'+nb+'/8</strong></div>';
-    } else {
-      bd.innerHTML = '<div style="font-size:13px;color:var(--t2);margin-bottom:12px">8 équipes prêtes ! Lance le tirage pour générer les matchs.</div>';
-      var btn = document.createElement('button');
-      btn.className = 'btn btn-gold';
-      btn.innerHTML = '🎲 Lancer le tirage au sort';
-      btn.addEventListener('click', lancerTirage);
-      bd.appendChild(btn);
+function tmodalVerify(){
+  var code=document.getElementById('tmodal-code').value.trim();
+  var eq=window._data.equipes[_tmodalId];
+  if(!code){ showAlert('Entre le code de ton équipe.','err','tmodal-alert'); return; }
+  // Code stocké en hash simple (comparaison directe — Firebase règle la sécurité)
+  if(code !== eq.code){ showAlert('Code incorrect. Réessaie.','err','tmodal-alert'); return; }
+  hideAlert('tmodal-alert');
+  if(_tmodalMode==='delete'){
+    if(confirm('Supprimer définitivement l\'équipe "'+eq.nom+'" ?')){
+      window._fbRemove(_tmodalId).then(function(){ toast('🗑 Équipe supprimée.'); closeModal('team-modal'); });
     }
-    card.appendChild(bd);
-    tirageEl.appendChild(card);
-  } else {
-    tirageEl.innerHTML = '<div class="card"><div class="card-hd"><h2>🎲 Tirage effectué ✅</h2></div><div class="card-bd"><div style="font-size:13px;color:var(--t2)">Le tirage a été réalisé. Résultats visibles sur l\'accueil.</div></div></div>';
+    return;
   }
+  // Mode edit: affiche le panel
+  document.getElementById('tmodal-eq-name').textContent='⚽ '+eq.nom;
+  document.getElementById('tmodal-edit').style.display='block';
+  document.getElementById('tmodal-code').closest('.form-sec').style.display='none';
+  document.getElementById('tmodal-alert').style.display='none';
+  document.querySelector('#team-modal .btn-p[onclick="tmodalVerify()"]').style.display='none';
+  _tmodalJIdx=0; _tmodalJCount=0;
+  var jlist=document.getElementById('tmodal-jlist');
+  jlist.innerHTML='';
+  Object.entries(eq.joueurs||{}).forEach(function(entry){
+    tmodalAddJ(entry[1].nom, entry[1].age, entry[0]);
+  });
+}
 
-  // Score inputs
+function tmodalAddJ(nom,age,origId){
+  if(_tmodalJCount>=5){ toast('⚠️ Maximum 5 joueurs.'); return; }
+  _tmodalJCount++;
+  var idx=_tmodalJIdx++;
+  var div=document.createElement('div'); div.className='jcard'; div.id='tmj-'+idx;
+  div.setAttribute('data-origid', origId||'');
+  var hd=document.createElement('div'); hd.className='jcard-hd';
+  hd.innerHTML='<span>👤 Joueur '+_tmodalJCount+'</span>';
+  var rm=document.createElement('button'); rm.className='btn-rm'; rm.textContent='✕';
+  rm.setAttribute('data-idx',idx);
+  rm.addEventListener('click',function(){ 
+    document.getElementById('tmj-'+this.getAttribute('data-idx')).remove();
+    _tmodalJCount--;
+  });
+  hd.appendChild(rm);
+  var fields=document.createElement('div'); fields.className='jfields';
+  var nomIn=document.createElement('input'); nomIn.type='text'; nomIn.placeholder='Nom complet';
+  nomIn.id='tmjn-'+idx; nomIn.value=nom||'';
+  var row2=document.createElement('div'); row2.className='jrow2';
+  var ageIn=document.createElement('input'); ageIn.type='number'; ageIn.placeholder='Âge'; ageIn.min='17'; ageIn.max='35';
+  ageIn.id='tmja-'+idx; ageIn.value=age||'';
+  row2.appendChild(ageIn);
+  fields.appendChild(nomIn); fields.appendChild(row2);
+  div.appendChild(hd); div.appendChild(fields);
+  document.getElementById('tmodal-jlist').appendChild(div);
+}
+
+function tmodalSave(){
+  var cards=document.querySelectorAll('#tmodal-jlist .jcard');
+  if(!cards.length){ showAlert('Ajoute au moins 1 joueur.','err','tmodal-alert'); return; }
+  var joueurs={}, ok=true;
+  cards.forEach(function(card){
+    if(!ok) return;
+    var idx=card.id.replace('tmj-','');
+    var nom=(document.getElementById('tmjn-'+idx)||{value:''}).value.trim();
+    var age=parseInt((document.getElementById('tmja-'+idx)||{value:''}).value,10);
+    if(!nom){ showAlert('Remplis tous les noms.','err','tmodal-alert'); ok=false; return; }
+    if(isNaN(age)||age<17||age>35){ showAlert('Âge invalide pour '+nom+' (17–35 ans).','err','tmodal-alert'); ok=false; return; }
+    var origId=card.getAttribute('data-origid')||('j'+idx);
+    joueurs[origId]={nom:nom,age:age};
+  });
+  if(!ok) return;
+  window._fbUpdateJoueurs(_tmodalId, joueurs).then(function(){
+    toast('✅ Équipe mise à jour !');
+    closeModal('team-modal');
+    // reset modal state
+    document.getElementById('tmodal-code').closest('.form-sec').style.display='block';
+    document.querySelector('#team-modal .btn-p[onclick="tmodalVerify()"]').style.display='flex';
+  });
+}
+
+function tmodalDelete(){
+  var eq=window._data.equipes[_tmodalId];
+  if(confirm('Supprimer définitivement l\'équipe "'+eq.nom+'" ?')){
+    window._fbRemove(_tmodalId).then(function(){ toast('🗑 Équipe supprimée.'); closeModal('team-modal'); });
+  }
+}
+
+// ── RENDER ADMIN ──────────────────────────────────────────────────────────────
+function renderAdmin(){
+  if(!window._adminOpen) return;
+  var equipes=window._data.equipes||{};
+  var eqKeys=Object.keys(equipes), joueurs=0;
+  eqKeys.forEach(function(k){ joueurs+=Object.keys(equipes[k].joueurs||{}).length; });
+  document.getElementById('adm-sum').innerHTML=
+    '<div class="sum-row"><span>Équipes inscrites</span><span class="sum-v">'+eqKeys.length+'/'+MAX_EQUIPES+'</span></div>'
+    +'<div class="sum-row"><span>Places libres</span><span class="sum-v">'+(MAX_EQUIPES-eqKeys.length)+'</span></div>'
+    +'<div class="sum-row"><span>Joueurs total</span><span class="sum-v">'+joueurs+'</span></div>'
+    +'<div class="sum-row"><span>Total à encaisser</span><span class="sum-v">'+(joueurs*7)+' €</span></div>';
+
+  // Timer
+  document.getElementById('adm-timer').style.display=window._data.tirage&&window._data.tirage.fait?'block':'none';
+
+  // Tirage
+  var tirageEl=document.getElementById('adm-tirage');
+  var tirage=window._data.tirage;
+  if(!tirage||!tirage.fait){
+    var canDraw=eqKeys.length>=MAX_EQUIPES;
+    tirageEl.innerHTML='';
+    var card=document.createElement('div'); card.className='card';
+    var hd=document.createElement('div'); hd.className='card-hd'; hd.innerHTML='<h2>🎲 Tirage au sort</h2>'; card.appendChild(hd);
+    var bd=document.createElement('div'); bd.className='card-bd';
+    if(!canDraw){
+      bd.innerHTML='<div style="text-align:center;padding:10px 0;font-size:14px;color:var(--t2)">En attente des '+MAX_EQUIPES+' équipes<br/><strong style="color:var(--green);font-size:24px">'+eqKeys.length+'/'+MAX_EQUIPES+'</strong></div>';
+    } else {
+      bd.innerHTML='<div style="text-align:center;padding:10px 0;font-size:14px;color:var(--t2)">⏳ Tirage automatique en cours…<br/><strong style="color:var(--green);font-size:24px">8/8</strong> équipes prêtes !</div>';
+    }
+    card.appendChild(bd); tirageEl.appendChild(card);
+  } else {
+    tirageEl.innerHTML='<div class="card"><div class="card-hd"><h2>🎲 Tirage effectué ✅</h2></div><div class="card-bd"><div style="font-size:13px;color:var(--t2)">Résultats visibles sur l\'accueil.</div></div></div>';
+  }
   renderAdminScores();
   renderAdminClassement();
 }
 
-function renderAdminScores() {
-  var el = document.getElementById('adm-scores');
-  var tirage = window._data.tirage;
-  if (!tirage || !tirage.fait) { el.innerHTML = ''; return; }
-  var equipes = window._data.equipes || {};
-  var pos = tirage.positions || {};
-  var scores = tirage.scores || {};
-
-  var frag = document.createDocumentFragment();
-  for (var r = 0; r < 3; r++) {
-    var info = ROUND_INFO[r];
-    var card = document.createElement('div');
-    card.className = 'card';
-    var hd = document.createElement('div');
-    hd.className = 'card-hd';
-    hd.style.background = 'rgba(0,0,0,.02)';
-    hd.innerHTML = '<h2 style="color:'+info.color+'">'+info.label+'</h2><span style="font-size:12px;color:var(--t2)">'+info.start+' – '+info.end+'</span>';
+function renderAdminScores(){
+  var el=document.getElementById('adm-scores');
+  var tirage=window._data.tirage;
+  if(!tirage||!tirage.fait){el.innerHTML='';return;}
+  var equipes=window._data.equipes||{}, pos=tirage.positions||{}, scores=tirage.scores||{};
+  var frag=document.createDocumentFragment();
+  for(var r=0;r<3;r++){
+    var info=ROUND_INFO[r];
+    var card=document.createElement('div'); card.className='card';
+    var hd=document.createElement('div'); hd.className='card-hd'; hd.style.background='rgba(0,0,0,.02)';
+    hd.innerHTML='<h2 style="color:'+info.color+'">'+info.label+'</h2><span style="font-size:12px;color:var(--t2)">'+info.start+' – '+info.end+'</span>';
     card.appendChild(hd);
-    var bd = document.createElement('div');
-    bd.className = 'card-bd';
-    bd.style.display = 'flex';
-    bd.style.flexDirection = 'column';
-    bd.style.gap = '8px';
-    for (var m = 0; m < 4; m++) {
-      var pp = SCHED[r][m];
-      var t1id = pos[String(pp[0])], t2id = pos[String(pp[1])];
-      var t1nm = (equipes[t1id]||{}).nom || '?';
-      var t2nm = (equipes[t2id]||{}).nom || '?';
-      var sc = scores['r'+r+'m'+m] || {};
-      var row = document.createElement('div');
-      row.className = 'admin-match';
-      var in1 = document.createElement('input');
-      in1.type = 'number'; in1.className = 'score-input'; in1.min = '0'; in1.max = '20';
-      in1.value = (sc.s1 !== null && sc.s1 !== undefined) ? sc.s1 : '';
-      in1.setAttribute('data-key', 'r'+r+'m'+m);
-      in1.setAttribute('data-field', 's1');
-      in1.addEventListener('change', onScoreChange);
-      var in2 = document.createElement('input');
-      in2.type = 'number'; in2.className = 'score-input'; in2.min = '0'; in2.max = '20';
-      in2.value = (sc.s2 !== null && sc.s2 !== undefined) ? sc.s2 : '';
-      in2.setAttribute('data-key', 'r'+r+'m'+m);
-      in2.setAttribute('data-field', 's2');
-      in2.addEventListener('change', onScoreChange);
-      row.innerHTML = '<span class="admin-team">'+t1nm+'</span>';
+    var bd=document.createElement('div'); bd.className='card-bd'; bd.style.cssText='display:flex;flex-direction:column;gap:8px;';
+    for(var m=0;m<4;m++){
+      var pp=SCHED[r][m];
+      var t1id=pos[String(pp[0])],t2id=pos[String(pp[1])];
+      var t1nm=(equipes[t1id]||{}).nom||'?', t2nm=(equipes[t2id]||{}).nom||'?';
+      var sc=scores['r'+r+'m'+m]||{};
+      var row=document.createElement('div'); row.className='admin-match';
+      var in1=document.createElement('input'); in1.type='number'; in1.className='score-input'; in1.min='0'; in1.max='20';
+      in1.value=(sc.s1!=null)?sc.s1:'';
+      in1.setAttribute('data-key','r'+r+'m'+m); in1.setAttribute('data-field','s1');
+      in1.addEventListener('change',onScoreChange);
+      var in2=document.createElement('input'); in2.type='number'; in2.className='score-input'; in2.min='0'; in2.max='20';
+      in2.value=(sc.s2!=null)?sc.s2:'';
+      in2.setAttribute('data-key','r'+r+'m'+m); in2.setAttribute('data-field','s2');
+      in2.addEventListener('change',onScoreChange);
+      var tb=document.createElement('span'); tb.className='terrain-badge-sm'; tb.textContent=TERRAINS[m]; row.appendChild(tb);
+      row.innerHTML+='<span class="admin-team">'+t1nm+'</span>';
       row.appendChild(in1);
-      row.innerHTML += '<span style="font-weight:800;color:var(--t3);flex-shrink:0">–</span>';
+      row.innerHTML+='<span style="font-weight:800;color:var(--t3);flex-shrink:0">–</span>';
       row.appendChild(in2);
-      var span2 = document.createElement('span');
-      span2.className = 'admin-team right';
-      span2.textContent = t2nm;
-      row.appendChild(span2);
-      bd.appendChild(row);
+      var sp=document.createElement('span'); sp.className='admin-team right'; sp.textContent=t2nm;
+      row.appendChild(sp); bd.appendChild(row);
     }
-    card.appendChild(bd);
-    frag.appendChild(card);
+    card.appendChild(bd); frag.appendChild(card);
   }
-  el.innerHTML = '';
-  el.appendChild(frag);
+  el.innerHTML=''; el.appendChild(frag);
 }
 
-function onScoreChange(e) {
-  var key   = e.target.getAttribute('data-key');
-  var field = e.target.getAttribute('data-field');
-  var val   = parseInt(e.target.value, 10);
-  if (isNaN(val) || val < 0) return;
-  window._fbSetScore(key, field, val);
+function onScoreChange(e){
+  var key=e.target.getAttribute('data-key'), field=e.target.getAttribute('data-field');
+  var val=parseInt(e.target.value,10);
+  if(isNaN(val)||val<0) return;
+  window._fbSetScore(key,field,val).then(function(){
+    var roundNum=parseInt(key.charAt(1),10);
+    var scores=window._data.tirage?window._data.tirage.scores||{}:{};
+    var complete=true;
+    for(var m=0;m<4;m++){
+      var sc=scores['r'+roundNum+'m'+m];
+      if(!sc||sc.s1==null||sc.s2==null){complete=false;break;}
+    }
+    if(complete){
+      if(roundNum<2){
+        var next=ROUND_INFO[roundNum+1];
+        toast('✅ Round '+(roundNum+1)+' terminé ! ⏩ '+next.label+' à '+next.start+' — 4 terrains');
+      } else {
+        toast('🏆 Tous les matchs terminés ! Classement final disponible.');
+      }
+    }
+  });
 }
 
-function renderAdminClassement() {
-  var el = document.getElementById('adm-classement');
-  var tirage = window._data.tirage;
-  if (!tirage || !tirage.fait) { el.innerHTML = ''; return; }
-  var standings = computeStandings();
-  if (!standings.length) { el.innerHTML = ''; return; }
-  var medals = ['🥇','🥈','🥉'];
-  var card = document.createElement('div');
-  card.className = 'card';
-  card.innerHTML = '<div class="card-hd"><h2>🏆 Classement temps réel</h2></div>';
-  var wrap = document.createElement('div');
-  wrap.style.overflowX = 'auto';
-  var tbl = document.createElement('table');
-  tbl.className = 'standings-table';
-  tbl.innerHTML = '<thead><tr><th>#</th><th>Équipe</th><th>Pts</th><th>V</th><th>N</th><th>D</th><th>BP</th><th>BC</th><th>Diff</th></tr></thead>';
-  var tbody = document.createElement('tbody');
-  standings.forEach(function(s, i) {
-    var tr = document.createElement('tr');
-    var diff = s.bp - s.bc;
-    tr.innerHTML = '<td>'+(medals[i]||(i+1))+'</td>'
-      +'<td><div>'+s.nom+'</div><div style="font-size:10px;color:var(--t2)">'+s.mosque+'</div></td>'
+function renderAdminClassement(){
+  var el=document.getElementById('adm-classement');
+  var tirage=window._data.tirage;
+  if(!tirage||!tirage.fait){el.innerHTML='';return;}
+  var standings=computeStandings();
+  if(!standings.length){el.innerHTML='';return;}
+  var medals=['🥇','🥈','🥉'];
+  var card=document.createElement('div'); card.className='card';
+  card.innerHTML='<div class="card-hd"><h2>🏆 Classement temps réel</h2></div>';
+  var wrap=document.createElement('div'); wrap.style.overflowX='auto';
+  var tbl=document.createElement('table'); tbl.className='standings-table';
+  tbl.innerHTML='<thead><tr><th>#</th><th>Équipe</th><th>Pts</th><th>V</th><th>N</th><th>D</th><th>BP</th><th>BC</th><th>Diff</th></tr></thead>';
+  var tbody=document.createElement('tbody');
+  standings.forEach(function(s,i){
+    var tr=document.createElement('tr');
+    var diff=s.bp-s.bc;
+    tr.innerHTML='<td>'+(medals[i]||(i+1))+'</td>'
+      +'<td>'+s.nom+'</td>'
       +'<td class="pts">'+s.pt+'</td>'
       +'<td style="color:var(--green)">'+s.v+'</td>'
       +'<td>'+s.n+'</td>'
@@ -742,176 +900,187 @@ function renderAdminClassement() {
       +'<td>'+(diff>0?'+':'')+diff+'</td>';
     tbody.appendChild(tr);
   });
-  tbl.appendChild(tbody);
-  wrap.appendChild(tbl);
-  card.appendChild(wrap);
-  el.innerHTML = '';
-  el.appendChild(card);
+  tbl.appendChild(tbody); wrap.appendChild(tbl); card.appendChild(wrap);
+  el.innerHTML=''; el.appendChild(card);
 }
 
-// ── RENDER ALL ────────────────────────────────────────────────────────────────
-function renderAll() {
-  renderHomeStats();
-  renderTirageHome();
-  renderClassementHome();
-  renderTeams();
-  if (window._adminOpen) renderAdmin();
+function renderAll(){
+  renderHomeStats(); renderTirageHome(); renderClassementHome(); renderTeams();
+  if(window._adminOpen) renderAdmin();
 }
 
 // ── TIRAGE ────────────────────────────────────────────────────────────────────
-function lancerTirage() {
-  var equipes = window._data.equipes || {};
-  var ids = Object.keys(equipes);
-  if (ids.length < 8) { toast('⚠️ Il faut 8 équipes inscrites.'); return; }
-
-  // Shuffle Fisher-Yates
-  for (var i = ids.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i+1));
-    var tmp = ids[i]; ids[i] = ids[j]; ids[j] = tmp;
+function lancerTirage(){
+  var ids=Object.keys(window._data.equipes||{});
+  if(ids.length<MAX_EQUIPES){ toast('⚠️ Il faut '+MAX_EQUIPES+' équipes.'); return; }
+  for(var i=ids.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1)),tmp=ids[i]; ids[i]=ids[j]; ids[j]=tmp;
   }
+  var positions={};
+  ids.forEach(function(id,idx){ positions[String(idx)]=id; });
+  window._fbSetTirage({fait:true,positions:positions,scores:{}}).then(function(){ toast('🎲 Tirage effectué !'); });
+}
 
-  var positions = {};
-  ids.forEach(function(id, idx) { positions[String(idx)] = id; });
-
-  var tirageData = { fait: true, positions: positions, scores: {} };
-  window._fbSetTirage(tirageData).then(function() {
-    toast('🎲 Tirage effectué avec succès !');
-  });
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function resetTournoi(){
+  if(!confirm('⚠️ Réinitialiser TOUT le tournoi ? Action irréversible.')) return;
+  window._fbResetTournoi().then(function(){ toast('🔄 Tournoi réinitialisé.'); });
 }
 
 // ── FORM ──────────────────────────────────────────────────────────────────────
-var jIdx = 0, jCount = 0;
-
-function addJoueur() {
-  if (jCount >= 5) { showAlert('Maximum 5 joueurs.', 'err'); return; }
-  jCount++;
-  var idx = jIdx++;
-  document.getElementById('jcount').textContent = '('+jCount+'/5)';
-  if (jCount >= 5) document.getElementById('btn-aj').style.display = 'none';
-
-  var div = document.createElement('div');
-  div.className = 'jcard'; div.id = 'jc-'+idx;
-  var hd = document.createElement('div');
-  hd.className = 'jcard-hd';
-  hd.innerHTML = '<span>👤 Joueur '+jCount+'</span>';
-  var rm = document.createElement('button');
-  rm.className = 'btn-rm'; rm.textContent = '✕';
-  rm.setAttribute('data-idx', idx);
-  rm.addEventListener('click', function(){ removeJoueur(this.getAttribute('data-idx')); });
+var jIdx=0,jCount=0;
+function addJoueur(){
+  if(jCount>=5){ showAlert('Maximum 5 joueurs.','err'); return; }
+  jCount++; var idx=jIdx++;
+  document.getElementById('jcount').textContent='('+jCount+'/5)';
+  if(jCount>=5) document.getElementById('btn-aj').style.display='none';
+  var div=document.createElement('div'); div.className='jcard'; div.id='jc-'+idx;
+  var hd=document.createElement('div'); hd.className='jcard-hd';
+  hd.innerHTML='<span>👤 Joueur '+jCount+'</span>';
+  var rm=document.createElement('button'); rm.className='btn-rm'; rm.textContent='✕';
+  rm.setAttribute('data-idx',idx);
+  rm.addEventListener('click',function(){
+    document.getElementById('jc-'+this.getAttribute('data-idx')).remove();
+    jCount--; document.getElementById('jcount').textContent='('+jCount+'/5)';
+    document.getElementById('btn-aj').style.display='';
+  });
   hd.appendChild(rm);
-  var fields = document.createElement('div');
-  fields.className = 'jfields';
-  var nomIn = document.createElement('input');
-  nomIn.type = 'text'; nomIn.placeholder = 'Nom complet'; nomIn.id = 'jn-'+idx;
-  var row2 = document.createElement('div'); row2.className = 'jrow2';
-  var ageIn = document.createElement('input');
-  ageIn.type = 'number'; ageIn.placeholder = 'Âge (17–35)'; ageIn.min = '17'; ageIn.max = '35'; ageIn.id = 'ja-'+idx;
-  var telIn = document.createElement('input');
-  telIn.type = 'tel'; telIn.placeholder = 'Tél. (optionnel)'; telIn.id = 'jt-'+idx;
-  row2.appendChild(ageIn); row2.appendChild(telIn);
+  var fields=document.createElement('div'); fields.className='jfields';
+  var nomIn=document.createElement('input'); nomIn.type='text'; nomIn.placeholder='Nom complet'; nomIn.id='jn-'+idx;
+  var row2=document.createElement('div'); row2.className='jrow2';
+  var ageIn=document.createElement('input'); ageIn.type='number'; ageIn.placeholder='Âge (17–35)'; ageIn.min='17'; ageIn.max='35'; ageIn.id='ja-'+idx;
+  row2.appendChild(ageIn);
   fields.appendChild(nomIn); fields.appendChild(row2);
   div.appendChild(hd); div.appendChild(fields);
   document.getElementById('jlist').appendChild(div);
 }
-
-function removeJoueur(idx) {
-  var el = document.getElementById('jc-'+idx);
-  if (el) { el.remove(); jCount--; document.getElementById('jcount').textContent='('+jCount+'/5)'; document.getElementById('btn-aj').style.display=''; }
+function resetForm(){
+  document.getElementById('f-team').value='';
+  document.getElementById('f-phone').value='';
+  document.getElementById('f-code').value='';
+  document.getElementById('jlist').innerHTML='';
+  document.getElementById('btn-aj').style.display='';
+  hideAlert('f-alert');
+  jCount=0; jIdx=0;
+  document.getElementById('jcount').textContent='(0/5)';
 }
-
-function resetForm() {
-  document.getElementById('f-mosque').value = '';
-  document.getElementById('f-team').value = '';
-  document.getElementById('f-phone').value = '';
-  document.getElementById('jlist').innerHTML = '';
-  document.getElementById('btn-aj').style.display = '';
-  document.getElementById('f-alert').className = 'alert';
-  jCount = 0; jIdx = 0;
-  document.getElementById('jcount').textContent = '(0/5)';
-}
-
-function submitForm() {
-  var mosque = document.getElementById('f-mosque').value.trim();
-  var team   = document.getElementById('f-team').value.trim();
-  var phone  = document.getElementById('f-phone').value.trim();
-  if (!mosque) { showAlert('Entre le nom de la mosquée.', 'err'); return; }
-  if (!team)   { showAlert("Entre le nom de l'équipe.", 'err'); return; }
-
-  var cards = document.querySelectorAll('.jcard');
-  if (!cards.length) { showAlert('Ajoute au moins 1 joueur.', 'err'); return; }
-
-  var joueurs = {}, ok = true;
-  cards.forEach(function(card) {
-    if (!ok) return;
-    var idx = card.id.replace('jc-','');
-    var nom = (document.getElementById('jn-'+idx)||{value:''}).value.trim();
-    var age = parseInt(((document.getElementById('ja-'+idx)||{value:''}).value),10);
-    if (!nom) { showAlert('Remplis le nom de tous les joueurs.','err'); ok=false; return; }
-    if (isNaN(age)||age<17||age>35) { showAlert('Âge invalide pour '+nom+' (17–35 ans).','err'); ok=false; return; }
-    joueurs['j'+idx] = { nom:nom, age:age, paye:false };
+function submitForm(){
+  if(isFull()){ showAlert('Le tournoi est complet (8 équipes max).','err'); return; }
+  var team=document.getElementById('f-team').value.trim();
+  var phone=document.getElementById('f-phone').value.trim();
+  var code=document.getElementById('f-code').value.trim();
+  if(!team){ showAlert("Entre le nom de l'équipe.",'err'); return; }
+  if(!code){ showAlert("Choisis un code secret pour ton équipe.",'err'); return; }
+  var cards=document.querySelectorAll('.jcard');
+  if(!cards.length){ showAlert("Ajoute au moins 1 joueur.",'err'); return; }
+  var joueurs={},ok=true;
+  cards.forEach(function(card){
+    if(!ok) return;
+    var idx=card.id.replace('jc-','');
+    var nom=(document.getElementById('jn-'+idx)||{value:''}).value.trim();
+    var age=parseInt((document.getElementById('ja-'+idx)||{value:''}).value,10);
+    if(!nom){ showAlert('Remplis le nom de tous les joueurs.','err'); ok=false; return; }
+    if(isNaN(age)||age<17||age>35){ showAlert('Âge invalide pour '+nom+' (17–35 ans).','err'); ok=false; return; }
+    joueurs['j'+idx]={nom:nom,age:age};
   });
-  if (!ok) return;
-
-  var data = window._data.equipes || {};
-  var existingCount = Object.keys(data).filter(function(k){ return data[k].mosquee === mosque; }).length;
-  if (existingCount >= 2) { showAlert('"'+mosque+'" a déjà 2 équipes (maximum).','err'); return; }
-  if (!window._fbReady) { showAlert('Firebase pas encore prêt, réessaie.','err'); return; }
-
-  window._fbPush({ mosquee:mosque, nom:team, telephone:phone, joueurs:joueurs, inscritLe:new Date().toISOString() })
+  if(!ok) return;
+  window._fbPush({nom:team,telephone:phone,code:code,joueurs:joueurs,inscritLe:new Date().toISOString()})
     .then(function(){ toast('✅ Équipe inscrite !'); resetForm(); goTo('teams'); })
     .catch(function(e){ showAlert('Erreur : '+e.message,'err'); });
 }
-
-function deleteTeam(id) {
-  if (!confirm('Supprimer cette équipe ?')) return;
+function deleteTeam(id){
+  if(!confirm('Supprimer cette équipe ?')) return;
   window._fbRemove(id).then(function(){ toast('🗑 Équipe supprimée.'); });
 }
 
-// ── ADMIN ─────────────────────────────────────────────────────────────────────
-function checkPin() {
-  if (document.getElementById('pin-in').value === '2807') {
-    document.getElementById('adm-lock').style.display = 'none';
-    document.getElementById('adm-panel').style.display = 'block';
-    window._adminOpen = true;
-    renderAdmin();
+// ── ADMIN AUTH ────────────────────────────────────────────────────────────────
+function checkPin(){
+  if(document.getElementById('pin-in').value===ADMIN_PIN){
+    document.getElementById('adm-lock').style.display='none';
+    document.getElementById('adm-panel').style.display='block';
+    window._adminOpen=true; renderAdmin();
   } else {
-    document.getElementById('pin-in').value = '';
-    toast('❌ Code PIN incorrect.');
+    document.getElementById('pin-in').value=''; toast('❌ Code PIN incorrect.');
   }
 }
-function adminOut() {
-  document.getElementById('adm-lock').style.display = 'block';
-  document.getElementById('adm-panel').style.display = 'none';
-  document.getElementById('pin-in').value = '';
-  window._adminOpen = false;
+function adminOut(){
+  document.getElementById('adm-lock').style.display='block';
+  document.getElementById('adm-panel').style.display='none';
+  document.getElementById('pin-in').value='';
+  window._adminOpen=false;
 }
-document.getElementById('pin-in').addEventListener('keydown', function(e){ if(e.key==='Enter') checkPin(); });
+
+// ── TIMER ─────────────────────────────────────────────────────────────────────
+var _tSecs=25*60,_tInt=null,_tRunning=false;
+function timerStart(){ if(_tRunning) return; _tRunning=true; _tInt=setInterval(function(){ if(_tSecs<=0){timerPause();toast('⏱ Temps écoulé !');return;} _tSecs--; renderTimer(); },1000); }
+function timerPause(){ _tRunning=false; clearInterval(_tInt); }
+function timerReset(){ timerPause(); _tSecs=25*60; renderTimer(); }
+function renderTimer(){
+  var m=Math.floor(_tSecs/60),s=_tSecs%60;
+  var el=document.getElementById('timer-disp');
+  el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  el.style.color=_tSecs<=60?'#ff6b6b':'#fff';
+}
 </script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, set, update, remove, onValue }
+import { getDatabase, ref, push, set, update, remove, onValue, runTransaction }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const app = initializeApp({ databaseURL:"https://tournoifoot-e233b-default-rtdb.firebaseio.com/" });
-const db  = getDatabase(app);
-
-window._fbReady = true;
-window._fbPush = function(data){ return push(ref(db,"tournoi/equipes"), data); };
-window._fbRemove = function(id){ return remove(ref(db,"tournoi/equipes/"+id)); };
-window._fbSetTirage = function(data){ return set(ref(db,"tournoi/tirage"), data); };
-window._fbSetScore = function(key, field, val){
-  var upd = {}; upd[field] = val;
-  return update(ref(db,"tournoi/tirage/scores/"+key), upd);
+const firebaseConfig = {
+  apiKey: "AIzaSyAWNBsqJRT2l4bebJCku-W8SsYWxIe6zko",
+  authDomain: "tournoifoot-e233b.firebaseapp.com",
+  databaseURL: "https://tournoifoot-e233b-default-rtdb.firebaseio.com",
+  projectId: "tournoifoot-e233b",
+  storageBucket: "tournoifoot-e233b.firebasestorage.app",
+  messagingSenderId: "915558317701",
+  appId: "1:915558317701:web:51b0b0d303f7989bfbb3ec"
 };
 
-// Listen to entire /tournoi
-onValue(ref(db,"tournoi"), function(snap){
-  var data = snap.val() || {};
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
+const BASE = 'tournoi2026';
+
+window._fbPush          = d       => push(ref(db, BASE+'/equipes'), d);
+window._fbRemove        = id      => remove(ref(db, BASE+'/equipes/'+id));
+window._fbSetTirage     = d       => set(ref(db, BASE+'/tirage'), d);
+window._fbSetScore      = (k,f,v) => update(ref(db, BASE+'/tirage/scores/'+k), {[f]:v});
+window._fbUpdateJoueurs = (id,j)  => update(ref(db, BASE+'/equipes/'+id), {joueurs:j});
+window._fbResetTournoi  = ()      => set(ref(db, BASE), {equipes:{}, tirage:null});
+
+// ✅ Tirage automatique via runTransaction (anti-doublon multi-client)
+function lancerTirageAuto(ids) {
+  for (let i = ids.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [ids[i], ids[j]] = [ids[j], ids[i]];
+  }
+  const positions = {};
+  ids.forEach((id, idx) => { positions[String(idx)] = id; });
+
+  runTransaction(ref(db, BASE + '/tirage'), (current) => {
+    if (current && current.fait) return; // déjà tiré → on abandonne
+    return { fait: true, positions, scores: {} };
+  }).then((result) => {
+    if (result.committed) {
+      toast('🎲 Tirage automatique effectué ! 8 équipes — matchs sur 4 terrains !');
+    }
+  }).catch(err => console.error('Tirage error:', err));
+}
+
+onValue(ref(db, BASE), snap => {
+  const data = snap.val() || {};
   window._data = {
     equipes: data.equipes || {},
     tirage:  data.tirage  || null
   };
+
+  // ✅ Déclenchement automatique dès que 8 équipes sont inscrites
+  const eqKeys = Object.keys(window._data.equipes);
+  if (eqKeys.length >= MAX_EQUIPES && (!window._data.tirage || !window._data.tirage.fait)) {
+    lancerTirageAuto([...eqKeys]);
+  }
+
   renderAll();
 });
 </script>
