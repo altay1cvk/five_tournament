@@ -418,11 +418,6 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--text);font-size:16px;-
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 var ADMIN_PIN = '2807';
 var MAX_EQUIPES = 8;
-var SCHED = [
-  [[0,1],[2,3],[4,5],[6,7]],
-  [[0,2],[1,3],[4,6],[5,7]],
-  [[0,4],[1,5],[2,6],[3,7]]
-];
 var ROUND_INFO = [
   { label:'Match 1', start:'13h00', end:'13h25', color:'#22c55e' },
   { label:'Match 2', start:'13h30', end:'13h55', color:'#f59e0b' },
@@ -432,6 +427,109 @@ var TERRAINS = ['🟢 Terrain 1','🔵 Terrain 2','🟡 Terrain 3','🔴 Terrain
 
 window._data = { equipes:{}, tirage:null };
 window._adminOpen = false;
+
+function shuffleArray(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1)),tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+  }
+  return a;
+}
+function havePlayed(t1,t2,matches){
+  return (matches||[]).some(function(m){
+    return (m.t1===t1&&m.t2===t2)||(m.t1===t2&&m.t2===t1);
+  });
+}
+function pairTeams(list, usedMatches){
+  var pool=shuffleArray(list), pairs=[];
+  while(pool.length>=2){
+    var t1=pool.shift(), pick=-1;
+    for(var i=0;i<pool.length;i++){
+      if(!havePlayed(t1,pool[i],usedMatches)){ pick=i; break; }
+    }
+    if(pick<0) pick=0;
+    var t2=pool.splice(pick,1)[0];
+    pairs.push([t1,t2]);
+  }
+  return pairs;
+}
+function getRoundMatches(tirage,r){
+  return (tirage&&tirage.rounds&&tirage.rounds['r'+r])||[];
+}
+function roundComplete(tirage,r){
+  var matches=getRoundMatches(tirage,r),scores=(tirage&&tirage.scores)||{};
+  if(!matches.length) return false;
+  for(var m=0;m<matches.length;m++){
+    var sc=scores['r'+r+'m'+m];
+    if(!sc||sc.s1==null||sc.s2==null) return false;
+  }
+  return true;
+}
+function createRound1(ids){
+  var shuffled=shuffleArray(ids), pairs=[];
+  for(var i=0;i<8;i+=2) pairs.push([shuffled[i],shuffled[i+1]]);
+  return pairs.map(function(p,idx){ return {t1:p[0],t2:p[1],terrain:idx}; });
+}
+function buildRound2(tirage){
+  if(!roundComplete(tirage,0)) return null;
+  var r1=getRoundMatches(tirage,0), scores=tirage.scores||{};
+  var winners=[], losers=[], draws=[];
+  for(var i=0;i<r1.length;i++){
+    var m=r1[i], sc=scores['r0m'+i], g1=parseInt(sc.s1,10), g2=parseInt(sc.s2,10);
+    if(g1>g2){ winners.push(m.t1); losers.push(m.t2); }
+    else if(g2>g1){ winners.push(m.t2); losers.push(m.t1); }
+    else { draws.push(m.t1,m.t2); }
+  }
+  var pairs=[];
+  pairs = pairs.concat(pairTeams(winners, r1));
+  pairs = pairs.concat(pairTeams(losers, r1));
+  pairs = pairs.concat(pairTeams(draws, r1));
+  var used = pairs.flat();
+  var left = r1.map(function(m){ return [m.t1,m.t2]; }).flat().filter(function(t){ return used.indexOf(t)<0; });
+  pairs = pairs.concat(pairTeams(left, r1));
+  return pairs.slice(0,4).map(function(p,idx){ return {t1:p[0],t2:p[1],terrain:idx}; });
+}
+function standingsFromRounds(maxRoundIdx){
+  var equipes=window._data.equipes||{}, tirage=window._data.tirage;
+  if(!tirage||!tirage.fait) return [];
+  var stats={}, scores=tirage.scores||{};
+  Object.keys(equipes).forEach(function(id){
+    stats[id]={id:id,nom:equipes[id].nom,pt:0,j:0,v:0,n:0,d:0,bp:0,bc:0};
+  });
+  for(var r=0;r<=maxRoundIdx;r++){
+    var matches=getRoundMatches(tirage,r);
+    for(var m=0;m<matches.length;m++){
+      var mt=matches[m], sc=scores['r'+r+'m'+m];
+      if(!sc||sc.s1==null||sc.s2==null) continue;
+      var g1=parseInt(sc.s1,10),g2=parseInt(sc.s2,10);
+      if(isNaN(g1)||isNaN(g2)||!stats[mt.t1]||!stats[mt.t2]) continue;
+      stats[mt.t1].j++; stats[mt.t2].j++;
+      stats[mt.t1].bp+=g1; stats[mt.t1].bc+=g2;
+      stats[mt.t2].bp+=g2; stats[mt.t2].bc+=g1;
+      if(g1>g2){stats[mt.t1].v++;stats[mt.t1].pt+=3;stats[mt.t2].d++;}
+      else if(g2>g1){stats[mt.t2].v++;stats[mt.t2].pt+=3;stats[mt.t1].d++;}
+      else{stats[mt.t1].n++;stats[mt.t1].pt++;stats[mt.t2].n++;stats[mt.t2].pt++;}
+    }
+  }
+  return Object.values(stats).sort(function(a,b){
+    if(b.pt!==a.pt) return b.pt-a.pt;
+    var da=a.bp-a.bc,db=b.bp-b.bc;
+    if(db!==da) return db-da;
+    return b.bp-a.bp;
+  });
+}
+function buildRound3(tirage){
+  if(!roundComplete(tirage,1)) return null;
+  var allPrev=getRoundMatches(tirage,0).concat(getRoundMatches(tirage,1));
+  var order=standingsFromRounds(1).map(function(s){ return s.id; });
+  var pairs=[[order[0],order[1]],[order[2],order[3]],[order[4],order[5]],[order[6],order[7]]];
+  for(var i=0;i<pairs.length;i++){
+    if(havePlayed(pairs[i][0],pairs[i][1],allPrev) && i+1<pairs.length){
+      var tmp=pairs[i][1]; pairs[i][1]=pairs[i+1][1]; pairs[i+1][1]=tmp;
+    }
+  }
+  return pairs.map(function(p,idx){ return {t1:p[0],t2:p[1],terrain:idx}; });
+}
 
 // ── NAV ───────────────────────────────────────────────────────────────────────
 function goTo(id) {
@@ -506,38 +604,7 @@ function exportCSV(){
 
 // ── STANDINGS ─────────────────────────────────────────────────────────────────
 function computeStandings(){
-  var equipes=window._data.equipes||{};
-  var tirage=window._data.tirage;
-  if(!tirage||!tirage.fait) return [];
-  var pos=tirage.positions||{}, scores=tirage.scores||{}, stats={};
-  for(var p=0;p<8;p++){
-    var tid=pos[String(p)];
-    if(!tid||!equipes[tid]) continue;
-    stats[tid]={id:tid,nom:equipes[tid].nom,pt:0,j:0,v:0,n:0,d:0,bp:0,bc:0};
-  }
-  for(var r=0;r<3;r++){
-    for(var m=0;m<4;m++){
-      var sc=scores['r'+r+'m'+m];
-      if(!sc||sc.s1==null||sc.s2==null) continue;
-      var pp=SCHED[r][m];
-      var t1=pos[String(pp[0])],t2=pos[String(pp[1])];
-      if(!stats[t1]||!stats[t2]) continue;
-      var g1=parseInt(sc.s1,10),g2=parseInt(sc.s2,10);
-      if(isNaN(g1)||isNaN(g2)) continue;
-      stats[t1].j++; stats[t2].j++;
-      stats[t1].bp+=g1; stats[t1].bc+=g2;
-      stats[t2].bp+=g2; stats[t2].bc+=g1;
-      if(g1>g2){stats[t1].v++;stats[t1].pt+=3;stats[t2].d++;}
-      else if(g2>g1){stats[t2].v++;stats[t2].pt+=3;stats[t1].d++;}
-      else{stats[t1].n++;stats[t1].pt++;stats[t2].n++;stats[t2].pt++;}
-    }
-  }
-  return Object.values(stats).sort(function(a,b){
-    if(b.pt!==a.pt) return b.pt-a.pt;
-    var da=a.bp-a.bc,db=b.bp-b.bc;
-    if(db!==da) return db-da;
-    return b.bp-a.bp;
-  });
+  return standingsFromRounds(2);
 }
 
 // ── RENDER HOME ───────────────────────────────────────────────────────────────
@@ -561,19 +628,26 @@ function renderTirageHome(){
     el.innerHTML='<div class="card"><div class="card-hd"><h2>🎲 Tirage au sort</h2></div><div class="card-bd"><div style="text-align:center;padding:12px 0;color:var(--t2);font-size:13px;">En attente du tirage<br/><strong style="color:var(--green);font-size:20px">'+nb+'/'+MAX_EQUIPES+'</strong> équipes inscrites</div></div></div>';
     return;
   }
-  var pos=tirage.positions||{}, scores=tirage.scores||{};
+  var scores=tirage.scores||{};
   var div=document.createElement('div');
   for(var r=0;r<3;r++){
     var info=ROUND_INFO[r];
+    var roundMatches=getRoundMatches(tirage,r);
     var block=document.createElement('div'); block.className='round-block';
     var hd=document.createElement('div'); hd.className='round-hd';
     hd.innerHTML='<span class="round-title" style="color:'+info.color+'">'+info.label+'</span><span class="round-time">'+info.start+' – '+info.end+'</span>';
     block.appendChild(hd);
+    if(!roundMatches.length){
+      var wait=document.createElement('div'); wait.className='match-card';
+      wait.innerHTML='<span style="font-size:13px;color:var(--t2)">⏳ En attente des résultats du match précédent.</span>';
+      block.appendChild(wait);
+      div.appendChild(block);
+      continue;
+    }
     for(var m=0;m<4;m++){
-      var pp=SCHED[r][m];
-      var t1id=pos[String(pp[0])],t2id=pos[String(pp[1])];
-      var t1=(equipes[t1id]||{}).nom||'?';
-      var t2=(equipes[t2id]||{}).nom||'?';
+      var match=roundMatches[m]||{};
+      var t1=(equipes[match.t1]||{}).nom||'?';
+      var t2=(equipes[match.t2]||{}).nom||'?';
       var sc=scores['r'+r+'m'+m];
       var s1=(sc&&sc.s1!=null)?sc.s1:'–',s2=(sc&&sc.s2!=null)?sc.s2:'–';
       var mc=document.createElement('div'); mc.className='match-card';
@@ -582,7 +656,7 @@ function renderTirageHome(){
         cl1=s1>s2?'score-box score-win':(s1<s2?'score-box score-lose':'score-box');
         cl2=s2>s1?'score-box score-win':(s2<s1?'score-box score-lose':'score-box');
       }
-      mc.innerHTML='<div class="terrain-badge">'+TERRAINS[m]+'</div>'
+      mc.innerHTML='<div class="terrain-badge">'+TERRAINS[match.terrain!=null?match.terrain:m]+'</div>'
         +'<span class="match-team">'+t1+'</span>'
         +'<div class="match-score"><div class="'+cl1+'">'+s1+'</div>'
         +'<span class="score-sep">-</span>'
@@ -814,18 +888,25 @@ function renderAdminScores(){
   var el=document.getElementById('adm-scores');
   var tirage=window._data.tirage;
   if(!tirage||!tirage.fait){el.innerHTML='';return;}
-  var equipes=window._data.equipes||{}, pos=tirage.positions||{}, scores=tirage.scores||{};
+  var equipes=window._data.equipes||{}, scores=tirage.scores||{};
+  var scores=tirage.scores||{};
   var frag=document.createDocumentFragment();
   for(var r=0;r<3;r++){
     var info=ROUND_INFO[r];
+    var roundMatches=getRoundMatches(tirage,r);
     var card=document.createElement('div'); card.className='card';
     var hd=document.createElement('div'); hd.className='card-hd'; hd.style.background='rgba(0,0,0,.02)';
     hd.innerHTML='<h2 style="color:'+info.color+'">'+info.label+'</h2><span style="font-size:12px;color:var(--t2)">'+info.start+' – '+info.end+'</span>';
     card.appendChild(hd);
     var bd=document.createElement('div'); bd.className='card-bd'; bd.style.cssText='display:flex;flex-direction:column;gap:8px;';
+    if(!roundMatches.length){
+      bd.innerHTML='<div style="font-size:13px;color:var(--t2);text-align:center;padding:8px 0">⏳ Affiches en attente des résultats du tour précédent.</div>';
+      card.appendChild(bd); frag.appendChild(card); 
+      continue;
+    }
     for(var m=0;m<4;m++){
-      var pp=SCHED[r][m];
-      var t1id=pos[String(pp[0])],t2id=pos[String(pp[1])];
+      var mt=roundMatches[m]||{};
+      var t1id=mt.t1,t2id=mt.t2;
       var t1nm=(equipes[t1id]||{}).nom||'?', t2nm=(equipes[t2id]||{}).nom||'?';
       var sc=scores['r'+r+'m'+m]||{};
       var row=document.createElement('div'); row.className='admin-match';
@@ -837,7 +918,7 @@ function renderAdminScores(){
       in2.value=(sc.s2!=null)?sc.s2:'';
       in2.setAttribute('data-key','r'+r+'m'+m); in2.setAttribute('data-field','s2');
       in2.addEventListener('change',onScoreChange);
-      var tb=document.createElement('span'); tb.className='terrain-badge-sm'; tb.textContent=TERRAINS[m]; row.appendChild(tb);
+      var tb=document.createElement('span'); tb.className='terrain-badge-sm'; tb.textContent=TERRAINS[mt.terrain!=null?mt.terrain:m]; row.appendChild(tb);
       row.innerHTML+='<span class="admin-team">'+t1nm+'</span>';
       row.appendChild(in1);
       row.innerHTML+='<span style="font-weight:800;color:var(--t3);flex-shrink:0">–</span>';
@@ -863,6 +944,16 @@ function onScoreChange(e){
       if(!sc||sc.s1==null||sc.s2==null){complete=false;break;}
     }
     if(complete){
+      if(roundNum===0 && (!window._data.tirage.rounds||!window._data.tirage.rounds.r1)){
+        var r2=buildRound2(window._data.tirage);
+        if(r2){ window._fbSetRoundMatches(1,r2).then(function(){ toast('✅ Match 1 terminé ! Match 2 généré: gagnants vs gagnants.'); }); }
+        return;
+      }
+      if(roundNum===1 && (!window._data.tirage.rounds||!window._data.tirage.rounds.r2)){
+        var r3=buildRound3(window._data.tirage);
+        if(r3){ window._fbSetRoundMatches(2,r3).then(function(){ toast('✅ Match 2 terminé ! Match 3 classement généré.'); }); }
+        return;
+      }
       if(roundNum<2){
         var next=ROUND_INFO[roundNum+1];
         toast('✅ Round '+(roundNum+1)+' terminé ! ⏩ '+next.label+' à '+next.start+' — 4 terrains');
@@ -913,12 +1004,8 @@ function renderAll(){
 function lancerTirage(){
   var ids=Object.keys(window._data.equipes||{});
   if(ids.length<MAX_EQUIPES){ toast('⚠️ Il faut '+MAX_EQUIPES+' équipes.'); return; }
-  for(var i=ids.length-1;i>0;i--){
-    var j=Math.floor(Math.random()*(i+1)),tmp=ids[i]; ids[i]=ids[j]; ids[j]=tmp;
-  }
-  var positions={};
-  ids.forEach(function(id,idx){ positions[String(idx)]=id; });
-  window._fbSetTirage({fait:true,positions:positions,scores:{}}).then(function(){ toast('🎲 Tirage effectué !'); });
+  var r0=createRound1(ids);
+  window._fbSetTirage({fait:true,rounds:{r0:r0},scores:{}}).then(function(){ toast('🎲 Tirage effectué ! Match 1 aléatoire.'); });
 }
 
 // ── RESET ─────────────────────────────────────────────────────────────────────
@@ -1046,26 +1133,49 @@ window._fbPush          = d       => push(ref(db, BASE+'/equipes'), d);
 window._fbRemove        = id      => remove(ref(db, BASE+'/equipes/'+id));
 window._fbSetTirage     = d       => set(ref(db, BASE+'/tirage'), d);
 window._fbSetScore      = (k,f,v) => update(ref(db, BASE+'/tirage/scores/'+k), {[f]:v});
+window._fbSetRoundMatches = (r,m) => set(ref(db, BASE+'/tirage/rounds/r'+r), m);
 window._fbUpdateJoueurs = (id,j)  => update(ref(db, BASE+'/equipes/'+id), {joueurs:j});
 window._fbResetTournoi  = ()      => set(ref(db, BASE), {equipes:{}, tirage:null});
 
 // ✅ Tirage automatique via runTransaction (anti-doublon multi-client)
 function lancerTirageAuto(ids) {
-  for (let i = ids.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [ids[i], ids[j]] = [ids[j], ids[i]];
-  }
-  const positions = {};
-  ids.forEach((id, idx) => { positions[String(idx)] = id; });
+  const round1 = createRound1(ids);
 
   runTransaction(ref(db, BASE + '/tirage'), (current) => {
     if (current && current.fait) return; // déjà tiré → on abandonne
-    return { fait: true, positions, scores: {} };
+    return { fait: true, rounds:{r0:round1}, scores: {} };
   }).then((result) => {
     if (result.committed) {
-      toast('🎲 Tirage automatique effectué ! 8 équipes — matchs sur 4 terrains !');
+      toast('🎲 Tirage automatique effectué ! Match 1 aléatoire prêt.');
     }
   }).catch(err => console.error('Tirage error:', err));
+}
+
+function migrateLegacyTirageRound1(eqIds) {
+  return runTransaction(ref(db, BASE + '/tirage'), (current) => {
+    if (!current || !current.fait) return current;
+    if (current.rounds && Array.isArray(current.rounds.r0) && current.rounds.r0.length === 4) return current;
+
+    let ids = [];
+    if (current.positions) {
+      for (let i = 0; i < MAX_EQUIPES; i++) {
+        const id = current.positions[String(i)];
+        if (id) ids.push(id);
+      }
+    }
+    if (ids.length < MAX_EQUIPES) ids = [...eqIds];
+    if (ids.length < MAX_EQUIPES) return current;
+
+    const round1 = createRound1(ids);
+    return {
+      ...current,
+      rounds: {
+        ...(current.rounds || {}),
+        r0: round1
+      },
+      scores: current.scores || {}
+    };
+  }).catch(err => console.error('Legacy tirage migration error:', err));
 }
 
 onValue(ref(db, BASE), snap => {
@@ -1079,6 +1189,10 @@ onValue(ref(db, BASE), snap => {
   const eqKeys = Object.keys(window._data.equipes);
   if (eqKeys.length >= MAX_EQUIPES && (!window._data.tirage || !window._data.tirage.fait)) {
     lancerTirageAuto([...eqKeys]);
+  }
+  if (eqKeys.length >= MAX_EQUIPES && window._data.tirage && window._data.tirage.fait
+      && (!window._data.tirage.rounds || !Array.isArray(window._data.tirage.rounds.r0) || window._data.tirage.rounds.r0.length !== 4)) {
+    migrateLegacyTirageRound1([...eqKeys]);
   }
 
   renderAll();
